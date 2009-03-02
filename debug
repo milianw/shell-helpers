@@ -1,0 +1,31 @@
+#!/usr/bin/env python
+
+# start a gdb session for a given app
+
+import sys
+import os
+import re
+
+if len(sys.argv) < 2:
+  print "debug APP [Options]"
+  sys.exit(1)
+
+if os.system('which %s 1>/dev/null' % sys.argv[1]) != 0:
+  print "could not find application %s" % sys.argv[1]
+  sys.exit(2)
+
+args = ""
+
+for arg in sys.argv[2:]:
+  if arg.startswith('-'):
+    args += arg
+  else:
+    args += '"' + arg.replace('"', '\\"') + '"'
+  
+  args += " "
+
+sys.exit(
+  os.system(
+    'gdb %s --eval-command="run %s"' % (sys.argv[1], args)
+  )
+)
