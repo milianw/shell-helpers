@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# Access your KDE 4 klipper on the command line
+# usage:
+#  ./clipboard
+#    will output current contents of klipper
+#  echo "foobar" | ./clipboard
+#    will put "foobar" into your clipboard/klipper
+
+# check for stdin
+#   since we don't want to wait endlessly we set a timeout
+#   a pity `read` only supports seconds and no fractions...
+read -t 1 stdin
+if [[ "$stdin" != "" ]]; then
+  # get the rest of stdin
+  stdin=$stdin$'\n'$(cat)
+  # oh, nice - user input! we set that as current
+  # clipboard content
+  dbus-send --type=method_call --dest=org.kde.klipper \
+    /klipper org.kde.klipper.klipper.setClipboardContents \
+    string:"$stdin"
+  exit
+fi
+
+# if we reach this point no user input was given and we
+#   print out the current contents of the clipboard
+# note: I hate the output of dbus, dcop was much easier in that regard!
+dbus-send --print-reply --dest=org.kde.klipper /klipper \
+    org.kde.klipper.klipper.getClipboardContents | awk '
+      BEGIN { output = ""; }
+      {
+        if ( NR > 1 ) {
+          output = output $0 "\n";
+        }
+      }
+      END {
+        print substr(output, 12, length(output) - 13);
+      }'

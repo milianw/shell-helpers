@@ -1,0 +1,3 @@
+#!/bin/bash
+sudo aptitude update; sudo aptitude -y dist-upgrade
+beep

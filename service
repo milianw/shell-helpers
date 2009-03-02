@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# as known from mandriva
+
+sudo /etc/init.d/$@
