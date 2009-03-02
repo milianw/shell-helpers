@@ -1,5 +1,13 @@
 #!/usr/bin/env python
 
+#####################################################################
+#
+# NOTE: this app is overkill and obsolete, just use a bash alias like
+#   alias debug='gdb --eval-command="run" --args"
+# that's exactly the same as what I do below. but much cleaner!
+#
+#####################################################################
+
 # start a gdb session for a given app
 
 import sys
