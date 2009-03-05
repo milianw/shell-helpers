@@ -25,7 +25,14 @@ prepend() { [ -d "$2" ] && eval $1=\"$2\$\{$1:+':'\$$1\}\" && export $1 ; }
  
  
 # KDE
+
+# this is where the build files are written to
+export KDE_BUILD=$HOME/projects/.build/kde4/
+# this is where your source code lies
+export KDE_SRC=$HOME/projects/kde4/
+# this is where your compiled stuff will be installed to
 export KDEDIR=$HOME/projects/compiled/kde4
+
 export KDEHOME=$HOME/.kde
 export KDETMP=/tmp/kde-$USER
 #mkdir -p $KDETMP
@@ -56,10 +63,6 @@ prepend CMAKE_INCLUDE_PATH $KDEDIR/include
 # XDG
 #unset XDG_DATA_DIRS # to avoid seeing kde3 files from /usr
 #unset XDG_CONFIG_DIRS
- 
-# you might want to change these:
-export KDE_BUILD=$HOME/projects/.build/kde4/
-export KDE_SRC=$HOME/projects/kde4/
  
 # make the debug output prettier
 export KDE_COLOR_DEBUG=1
