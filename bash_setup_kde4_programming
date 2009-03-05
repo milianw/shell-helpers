@@ -1,0 +1,185 @@
+#!/bin/bash
+###############################################################
+# KDE 4 DEVELOPMENT
+#
+# If you just want to setup your environment for kde4
+# development, download this file and save it somewhere
+# now put the following line (with the path pointing to 
+# your just downloaded file) into your ~/.bashrc:
+# 
+# . ~/path/to/this/file
+# 
+# Example (the leading # has to be ommitted of course!)
+# . ~/.bash_setup_kde4_programming
+###############################################################
+
+# you might have to change the actual filename in the path below
+# in my git repo the file is called kde4_setup_build_environment.sh
+# NOTE: it's important this lies in ~/.kde/env so it gets
+# called at KDE startup. This makes compiled applications
+# available via KRunner etc. 
+. ~/.kde/env/kde4_setup_build_environment.sh
+ 
+# Use makeobj instead of make, to automatically switch to the build dir.
+# If you don't have makeobj, install the package named kdesdk-scripts or
+# kdesdk, or check out kdesdk/scripts from svn.
+alias make=makeobj
+
+# Uncomment the following lines if DBus does not work. DBus is not
+# working if, when you run `dbus-uuidgen --ensure && qdbus`, you get an error.
+#
+# alias dbusstart="eval `PATH=$DBUSDIR/bin \
+#  $DBUSDIR/bin/dbus-launch --auto-syntax`"
+ 
+# A function to easily build the current directory of KDE.
+#
+# This builds only the sources in the current ~/{src,build}/KDE subdirectory.
+# Usage: cs KDE/kdebase && cmakekde
+#   will build/rebuild the sources in ~/src/KDE/kdebase
+function cmakekde {
+        local srcFolder current switched
+        switched=0
+        if test -n "$1"; then
+                # srcFolder is defined via command line argument
+                srcFolder="$1"
+        else
+                # get srcFolder for current dir
+                srcFolder=`pwd | sed -e s,$KDE_BUILD,$KDE_SRC,`
+        fi
+        # we are in the src folder, change to build directory
+        # Alternatively, we could just use makeobj in the commands below...
+        current=`pwd`
+        if [ "$srcFolder" = "$current" ]; then
+                cb
+                switched=1
+        fi
+        # to enable tests, add -DKDE4_BUILD_TESTS=ON to the next line.
+        # you can also change "debugfull" to "debug" to save disk space.
+        cmake "$srcFolder" -DCMAKE_INSTALL_PREFIX=$KDEDIR \
+                -DCMAKE_BUILD_TYPE=debugfull \
+                -DKDE4_BUILD_TESTS=ON
+                
+ 
+        # uncomment the following two lines to make builds wait after
+        # configuration step, so that the user can check configure output
+        beep
+        echo "Press <ENTER> to continue..."
+        read userinput
+ 
+        # Note: To speed up compiling, change 'make -j2' to 'make -jx',
+        #   where x is your number of processors +1
+        nice make -j3 && \
+        make install
+        if test $switched -eq 1; then
+          cs
+        fi
+        beep
+}
+ 
+# for the lazy ones, add/comment other directories
+function cmakekdeall {
+    local directories
+    directories=(
+      kte_linter/linter
+      kte_linter/phplinter
+    )
+    for i in `seq 1 ${#directories[@]}`; do
+        echo "############## ${directories[$i-1]} ##############";
+        if [[ "$1" == "" ]]; then
+            cs ${directories[$i-1]} && svn up && cb && make install;
+        else
+          cs ${directories[$i-1]} && svn up && cmakekde;
+        fi
+    done
+}
+ 
+# A function to easily change to the build directory.
+# Usage: cb KDE/kdebase
+#   will change to $KDE_BUILD/KDE/kdebase
+# Usage: cb
+#   will simply go to the build folder if you are currently in a src folder
+#   Example:
+#     $ pwd
+#     /home/user/src/KDE/kdebase
+#     $ cb && pwd
+#     /home/user/build/KDE/kdebase
+function cb {
+        local dest
+ 
+        # Make sure build directory exists.
+        mkdir -p "$KDE_BUILD"
+ 
+        # command line argument
+        if test -n "$1"; then
+                cd "$KDE_BUILD/$1"
+                return
+        fi
+        # substitute src dir with build dir
+        dest=`pwd | sed -e s,$KDE_SRC,$KDE_BUILD,`
+        if test ! -d "$dest"; then
+                # build directory does not exist, create
+                mkdir -p "$dest"
+        fi
+        cd "$dest"
+}
+ 
+# Change to the source directory.  Same as cb, except this
+# switches to $KDE_SRC instead of $KDE_BUILD.
+# Usage: cs KDE/kdebase
+#   will change to $KDE_SRC/KDE/kdebase
+# Usage: cs
+#   will simply go to the source folder if you are currently in a build folder
+#   Example:
+#     $ pwd
+#     /home/user/build/KDE/kdebase
+#     $ cs && pwd
+#     /home/user/src/KDE/kdebase
+function cs {
+        local dest current
+ 
+        # Make sure source directory exists.
+        mkdir -p "$KDE_SRC"
+ 
+        # command line argument
+        if test -n "$1"; then
+                cd "$KDE_SRC/$1"
+        else
+                # substitute build dir with src dir
+                dest=`pwd | sed -e s,$KDE_BUILD,$KDE_SRC,`
+                current=`pwd`
+                if [ "$dest" = "$current" ]; then
+                        cd "$KDE_SRC"
+                else
+                        cd "$dest"
+                fi
+        fi
+}
+ 
+# Add autocompletion to cs function
+function _cs_scandir
+{
+        local base ext
+ 
+        base=$1
+        ext=$2
+        if [ -d $base ]; then
+                for d in `ls $base`; do
+                        if [ -d $base/$d ]; then
+                                dirs="$dirs $ext$d/"
+                        fi
+                done
+        fi
+}
+ 
+function _cs()
+{
+        local cur dirs
+        _cs_scandir "$KDE_SRC"
+        _cs_scandir "$KDE_SRC/KDE" "KDE/"
+        COMPREPLY=()
+        cur="${COMP_WORDS[COMP_CWORD]}"
+        COMPREPLY=( $(compgen -W "${dirs}" -- ${cur}) )
+}
+ 
+# Remove comment on next line to enable cs autocompletion
+complete -F _cs cs
