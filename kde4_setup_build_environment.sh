@@ -35,7 +35,7 @@ export KDEDIR=$HOME/projects/compiled/kde4
 
 export KDEHOME=$HOME/.kde
 export KDETMP=/tmp/kde-$USER
-#mkdir -p $KDETMP
+mkdir -p $KDETMP
 export KDEDIRS=$KDEDIR
 prepend PATH $KDEDIR/bin
 prepend LD_LIBRARY_PATH $KDEDIR/lib
