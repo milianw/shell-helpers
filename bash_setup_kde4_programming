@@ -201,7 +201,7 @@ complete -F _cs cs
 # run a given unit-test or all via ctest
 function kdetest
 {
-  local tests test args old_pwd;
+  local tests test args old_pwd tmpfile;
 
   old_pwd=$(pwd)
   cb
@@ -215,6 +215,7 @@ function kdetest
     return 1
   fi
 
+  tmpfile=/tmp/testoutput_$$
 
   if [[ "$1" != "" ]]; then
     test=$1
@@ -228,11 +229,29 @@ function kdetest
       cd "$old_pwd"
       return 1
     fi
-    ./$test $args
+
+    ./$test -maxwarnings 0 $args | tee -a "$tmpfile"
+    echo
   else
     # run all tests
-    ctest
+    for test in $tests; do
+      ./$test -maxwarnings 0 | tee -a "$tmpfile"
+    done
   fi
+
+  echo
+  echo " --- ALL PASSED TESTS --- "
+  grep --color=never "^PASS " "$tmpfile"
+  echo
+  echo $(grep -c "^PASS " "$tmpfile")" passed tests in total"
+
+  echo
+  echo " --- ALL FAILED TESTS --- "
+  grep --color=never "^FAIL!" "$tmpfile"
+  echo
+  echo $(grep -c "^FAIL!" "$tmpfile")" failed tests in total"
+
+  rm "$tmpfile"
 
   cd "$old_pwd"
 }
