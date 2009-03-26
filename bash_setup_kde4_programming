@@ -197,3 +197,84 @@ function _cs()
 
 # Remove comment on next line to enable cs autocompletion
 complete -F _cs cs
+
+# run a given unit-test or all via ctest
+function kdetest
+{
+  local tests test args old_pwd;
+
+  old_pwd=$(pwd)
+  cb
+
+  tests=$(LANG=en_US.UTF-8 ctest -N -V | grep "Test command:" | cut -c $(echo "Test command: $(pwd)/" | wc -c)-)
+
+  if [[ "$tests" == "" ]]; then
+    echo "this directory does not contain any unit tests!"
+    echo
+    cd "$old_pwd"
+    return 1
+  fi
+
+
+  if [[ "$1" != "" ]]; then
+    test=$1
+    shift 1
+    args=$@
+
+    if [ ! -f "$test" ] || ! in_array "$test" $tests ; then
+      echo "could not find unittest '$test'. available are:"
+      echo $tests
+      echo
+      cd "$old_pwd"
+      return 1
+    fi
+    ./$test $args
+  else
+    # run all tests
+    ctest
+  fi
+
+  cd "$old_pwd"
+}
+
+# completion for kdetest
+function _kdetest
+{
+  local tests;
+
+  old_pwd=$(pwd)
+
+  cb
+  tests=$(LANG=en_US.UTF-8 ctest -N -V | grep "Test command:" | cut -c $(echo "Test command: $(pwd)/" | wc -c)-)
+
+  COMPREPLY=()
+  cur="${COMP_WORDS[COMP_CWORD]}"
+  prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+  if [[ "$prev" == "kdetest" ]]; then
+    # completion of tests
+    COMPREPLY=( $(compgen -W "${tests}" -- ${cur}) )
+  elif in_array "$prev" $tests; then
+    # completion of available functions
+    COMPREPLY=( $(compgen -W "$(./$prev -functions 2>/dev/null | cut -f 1 -d \( )" -- ${cur}) )
+  fi
+
+  cd "$old_pwd"
+}
+
+complete -F _kdetest kdetest
+
+# see http://ftp.hu.freebsd.org/pub/linux/distributions/frugalware/frugalware-testing/t/functions.sh
+function in_array
+{
+  local i
+  needle=$1
+  shift 1
+  # array() undefined
+  [ -z "$1" ] && return 1
+  for i in $*
+  do
+    [ "$i" == "$needle" ] && return 0
+  done
+  return 1
+}
