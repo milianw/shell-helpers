@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # colors, yay!
+alias ls='ls --color=auto'
 alias svndiff="svn diff --diff-cmd=colordiff"
 alias grep='grep --colour'
 
