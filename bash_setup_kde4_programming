@@ -62,7 +62,6 @@ function cmakekde {
 
         # uncomment the following two lines to make builds wait after
         # configuration step, so that the user can check configure output
-        beep
         echo "Press <ENTER> to continue..."
         read userinput
 
@@ -73,7 +72,6 @@ function cmakekde {
         if test $switched -eq 1; then
           cs
         fi
-        beep
 }
 
 # for the lazy ones, add/comment other directories

@@ -1,7 +1,0 @@
-#!/bin/bash
-
-# I always want to install all updates
-sudo aptitude update; sudo aptitude -y dist-upgrade
-# optional: install beep for audio feedback once
-#   the upgrade has finished
-beep
