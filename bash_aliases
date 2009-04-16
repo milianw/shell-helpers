@@ -20,7 +20,6 @@ alias debug='gdb --eval-command="run" --args'
 
 # always use english here se we can search for the error messages
 alias make="LANG=en_US make -j 3"
-#!/bin/bash
 
 # I always want to install all updates
 alias apupgrade="aptitude update; sudo aptitude -y dist-upgrade"
