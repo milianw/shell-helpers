@@ -18,11 +18,10 @@ prepend() { [ -d "$2" ] && eval $1=\"$2\$\{$1:+':'\$$1\}\" && export $1 ; }
 # only set Qt related variables if you compiled Qt on your own
 # (which is discouraged). if you use the distro provided Qt, skip
 # this section. Comment it if necessary.
-export QTDIR=$HOME/projects/compiled/
+export QTDIR=$HOME/projects/compiled
 prepend PATH $QTDIR/bin
 prepend LD_LIBRARY_PATH $QTDIR/lib
 prepend PKG_CONFIG_PATH $QTDIR/lib/pkgconfig
-
 
 # KDE
 
@@ -42,10 +41,13 @@ prepend LD_LIBRARY_PATH $KDEDIR/lib
 prepend PKG_CONFIG_PATH $KDEDIR/lib/pkgconfig
 prepend QT_PLUGIN_PATH $KDEDIR/lib/kde4/plugins
 
+prepend CMAKE_PREFIX_PATH $QTDIR
 prepend CMAKE_PREFIX_PATH $KDEDIR
 
 # CMake
 # Make sure CMake searches the right places.
+prepend CMAKE_LIBRARY_PATH $QTDIR/lib
+prepend CMAKE_INCLUDE_PATH $QTDIR/include
 prepend CMAKE_LIBRARY_PATH $KDEDIR/lib
 prepend CMAKE_INCLUDE_PATH $KDEDIR/include
 
@@ -71,3 +73,5 @@ export QTEST_COLORED=1
 # Make
 # Tell many scripts how to switch from source dir to build dir:
 export OBJ_REPLACEMENT="s#$KDE_SRC#$KDE_BUILD#"
+
+export LIBRARY_PATH=$LD_LIBRARY_PATH
