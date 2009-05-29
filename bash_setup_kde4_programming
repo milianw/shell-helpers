@@ -238,6 +238,11 @@ function kdetest
   fi
 
   echo
+  echo " --- BENCHMARKS --- "
+  grep --color=never -A 1 "^RESULT " "$tmpfile"
+  echo
+
+  echo
   echo " --- ALL PASSED TESTS --- "
   grep --color=never "^PASS " "$tmpfile"
   echo
