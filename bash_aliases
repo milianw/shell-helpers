@@ -23,6 +23,3 @@ alias make="LANG=en_US make -j 3"
 
 # I always want to install all updates
 alias apupgrade="sudo aptitude update; sudo aptitude -y dist-upgrade"
-
-# Use the raster engine for kdevelop
-alias kdevel="kdevelop --graphicssystem raster"
