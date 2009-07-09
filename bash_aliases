@@ -23,3 +23,7 @@ alias make="LANG=en_US make -j 3"
 
 # I always want to install all updates
 alias apupgrade="sudo aptitude update; sudo aptitude -y dist-upgrade"
+
+# sometimes I want to clean all files which are not tracked by svn
+alias svnclean="svn status | grep "^?" | cut -c 3- | xargs rm -Rf"
+
