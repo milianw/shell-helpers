@@ -69,6 +69,7 @@ function cmakekde {
         #   where x is your number of processors +1
         nice make -j3 && \
         make install
+        kbuildsycoca4
         if test $switched -eq 1; then
           cs
         fi
