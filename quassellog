@@ -1,0 +1,114 @@
+#!/bin/bash
+######################################################
+# shell script to access quassel logs from the CLI
+# 
+# Features:
+# - grep by simple LIKE pattern
+# - grep by buffer
+# - grep by user
+# - or any combination of those. 
+#
+# Author: Milian Wolff <mail@milianw.de>
+# License: GPL v3 or higher
+# 
+# Dependencies:
+# - sqlite3 on the host where quassel-storage.sqlite lies
+# - ssh on remote hosts
+######################################################
+
+# Set this value to the host where quassel is running
+# so you can use this script from other hosts as well.
+host="jongleur"
+# The absolute path to the quassel database
+database="/var/cache/quassel/quassel-storage.sqlite"
+
+######################################################
+######################################################
+
+query=""
+pattern=""
+user=""
+buffer=""
+
+if [[ "$host" != "" && "$HOSTNAME" != "$host" ]]; then
+  ssh "$host" "$0" \"$1\" \"$2\" \"$3\" \"$4\" \"$5\" \"$6\" \"$7\" \"$8\" \"$9\"
+  exit
+fi
+
+function usage {
+  echo "$(basename $0) [-u USER] [-b BUFFER] [PATTERN]"
+  echo
+  echo " -u USER        show only messages from users, who have USER at"
+  echo "                the start of their sender name."
+  echo
+  echo " -b BUFFER      show only messages in this buffer"
+  echo "                valid buffers are:"
+  sqlite3 "$database" "SELECT buffername FROM buffer WHERE buffername != '' ORDER BY buffername" | column
+  echo
+  echo " PATTERN        a simple pattern, use * for wildcard matching"
+  echo
+  # TODO:
+  echo "NOTE: order of options is not exchangable, i.e. first -u, then -b then pattern..."
+}
+
+if [[ "$1" == "-u" ]]; then
+  shift 1
+  if [[ "$1" == "" ]]; then
+    usage
+    exit
+  fi
+  user="$1"
+  shift 1
+fi
+
+if [[ "$1" == "-b" ]]; then
+  shift 1
+  if [[ "$1" == "" ]]; then
+    usage
+    exit
+  fi
+  buffer="$1"
+  shift 1
+fi
+
+if [[ "$1" == "" && "$user" == "" && "$buffer" == "" ]]; then
+  usage
+  exit
+fi
+
+pattern="$1"
+
+# escape '
+pattern=${pattern//\'/\'\'}
+# escape %
+pattern=${pattern//%/%%}
+
+query=" \
+  SELECT \
+    ('[' || DATETIME(time, 'unixepoch', 'localtime') || ']  ' || sender.sender || ' > ' || message) \
+    FROM backlog LEFT JOIN sender \
+      ON backlog.senderid = sender.senderid \
+     WHERE"
+
+if [[ "$pattern" != "" ]]; then
+  query="$query message LIKE '%$pattern%'"
+fi
+
+if [[ "$user" != "" ]]; then
+  if [[ "$pattern" != "" ]]; then
+    query="$query AND"
+  fi
+  query="$query sender LIKE '$user%'"
+fi
+
+if [[ "$buffer" != "" ]]; then
+  if [[ "$pattern" != "" || "$user" != "" ]]; then
+    query="$query AND"
+  fi
+  query="$query bufferid IN (SELECT bufferid FROM buffer WHERE buffername = '$buffer')"
+fi
+
+# to slow:
+# query="$query ORDER BY time DESC"
+
+sqlite3 "$database" "$query" || echo $query
