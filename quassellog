@@ -18,9 +18,15 @@
 
 # Set this value to the host where quassel is running
 # so you can use this script from other hosts as well.
-host="jongleur"
+# Usage: QUASSEL_HOST="myremotehost" quassellog ...
+host="$QUASSEL_HOST"
 # The absolute path to the quassel database
-database="/var/cache/quassel/quassel-storage.sqlite"
+# Usage: QUASSEL_DATABASE="/foo/bvar/asdf.sqlite" quassellog ...
+if [[ "$QUASSEL_DATABASE" == "" ]]; then
+  database="/var/cache/quassel/quassel-storage.sqlite"
+else
+  database="$QUASSEL_DATABASE"
+fi
 
 ######################################################
 ######################################################
@@ -50,6 +56,13 @@ function usage {
   # TODO:
   echo "NOTE: order of options is not exchangable, i.e. first -u, then -b then pattern..."
 }
+
+if [[ "$database" == "" || ! -f "$database" ]]; then
+  echo "BAD DATABASE: $database"
+  echo
+  usage
+  exit
+fi
 
 if [[ "$1" == "-u" ]]; then
   shift 1
@@ -82,6 +95,8 @@ pattern="$1"
 pattern=${pattern//\'/\'\'}
 # escape %
 pattern=${pattern//%/%%}
+# wildcards
+pattern=${pattern//\*/%}
 
 query=" \
   SELECT \
