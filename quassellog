@@ -52,44 +52,34 @@ function usage {
   sqlite3 "$database" "SELECT buffername FROM buffer WHERE buffername != '' ORDER BY buffername" | column
   echo
   echo " PATTERN        a simple pattern, use * for wildcard matching"
-  echo
-  # TODO:
-  echo "NOTE: order of options is not exchangable, i.e. first -u, then -b then pattern..."
 }
 
 if [[ "$database" == "" || ! -f "$database" ]]; then
   echo "BAD DATABASE: $database"
   echo
   usage
-  exit
+  exit 1
 fi
 
-if [[ "$1" == "-u" ]]; then
-  shift 1
-  if [[ "$1" == "" ]]; then
-    usage
-    exit
+while getopts "u:b:" flag
+do
+  if [[ "$flag" == "u" ]]; then
+    user="$OPTARG"
+  elif [[ "$flag" == "b" ]]; then
+    buffer="$OPTARG"
   fi
-  user="$1"
-  shift 1
-fi
+done
 
-if [[ "$1" == "-b" ]]; then
-  shift 1
-  if [[ "$1" == "" ]]; then
-    usage
-    exit
-  fi
-  buffer="$1"
-  shift 1
-fi
-
-if [[ "$1" == "" && "$user" == "" && "$buffer" == "" ]]; then
-  usage
-  exit
-fi
+shift $(($OPTIND - 1))
 
 pattern="$1"
+
+if [[ "$pattern" == "" && "$user" == "" && "$buffer" == "" ]]; then
+  echo "pattern required"
+  echo
+  usage
+  exit 1
+fi
 
 # escape '
 pattern=${pattern//\'/\'\'}
