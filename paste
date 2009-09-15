@@ -26,6 +26,12 @@ toPaste=$(dbus-send --print-reply --dest=org.kde.klipper /klipper \
             print substr(output, 12, length(output) - 13);
         }')
 
+if [[ "$(echo $toPaste | wc -l)" == "1" && "$(echo $toPaste | grep $target)" ]]; then
+  echo "cancelling, not pasting '$toPaste' - looks useless"
+fi
+
+exit
+
 # paste
 echo "will paste the following to $target:"
 echo
