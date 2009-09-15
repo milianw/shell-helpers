@@ -251,7 +251,7 @@ function kdetest
 
   echo
   echo " --- ALL FAILED TESTS --- "
-  grep --color=never "^FAIL!" "$tmpfile"
+  perl -ne '(/^^FAIL!/../^   Loc:/) && print' "$tmpfile"
   echo
   echo $(grep -c "^FAIL!" "$tmpfile")" failed tests in total"
 
