@@ -19,9 +19,9 @@ prepend() { [ -d "$2" ] && eval $1=\"$2\$\{$1:+':'\$$1\}\" && export $1 ; }
 # (which is discouraged). if you use the distro provided Qt, skip
 # this section. Comment it if necessary.
 # export QTDIR=$HOME/projects/compiled
-prepend PATH $QTDIR/bin
-prepend LD_LIBRARY_PATH $QTDIR/lib
-prepend PKG_CONFIG_PATH $QTDIR/lib/pkgconfig
+# prepend PATH $QTDIR/bin
+# prepend LD_LIBRARY_PATH $QTDIR/lib
+# prepend PKG_CONFIG_PATH $QTDIR/lib/pkgconfig
 
 # KDE
 
