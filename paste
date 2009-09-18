@@ -30,8 +30,6 @@ if [[ "$(echo $toPaste | wc -l)" == "1" && "$(echo $toPaste | grep $target)" ]];
   echo "cancelling, not pasting '$toPaste' - looks useless"
 fi
 
-exit
-
 # paste
 echo "will paste the following to $target:"
 echo
