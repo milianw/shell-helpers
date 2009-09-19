@@ -200,12 +200,20 @@ complete -F _cs cs
 # run a given unit-test or all via ctest
 function kdetest
 {
-  local tests test args old_pwd tmpfile;
+  local tests test args old_pwd tmpfile debug;
+
+  debug=0
 
   old_pwd=$(pwd)
   cb
 
-  tests=$(LANG=en_US.UTF-8 ctest -N -V | grep "Test command:" | cut -c $(echo "Test command: $(pwd)/" | wc -c)-)
+  if [[ "$1" == "--debug" ]]; then
+    debug=1
+    tests=$(getTests --debug)
+    shift 1
+  else
+    tests=$(getTests)
+  fi
 
   if [[ "$tests" == "" ]]; then
     echo "this directory does not contain any unit tests!"
@@ -218,6 +226,9 @@ function kdetest
 
   if [[ "$1" != "" ]]; then
     test=$1
+    if [[ "$debug" == "1" ]]; then
+      test=${test/.shell/}
+    fi
     shift 1
     args=$@
 
@@ -229,12 +240,21 @@ function kdetest
       return 1
     fi
 
-    ./$test -maxwarnings 0 $args | tee -a "$tmpfile"
+	if [[ "$debug" == "1" ]]; then
+      gdb --eval-command="run" --args ./$test -maxwarnings 0 $args | tee -a "$tmpfile"
+	else
+      ./$test -maxwarnings 0 $args | tee -a "$tmpfile"
+	fi
     echo
   else
     # run all tests
     for test in $tests; do
-      ./$test -maxwarnings 0 | tee -a "$tmpfile"
+      if [[ "$debug" == "1" ]]; then
+        gdb --eval-command="run" --args ./$test -maxwarnings 0 | tee -a "$tmpfile"
+	  else
+        ./$test -maxwarnings 0 | tee -a "$tmpfile"
+	  fi
+
     done
   fi
 
@@ -265,16 +285,16 @@ function _kdetest
 {
   local tests;
 
-  old_pwd=$(pwd)
-
-  cb
-  tests=$(LANG=en_US.UTF-8 ctest -N -V | grep "Test command:" | cut -c $(echo "Test command: $(pwd)/" | wc -c)-)
-
   COMPREPLY=()
   cur="${COMP_WORDS[COMP_CWORD]}"
   prev="${COMP_WORDS[COMP_CWORD-1]}"
 
-  if [[ "$prev" == "kdetest" ]]; then
+  old_pwd=$(pwd)
+  cb
+
+  tests=$(getTests ${COMP_WORDS[1]})
+
+  if [[ "$prev" == "kdetest" || "$prev" == "--debug" ]]; then
     # completion of tests
     COMPREPLY=( $(compgen -W "${tests}" -- ${cur}) )
   elif in_array "$prev" $tests; then
@@ -283,6 +303,24 @@ function _kdetest
   fi
 
   cd "$old_pwd"
+}
+
+# removes .shell from the end of each test file
+function getTests {
+  local tests;
+  tests=""
+
+  tests=$(LANG=en_US.UTF-8 ctest -N -V | grep "Test command:" | cut -c $(echo "Test command: $(pwd)/" | wc -c)-)
+
+  if [[ "$1" == "--debug" ]]; then
+    # remove trailing .shell
+    for t in $tests; do
+      echo -n ${t/.shell/}" "
+    done
+    echo
+  else
+    echo $tests
+  fi
 }
 
 complete -F _kdetest kdetest
