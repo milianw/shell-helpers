@@ -135,7 +135,7 @@ function cb {
         fi
         cd "$dest"
 }
-
+export -f cb
 # Change to the source directory.  Same as cb, except this
 # switches to $KDE_SRC instead of $KDE_BUILD.
 # Usage: cs KDE/kdebase
@@ -167,7 +167,7 @@ function cs {
                 fi
         fi
 }
-
+export -f cs
 # Add autocompletion to cs function
 function _cs_scandir
 {
@@ -339,3 +339,4 @@ function in_array
   done
   return 1
 }
+export -f in_array
