@@ -14,6 +14,11 @@ prepend() { [ -d "$2" ] && eval $1=\"$2\$\{$1:+':'\$$1\}\" && export $1 ; }
 # sure the your kde3 path isn't in here.
 #prepend PATH /usr/local/bin
 
+# Make
+# set your common make flags here, so all scripts can benefit from them
+# general rule-of-thumb for -j: #cpucores + 1
+export MAKEFLAGS=" -j$(($(grep -c '^processor' /proc/cpuinfo)+1)) "
+
 # Qt
 # only set Qt related variables if you compiled Qt on your own
 # (which is discouraged). if you use the distro provided Qt, skip
