@@ -274,6 +274,8 @@ function kdetest
   perl -ne '(/^^FAIL!/../^   Loc:/) && print' "$tmpfile"
   echo
   echo $(grep -c "^FAIL!" "$tmpfile")" failed tests in total"
+  echo
+  grep --color=never "^QFATAL : " "$tmpfile"
 
   rm "$tmpfile"
 
