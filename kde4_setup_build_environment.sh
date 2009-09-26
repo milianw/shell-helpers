@@ -70,6 +70,7 @@ prepend CMAKE_INCLUDE_PATH $KDEDIR/include
 # XDG
 #unset XDG_DATA_DIRS # to avoid seeing kde3 files from /usr
 #unset XDG_CONFIG_DIRS
+prepend XDG_DATA_DIRS $KDEDIR/share
 
 # make the debug output prettier
 export KDE_COLOR_DEBUG=1
@@ -80,3 +81,7 @@ export QTEST_COLORED=1
 export OBJ_REPLACEMENT="s#$KDE_SRC#$KDE_BUILD#"
 
 export LIBRARY_PATH=$LD_LIBRARY_PATH
+
+# Use ccache if possible
+prepend PATH /usr/lib/ccache
+
