@@ -23,10 +23,12 @@ export MAKEFLAGS=" -j$(($(grep -c '^processor' /proc/cpuinfo)+1)) "
 # only set Qt related variables if you compiled Qt on your own
 # (which is discouraged). if you use the distro provided Qt, skip
 # this section. Comment it if necessary.
-# export QTDIR=$HOME/projects/compiled
-# prepend PATH $QTDIR/bin
-# prepend LD_LIBRARY_PATH $QTDIR/lib
-# prepend PKG_CONFIG_PATH $QTDIR/lib/pkgconfig
+if [ -d $HOME/projects/compiled/qt ]; then
+  export QTDIR=$HOME/projects/compiled/qt
+  prepend PATH $QTDIR/bin
+  prepend LD_LIBRARY_PATH $QTDIR/lib
+  prepend PKG_CONFIG_PATH $QTDIR/lib/pkgconfig
+fi
 
 # KDE
 
@@ -87,5 +89,9 @@ export OBJ_REPLACEMENT="s#/home/$USER/projects/\([^\.]\)#/home/$USER/projects/.b
 export LIBRARY_PATH=$LD_LIBRARY_PATH
 
 # Use ccache if possible
-prepend PATH /usr/lib/ccache
+if [[ -d /usr/lib/ccache/bin ]]; then
+  prepend PATH /usr/lib/ccache/bin
+elif [[ -d /usr/lib/ccache ]]; then
+  prepend PATH /usr/lib/ccache
+fi
 
