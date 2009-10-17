@@ -78,7 +78,11 @@ export QTEST_COLORED=1
 
 # Make
 # Tell many scripts how to switch from source dir to build dir:
-export OBJ_REPLACEMENT="s#$KDE_SRC#$KDE_BUILD#"
+# requires makeobj from kdesdk
+# default, works for most people, but only inside $KDE_SRC
+# export OBJ_REPLACEMENT="s#$KDE_SRC#$KDE_BUILD#"
+# adapted to my needs: works everywhere inside my ~/projects folder
+export OBJ_REPLACEMENT="s#/home/$USER/projects/\([^\.]\)#/home/$USER/projects/.build/\1#"
 
 export LIBRARY_PATH=$LD_LIBRARY_PATH
 
