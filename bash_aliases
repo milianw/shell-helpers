@@ -27,3 +27,7 @@ alias apupgrade="sudo aptitude update; sudo aptitude -y dist-upgrade"
 # sometimes I want to clean all files which are not tracked by svn
 alias svnclean="svn status | grep "^?" | cut -c 3- | xargs rm -Rf"
 
+if [ -f /etc/arch-release ]; then
+  # arch linux specific aliases
+  alias upgradesystem='yaourt -Syu - -aur'
+fi
