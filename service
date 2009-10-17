@@ -1,5 +1,0 @@
-#!/bin/bash
-
-# simple shortcut to rc.d stuff, as known from mandriva
-
-sudo /etc/init.d/$@

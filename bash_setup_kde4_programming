@@ -23,13 +23,37 @@
 # Use makeobj instead of make, to automatically switch to the build dir.
 # If you don't have makeobj, install the package named kdesdk-scripts or
 # kdesdk, or check out kdesdk/scripts from svn.
-alias make='makeobj -j 3'
+alias make='makeobj'
 
 # Uncomment the following lines if DBus does not work. DBus is not
 # working if, when you run `dbus-uuidgen --ensure && qdbus`, you get an error.
 #
 # alias dbusstart="eval `PATH=$DBUSDIR/bin \
 #  $DBUSDIR/bin/dbus-launch --auto-syntax`"
+
+# A function to easily build the project in the current directory
+#
+# builds in the dir depending on what you set OBJ_REPLACEMENT to
+# installs to "install" folder in the project folder
+#
+# cd ~/projects/...
+# cmakeproject
+function cmakeproject {
+  local srcdir builddir installdir
+  srcdir=$(pwd)
+  installdir="$srcdir/install"
+  builddir=$(echo $srcdir | sed -e "$OBJ_REPLACEMENT")
+
+  mkdir -p "$builddir"
+  cd "$builddir"
+
+  cmake "$srcdir" -DCMAKE_INSTALL_PREFIX="$installdir" \
+    -DCMAKE_BUILD_TYPE=debugfull \
+    -DKDE4_BUILD_TESTS=ON
+
+  nice make install
+  cd "$srcdir"
+}
 
 # A function to easily build the current directory of KDE.
 #
