@@ -5,9 +5,6 @@ alias ls='ls --color=auto'
 alias svndiff="svn diff --diff-cmd=colordiff"
 alias grep='grep --colour'
 
-# for readline support
-alias gnuplot='rlwrap -a -c gnuplot'
-
 # run php on cli with special config for profiling
 alias phprofile='php -c /etc/php5/cli/profile/'
 
