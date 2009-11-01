@@ -36,3 +36,6 @@ fi
 
 # damn you free, why have thy no -h...
 alias free="free -m"
+
+# mplayer with cache, e.g. for sshfs mounted shares and the like
+alias netmplayer="mplayer -cache 8192"
