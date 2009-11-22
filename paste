@@ -28,6 +28,7 @@ toPaste=$(dbus-send --print-reply --dest=org.kde.klipper /klipper \
 
 if [[ "$(echo $toPaste | wc -l)" == "1" && "$(echo $toPaste | grep $target)" ]]; then
   echo "cancelling, not pasting '$toPaste' - looks useless"
+  exit
 fi
 
 # paste
