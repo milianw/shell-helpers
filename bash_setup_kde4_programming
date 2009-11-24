@@ -264,20 +264,20 @@ function kdetest
       return 1
     fi
 
-	if [[ "$debug" == "1" ]]; then
+  if [[ "$debug" == "1" ]]; then
       gdb --eval-command="run" --args ./$test -maxwarnings 0 $args | tee -a "$tmpfile"
-	else
+  else
       ./$test -maxwarnings 0 $args | tee -a "$tmpfile"
-	fi
+  fi
     echo
   else
     # run all tests
     for test in $tests; do
       if [[ "$debug" == "1" ]]; then
         gdb --eval-command="run" --args ./$test -maxwarnings 0 | tee -a "$tmpfile"
-	  else
+    else
         ./$test -maxwarnings 0 | tee -a "$tmpfile"
-	  fi
+    fi
 
     done
   fi
