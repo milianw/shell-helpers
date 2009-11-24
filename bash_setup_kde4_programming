@@ -336,7 +336,7 @@ function getTests {
   local tests;
   tests=""
 
-  tests=$(LANG=en_US.UTF-8 ctest -N -V | grep "Test command:" | cut -c $(echo "Test command: $(pwd)/" | wc -c)-)
+  tests=$(LANG=en_US.UTF-8 ctest -N -V | grep "Test command:" | egrep -o ' [^ ]+$' | cut -c $(echo " "$(pwd)"/" | wc -c)-)
 
   if [[ "$1" == "--debug" ]]; then
     # remove trailing .shell
