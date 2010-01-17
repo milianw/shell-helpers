@@ -33,3 +33,6 @@ if [ -f /etc/arch-release ]; then
   # ack is called ack-grep under debian, and I got used to that name...
   alias ack-grep='ack'
 fi
+
+# damn you free, why have thy no -h...
+alias free="free -m"
