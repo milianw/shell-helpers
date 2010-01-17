@@ -95,3 +95,7 @@ elif [[ -d /usr/lib/ccache ]]; then
   prepend PATH /usr/lib/ccache
 fi
 
+# Insert Krazy into path if available
+if [[ -d /usr/local/Krazy2 ]]; then
+  prepend PATH /usr/local/Krazy2/bin
+fi
