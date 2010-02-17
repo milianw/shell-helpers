@@ -72,7 +72,16 @@ prepend CMAKE_INCLUDE_PATH $KDEDIR/include
 # XDG
 #unset XDG_DATA_DIRS # to avoid seeing kde3 files from /usr
 #unset XDG_CONFIG_DIRS
+if [[ "$XDG_DATA_DIRS" == "" ]]; then
+  XDG_DATA_DIRS=/usr/share
+fi
 prepend XDG_DATA_DIRS $KDEDIR/share
+export XDG_DATA_DIRS
+if [[ "$XDG_CONFIG_DIRS" == "" ]]; then
+  XDG_CONFIG_DIRS=/usr/share/kde4/config
+fi
+prepend XDG_CONFIG_DIRS $KDEDIR/share/kde4/config
+export XDG_CONFIG_DIRS
 
 # make the debug output prettier
 export KDE_COLOR_DEBUG=1
