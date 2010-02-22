@@ -18,7 +18,7 @@
 # NOTE: it's important this lies in ~/.kde/env so it gets
 # called at KDE startup. This makes compiled applications
 # available via KRunner etc.
-. ~/.kde/env/kde4_setup_build_environment.sh
+. ~/.bin/kde4_setup_build_environment.sh
 
 # Use makeobj instead of make, to automatically switch to the build dir.
 # If you don't have makeobj, install the package named kdesdk-scripts or
