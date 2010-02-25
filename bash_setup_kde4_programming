@@ -265,18 +265,18 @@ function kdetest
     fi
 
   if [[ "$debug" == "1" ]]; then
-      gdb --eval-command="run" --args ./$test -maxwarnings 0 $args | tee -a "$tmpfile"
+      gdb --eval-command="run" --args ./$test -maxwarnings 0 $args 2>&1 | tee -a "$tmpfile"
   else
-      ./$test -maxwarnings 0 $args | tee -a "$tmpfile"
+      ./$test -maxwarnings 0 $args 2>&1 | tee -a "$tmpfile"
   fi
     echo
   else
     # run all tests
     for test in $tests; do
       if [[ "$debug" == "1" ]]; then
-        gdb --eval-command="run" --args ./$test -maxwarnings 0 | tee -a "$tmpfile"
+        gdb --eval-command="run" --args ./$test -maxwarnings 0 2>&1 | tee -a "$tmpfile"
     else
-        ./$test -maxwarnings 0 | tee -a "$tmpfile"
+        ./$test -maxwarnings 0 2>&1 | tee -a "$tmpfile"
     fi
 
     done
@@ -302,6 +302,7 @@ function kdetest
   echo $(grep -c "^FAIL!" "$tmpfile")" failed tests in total"
   echo
   grep --color=never "^QFATAL : " "$tmpfile"
+  grep --color=never -B 5 "^Segmentation fault" "$tmpfile"
 
   rm "$tmpfile"
 
