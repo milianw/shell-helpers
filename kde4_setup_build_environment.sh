@@ -104,6 +104,11 @@ elif [[ -d /usr/lib/ccache ]]; then
   prepend PATH /usr/lib/ccache
 fi
 
+# use icecream if possible
+if [[ -d /usr/lib64/icecc ]]; then
+  prepend PATH /usr/lib64/icecc/bin
+fi
+
 # Insert Krazy into path if available
 if [[ -d /usr/local/Krazy2 ]]; then
   prepend PATH /usr/local/Krazy2/bin
