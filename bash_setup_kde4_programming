@@ -226,18 +226,22 @@ function kdetest
 {
   local tests test args old_pwd tmpfile debug;
 
-  debug=0
+  debug=
 
   old_pwd=$(pwd)
   cb
 
   if [[ "$1" == "--debug" ]]; then
-    debug=1
-    tests=$(getTests --debug)
+    debug=$1
     shift 1
-  else
-    tests=$(getTests)
   fi
+
+  if [[ -d "$1" ]]; then
+    cd $1
+    shift 1
+  fi
+
+  tests=$(getTests $debug)
 
   if [[ "$tests" == "" ]]; then
     echo "this directory does not contain any unit tests!"
@@ -264,21 +268,20 @@ function kdetest
       return 1
     fi
 
-  if [[ "$debug" == "1" ]]; then
+    if [[ "$debug" != "" ]]; then
       gdb --eval-command="run" --args ./$test -maxwarnings 0 $args 2>&1 | tee -a "$tmpfile"
-  else
+    else
       ./$test -maxwarnings 0 $args 2>&1 | tee -a "$tmpfile"
-  fi
+    fi
     echo
   else
     # run all tests
     for test in $tests; do
-      if [[ "$debug" == "1" ]]; then
+      if [[ "$debug" != "" ]]; then
         gdb --eval-command="run" --args ./$test -maxwarnings 0 2>&1 | tee -a "$tmpfile"
-    else
+      else
         ./$test -maxwarnings 0 2>&1 | tee -a "$tmpfile"
-    fi
-
+      fi
     done
   fi
 
