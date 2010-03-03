@@ -152,7 +152,7 @@ function cb {
                 return
         fi
         # substitute src dir with build dir
-        dest=`pwd | sed -e s,$KDE_SRC,$KDE_BUILD,`
+        dest=`pwd | sed -e $OBJ_REPLACEMENT`
         if test ! -d "$dest"; then
                 # build directory does not exist, create
                 mkdir -p "$dest"
