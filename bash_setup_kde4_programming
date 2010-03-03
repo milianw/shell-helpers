@@ -254,7 +254,7 @@ function kdetest
 
   if [[ "$1" != "" ]]; then
     test=$1
-    if [[ "$debug" == "1" ]]; then
+    if [[ "$debug" == "--debug" ]]; then
       test=${test/.shell/}
     fi
     shift 1
