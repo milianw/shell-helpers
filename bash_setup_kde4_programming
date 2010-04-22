@@ -152,7 +152,7 @@ function cb {
                 return
         fi
         # substitute src dir with build dir
-        dest=`pwd | sed -e s,$KDE_SRC,$KDE_BUILD,`
+        dest=`pwd | sed -e $OBJ_REPLACEMENT`
         if test ! -d "$dest"; then
                 # build directory does not exist, create
                 mkdir -p "$dest"
@@ -226,18 +226,22 @@ function kdetest
 {
   local tests test args old_pwd tmpfile debug;
 
-  debug=0
+  debug=
 
   old_pwd=$(pwd)
   cb
 
   if [[ "$1" == "--debug" ]]; then
-    debug=1
-    tests=$(getTests --debug)
+    debug=$1
     shift 1
-  else
-    tests=$(getTests)
   fi
+
+  if [[ -d "$1" ]]; then
+    cd $1
+    shift 1
+  fi
+
+  tests=$(getTests $debug)
 
   if [[ "$tests" == "" ]]; then
     echo "this directory does not contain any unit tests!"
@@ -250,7 +254,7 @@ function kdetest
 
   if [[ "$1" != "" ]]; then
     test=$1
-    if [[ "$debug" == "1" ]]; then
+    if [[ "$debug" == "--debug" ]]; then
       test=${test/.shell/}
     fi
     shift 1
@@ -264,34 +268,54 @@ function kdetest
       return 1
     fi
 
-  if [[ "$debug" == "1" ]]; then
-      gdb --eval-command="run" --args ./$test -maxwarnings 0 $args | tee -a "$tmpfile"
-  else
-      ./$test -maxwarnings 0 $args | tee -a "$tmpfile"
-  fi
+    if [[ "$debug" != "" ]]; then
+      gdb --eval-command="run" --args ./$test -maxwarnings 0 $args 2>&1 | tee -a "$tmpfile"
+    else
+      ./$test -maxwarnings 0 $args 2>&1 | tee -a "$tmpfile"
+    fi
     echo
   else
     # run all tests
     for test in $tests; do
-      if [[ "$debug" == "1" ]]; then
-        gdb --eval-command="run" --args ./$test -maxwarnings 0 | tee -a "$tmpfile"
-    else
-        ./$test -maxwarnings 0 | tee -a "$tmpfile"
-    fi
-
+      if [[ "$debug" != "" ]]; then
+        gdb --eval-command="run" --args ./$test -maxwarnings 0 2>&1 | tee -a "$tmpfile"
+      else
+        ./$test -maxwarnings 0 2>&1 | tee -a "$tmpfile"
+      fi
     done
   fi
 
-  echo
-  echo " --- BENCHMARKS --- "
-  grep --color=never -A 1 "^RESULT " "$tmpfile"
-  echo
+  if [[ "$(grep -c "^RESULT " "$tmpfile")" != 0 ]]; then
+    echo
+    echo " --- BENCHMARKS --- "
+    grep --color=never -A 1 "^RESULT " "$tmpfile"
+    echo
+  fi
 
   echo
   echo " --- ALL PASSED TESTS --- "
   grep --color=never "^PASS " "$tmpfile"
   echo
   echo $(grep -c "^PASS " "$tmpfile")" passed tests in total"
+
+
+  if [[ "$(grep -c "^XPASS " "$tmpfile")" != 0 ]]; then
+    echo
+    echo " --- UNEXPECTED PASSES --- "
+    perl -ne '(/^^XPASS/../^   Loc:/) && print' "$tmpfile"
+    echo
+    echo $(grep -c "^XPASS" "$tmpfile")" unexpected passed tests in total"
+    echo
+  fi
+
+  if [[ "$(grep -c "^XFAIL " "$tmpfile")" != 0 ]]; then
+    echo
+    echo " --- EXPECTED FAILURES --- "
+    perl -ne '(/^^XFAIL/../^   Loc:/) && print' "$tmpfile"
+    echo
+    echo $(grep -c "^XFAIL" "$tmpfile")" expected failed tests in total"
+    echo
+  fi
 
   echo
   echo " --- ALL FAILED TESTS --- "
@@ -300,6 +324,7 @@ function kdetest
   echo $(grep -c "^FAIL!" "$tmpfile")" failed tests in total"
   echo
   grep --color=never "^QFATAL : " "$tmpfile"
+  grep --color=never -B 5 "^Segmentation fault" "$tmpfile"
 
   rm "$tmpfile"
 

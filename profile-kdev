@@ -1,0 +1,25 @@
+#!/bin/bash
+
+if [[ "$0" == "" ]]; then
+  echo "no session given, exiting"
+  exit 1
+fi
+
+session=$1
+shift 1
+
+hash=$(kdevelop --sessions | grep $session | awk '{print $1}')
+
+if [[ "$hash" == "" ]]; then
+  echo "could not find hash for session $session"
+  exit 2;
+fi
+
+export KDEV_SESSION=$hash
+
+#echo "hash is «$KDEV_SESSION»"
+
+outdir=/amd/jongleur/0/milianw-temp/profiling/kdevelop/$session/
+mkdir -p $outdir
+
+valgrind --tool=callgrind --callgrind-out-file=$outdir/$$ kdevelop.bin
