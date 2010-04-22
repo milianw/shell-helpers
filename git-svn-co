@@ -18,7 +18,7 @@ if [[ -d "$dir" ]]; then
 fi
 
 echo -n "getting svn rev to checkout... "
-rev=$(svn log -l 1 "$url" | egrep -o "^r[0-9]+" | cut -d "r" -f 2)
+rev=$(svn log -l 100 "$url" |  egrep -o "^r[0-9]+" | cut -d "r" -f 2 | tail -n 1)
 
 if [[ "$rev" == "" ]]; then
     echo "error"
@@ -37,3 +37,5 @@ echo "git svn init "$url""
 git svn init "$url"
 echo "git svn fetch -r $rev"
 git svn fetch -r $rev
+echo "git svn rebase"
+git svn rebase
