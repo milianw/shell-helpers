@@ -61,7 +61,7 @@ function cmakeproject {
 # Usage: cs KDE/kdebase && cmakekde
 #   will build/rebuild the sources in ~/src/KDE/kdebase
 function cmakekde {
-        local srcFolder current switched
+        local srcFolder current switched fail
         switched=0
         if test -n "$1"; then
                 # srcFolder is defined via command line argument
@@ -77,17 +77,21 @@ function cmakekde {
                 cb
                 switched=1
         fi
+        fail=0
         # to enable tests, add -DKDE4_BUILD_TESTS=ON to the next line.
         # you can also change "debugfull" to "debug" to save disk space.
         cmake "$srcFolder" -DCMAKE_INSTALL_PREFIX=$KDEDIR \
                 -DCMAKE_BUILD_TYPE=debugfull \
-                -DKDE4_BUILD_TESTS=ON
-
+                -DKDE4_BUILD_TESTS=ON || fail=1
 
         # uncomment the following two lines to make builds wait after
         # configuration step, so that the user can check configure output
         echo "Press <ENTER> to continue..."
         read userinput
+
+        if [[ $fail == 1 ]]; then
+          return 1
+        fi
 
         # Note: To speed up compiling, change 'make -j2' to 'make -jx',
         #   where x is your number of processors +1
