@@ -61,7 +61,7 @@ fi
 echo
 git checkout $branch
 echo
-git merge $newBranch
+git merge $newBranch -m "merge request #$request"
 
 resetAndExit
 
