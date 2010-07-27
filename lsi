@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# hackish way to get a case insensitive ls
+# usage:
+#     lsi PATTERN LS-OPTIONS
+# e.g.:
+#     lsi *foobar* -ld
+
+
+needle=$1
+
+shift 1
+
+path=$(echo $needle | sed 's#/[^/]\+$##')
+if [[ "$path" == "$needle" ]]; then
+  path=""
+else
+  path=$path/
+  needle=${needle##$path}
+fi
+
+echo $path $needle
+
+find $path -maxdepth 1 -ipath "$needle" | xargs ls --color=auto $@
