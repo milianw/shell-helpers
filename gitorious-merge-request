@@ -14,7 +14,7 @@ if [[ "$branch" == "" ]]; then
   exit 2
 fi
 
-url=$(git remote -v | egrep '\(fetch\)$' | awk '{print $2}')
+url=$(git remote -v | egrep '^origin.*\(fetch\)$' | awk '{print $2}')
 if [[ "$url" == "" ]]; then
   echo "could not find pull url"
   exit
