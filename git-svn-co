@@ -12,13 +12,19 @@ else
     dir="$2"
 fi
 
+if [[ "$3" == "" ]]; then
+    l=100
+else
+    l=$3
+fi
+
 if [[ -d "$dir" ]]; then
     echo "dir $dir exists"
     exit 255
 fi
 
 echo -n "getting svn rev to checkout... "
-rev=$(svn log -l 100 "$url" |  egrep -o "^r[0-9]+" | cut -d "r" -f 2 | tail -n 1)
+rev=$(svn log -l $l "$url" |  egrep -o "^r[0-9]+" | cut -d "r" -f 2 | tail -n 1)
 
 if [[ "$rev" == "" ]]; then
     echo "error"
