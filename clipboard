@@ -8,10 +8,7 @@
 #    will put "foobar" into your clipboard/klipper
 
 # check for stdin
-#   since we don't want to wait endlessly we set a timeout
-#   a pity `read` only supports seconds and no fractions...
-read -t 1 stdin
-if [[ "$stdin" != "" ]]; then
+if ! tty -s && stdin=$(</dev/stdin) && [[ "$stdin" ]]; then
   # get the rest of stdin
   stdin=$stdin$'\n'$(cat)
   # oh, nice - user input! we set that as current
