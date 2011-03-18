@@ -13,23 +13,10 @@ if ! tty -s && stdin=$(</dev/stdin) && [[ "$stdin" ]]; then
   stdin=$stdin$'\n'$(cat)
   # oh, nice - user input! we set that as current
   # clipboard content
-  dbus-send --type=method_call --dest=org.kde.klipper \
-    /klipper org.kde.klipper.klipper.setClipboardContents \
-    string:"$stdin"
+  qdbus org.kde.klipper /klipper setClipboardContents "$stdin"
   exit
 fi
 
 # if we reach this point no user input was given and we
-#   print out the current contents of the clipboard
-# note: I hate the output of dbus, dcop was much easier in that regard!
-dbus-send --print-reply --dest=org.kde.klipper /klipper \
-    org.kde.klipper.klipper.getClipboardContents | awk '
-      BEGIN { output = ""; }
-      {
-        if ( NR > 1 ) {
-          output = output $0 "\n";
-        }
-      }
-      END {
-        print substr(output, 12, length(output) - 13);
-      }'
+# print out the current contents of the clipboard
+qdbus org.kde.klipper /klipper getClipboardContents
