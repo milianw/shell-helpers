@@ -2,4 +2,4 @@
 
 # display errors and warnings of your Xorg log
 
-egrep "^\((EE|WW)" /var/log/Xorg.0.log
+egrep "\((EE|WW)" /var/log/Xorg.0.log
