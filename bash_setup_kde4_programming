@@ -256,6 +256,9 @@ function kdetest
 
   tmpfile=/tmp/testoutput_$$
 
+  KDEHOME_backup=$KDEHOME
+  KDEHOME=~/.kde-unit-test
+
   if [[ "$1" != "" ]]; then
     test=$1
     if [[ "$debug" == "--debug" ]]; then
@@ -288,6 +291,8 @@ function kdetest
       fi
     done
   fi
+
+  KDEHOME=$KDEHOME_backup
 
   if [[ "$(grep -c "^RESULT " "$tmpfile")" != 0 ]]; then
     echo
