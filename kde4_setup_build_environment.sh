@@ -44,6 +44,7 @@ export KDETMP=/tmp/kde-$USER
 mkdir -p $KDETMP
 export KDEDIRS=$KDEDIR
 prepend PATH $KDEDIR/bin
+prepend PATH $KDEDIR/lib/kde4/libexec
 prepend LD_LIBRARY_PATH $KDEDIR/lib
 prepend PKG_CONFIG_PATH $KDEDIR/lib/pkgconfig
 prepend QT_PLUGIN_PATH $KDEDIR/lib/kde4/plugins
