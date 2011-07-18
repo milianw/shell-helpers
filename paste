@@ -4,31 +4,21 @@
 # to paste fast and conveniently from a console.
 
 # see man pastebinit and it's -b argument
-target="http://mwolff.pastebin.com"
+target="http://paste.kde.org/~mwolff/"
+
+# get clipboard contents from klipper
+toPaste=$(clipboard)
+
+if [[ "$(echo $toPaste | wc -l)" == "1" && "$(echo $toPaste | grep $target)" ]]; then
+  echo "cancelling, not pasting '$toPaste' - looks useless"
+  exit
+fi
 
 # see man pastebinit and it's -f argument
 formatting="text"
 
 if [[ "$1" != "" ]]; then
 	formatting="$1"
-fi
-
-# get clipboard contents from klipper
-toPaste=$(dbus-send --print-reply --dest=org.kde.klipper /klipper \
-    org.kde.klipper.klipper.getClipboardContents | awk '
-        BEGIN { output = ""; }
-        {
-            if ( NR > 1 ) {
-                output = output $0 "\n";
-            }
-        }
-        END {
-            print substr(output, 12, length(output) - 13);
-        }')
-
-if [[ "$(echo $toPaste | wc -l)" == "1" && "$(echo $toPaste | grep $target)" ]]; then
-  echo "cancelling, not pasting '$toPaste' - looks useless"
-  exit
 fi
 
 # paste
@@ -39,12 +29,12 @@ echo
 echo -n "... pasting ..."
 
 pasteUrl=$(echo -n "$toPaste" | pastebinit -f "$formatting" -b "$target")
+trim() { echo $1; }
+pasteUrl=$(trim $pasteUrl)
 
 echo " done"
 echo
 echo "pasted to $pasteUrl"
 
 # set klipper contents to pasteUrl
-dbus-send --type=method_call --dest=org.kde.klipper \
-    /klipper org.kde.klipper.klipper.setClipboardContents \
-        string:"$pasteUrl"
+echo $pasteUrl | clipboard
