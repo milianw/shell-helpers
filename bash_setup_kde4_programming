@@ -82,7 +82,7 @@ function cmakekde {
         # you can also change "debugfull" to "debug" to save disk space.
         cmake "$srcFolder" -DCMAKE_INSTALL_PREFIX=$KDEDIR \
                 -DCMAKE_BUILD_TYPE=debugfull \
-                -DKDE4_AUTH_POLICY_FILES_INSTALL_DIR=$KDEDIR/share/polkit-1/actions
+                -DKDE4_AUTH_POLICY_FILES_INSTALL_DIR=$KDEDIR/share/polkit-1/actions \
                 -DKDE4_BUILD_TESTS=ON || fail=1
 
         # uncomment the following two lines to make builds wait after
