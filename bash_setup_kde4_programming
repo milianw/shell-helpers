@@ -308,6 +308,14 @@ function kdetest
   echo
   echo $(grep -c "^PASS " "$tmpfile")" passed tests in total"
 
+  if [[ "$(grep -c "^XFAIL " "$tmpfile")" != 0 ]]; then
+    echo
+    echo " --- EXPECTED FAILURES --- "
+    perl -ne '(/^^XFAIL/../^   Loc:/) && print' "$tmpfile"
+    echo
+    echo $(grep -c "^XFAIL" "$tmpfile")" expected failed tests in total"
+    echo
+  fi
 
   if [[ "$(grep -c "^XPASS " "$tmpfile")" != 0 ]]; then
     echo
@@ -315,15 +323,6 @@ function kdetest
     perl -ne '(/^^XPASS/../^   Loc:/) && print' "$tmpfile"
     echo
     echo $(grep -c "^XPASS" "$tmpfile")" unexpected passed tests in total"
-    echo
-  fi
-
-  if [[ "$(grep -c "^XFAIL " "$tmpfile")" != 0 ]]; then
-    echo
-    echo " --- EXPECTED FAILURES --- "
-    perl -ne '(/^^XFAIL/../^   Loc:/) && print' "$tmpfile"
-    echo
-    echo $(grep -c "^XFAIL" "$tmpfile")" expected failed tests in total"
     echo
   fi
 
