@@ -1,0 +1,18 @@
+#!/bin/bash
+
+while true; do
+  d=$1
+  shift 1
+  if [[ "$d" == "" ]]; then
+    break;
+  fi
+
+  cs $d
+  stashed=$(git stash)
+  git pull --rebase
+  if [[ "$stashed" != "No local changes to save" ]]; then
+    git stash pop
+  fi
+
+  makeobj install
+done
