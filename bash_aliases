@@ -38,4 +38,4 @@ alias free="free -m"
 alias netmplayer="mplayer -cache 8192"
 
 alias kde-update-pim="kde-update akonadi kdepimlibs kdepim-runtime kdepim"
-alias kde-update-kdev="kde-update kdevplatform kdevelop php php-docs qmake"
+alias kde-update-kdev="kde-update kate kdevplatform kdevelop php php-docs qmake"
