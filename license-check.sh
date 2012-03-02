@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ ! -d $1 ]; then
+if [[ "$1" == "" || ! -d $1 ]]; then
   echo "usage: $0 FOLDER"
   exit 1;
 fi
