@@ -27,6 +27,7 @@ if [ -d $HOME/projects/compiled/qt ]; then
   export QTDIR=$HOME/projects/compiled/qt
   prepend PATH $QTDIR/bin
   prepend LD_LIBRARY_PATH $QTDIR/lib
+  prepend LD_LIBRARY_PATH $QTDIR/plugins/sqldrivers/
   prepend PKG_CONFIG_PATH $QTDIR/lib/pkgconfig
 fi
 
