@@ -94,9 +94,7 @@ function cmakekde {
           return 1
         fi
 
-        # Note: To speed up compiling, change 'make -j2' to 'make -jx',
-        #   where x is your number of processors +1
-        nice make -j3 && \
+        nice make && \
         make install
         kbuildsycoca4
         if test $switched -eq 1; then
