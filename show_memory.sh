@@ -1,10 +1,17 @@
 logfile=$1
 
+title=$(head -n1 "$logfile")
+timeout=$(head -n2 "$logfile" | tail -n1)
+
+title=${title/\# /}
+timeout=${timeout/\# /}
+
 # total:
 #  '$logfile' using 3 w lines title 'Kbytes', \
 
 gnuplot -p -e "
-set xlabel 'snapshot ~1s';
+set title '$title';
+set xlabel 'snapshot ~${timeout}s';
 set ylabel 'memory consumption in kB';
 set key bottom right;
 plot \

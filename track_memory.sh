@@ -1,4 +1,9 @@
 pid=$1
+sleep=$2;
+
+if [[ "$sleep" == "" ]]; then
+  sleep=1;
+fi
 
 if [[ "$(ps -p $pid | grep $pid)" == "" ]]; then
   echo "cannot find program with pid $pid"
@@ -7,10 +12,13 @@ fi
 
 logfile=mem.log.$pid
 
+echo "# $(ps -o command= -p $pid)" > $logfile
+echo "# $sleep" >> $logfile
+
 while [[ "$(ps -p $pid | grep $pid)" != "" ]]; do
   echo "snapshot " $pid
   pmap -x $pid | grep total >> $logfile
-  sleep 1;
+  sleep $sleep;
 done
 
 echo "done tracking, visualizing"
