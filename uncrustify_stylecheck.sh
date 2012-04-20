@@ -18,7 +18,7 @@
 # path to uncrustify configuration file
 UNCRUSTIFY_CONFIG_FILE=$(pwd)/format.config.uncrustify
 # url or similar that explains your project's coding style
-REAMDE="http://techbase.kde.org/Projects/KDevelop4/CodingStyle"
+README="http://techbase.kde.org/Projects/KDevelop4/CodingStyle"
 
 if [[ "$(which uncrustify)" == "" ]]; then
   echo "could not find uncrustify in PATH, please install it"
