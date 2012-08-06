@@ -10,10 +10,13 @@
 # check for stdin
 if ! tty -s && stdin=$(</dev/stdin) && [[ "$stdin" ]]; then
   # get the rest of stdin
-  stdin=$stdin$'\n'$(cat)
+  rest="$(cat)"
+  if [[ "$rest" != "" ]]; then
+    stdin="$stdin"$'\n'"$rest"
+  fi
   # oh, nice - user input! we set that as current
   # clipboard content
-  qdbus org.kde.klipper /klipper setClipboardContents "$stdin"
+  qdbus org.kde.klipper /klipper setClipboardContents "$stdin" > /dev/null
   exit
 fi
 
