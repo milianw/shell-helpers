@@ -23,7 +23,8 @@
 # Use makeobj instead of make, to automatically switch to the build dir.
 # If you don't have makeobj, install the package named kdesdk-scripts or
 # kdesdk, or check out kdesdk/scripts from svn.
-alias make='makeobj'
+# use -rR for speed
+alias make='makeobj -rR'
 
 # Uncomment the following lines if DBus does not work. DBus is not
 # working if, when you run `dbus-uuidgen --ensure && qdbus`, you get an error.
