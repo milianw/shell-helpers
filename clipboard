@@ -7,13 +7,11 @@
 #  echo "foobar" | ./clipboard
 #    will put "foobar" into your clipboard/klipper
 
+
 # check for stdin
-if ! tty -s && read -t 0; then
-  # get the stdin contents
-  stdin="$(cat)"
-  # oh, nice - user input! we set that as current
-  # clipboard content
-  qdbus org.kde.klipper /klipper setClipboardContents "$stdin" > /dev/null
+if ! test -t 0; then
+  # oh, nice - user input! we set that as current clipboard content
+  qdbus org.kde.klipper /klipper setClipboardContents "$(</dev/stdin)" > /dev/null
   exit
 fi
 
