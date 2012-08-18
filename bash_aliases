@@ -37,5 +37,7 @@ alias free="free -m"
 # mplayer with cache, e.g. for sshfs mounted shares and the like
 alias netmplayer="mplayer -cache 8192"
 
-alias kde-update-pim="kde-update akonadi kdepimlibs kdepim-runtime kdepim"
+alias kde-update-pim="kde-update akonadi nepomuk-core kdepimlibs kdepim-runtime kdepim"
 alias kde-update-kdev="kde-update kate kdevplatform kdevelop php php-docs qmake"
+
+alias isomount="mount -o loop -t iso9660"
