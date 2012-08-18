@@ -14,5 +14,5 @@ while true; do
     git stash pop
   fi
 
-  makeobj install
+  makeobj install || break
 done
