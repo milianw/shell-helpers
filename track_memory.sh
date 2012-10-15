@@ -30,11 +30,26 @@ echo "# $sleep" >> $logfile
 
 cat $logfile
 
+read -r -d '' summer <<'AWK'
+{
+  if ($1 == "total") {
+    rss = $4
+    dirty = $5
+  } else if ($7 == "anon") {
+    heap += $3
+  } else if ($7 == "stack") {
+    stack += $3
+  }
+}
+END {
+  print rss,dirty,heap,stack
+}
+AWK
+
 while [[ "$(ps -p $pid | grep $pid)" != "" ]]; do
   echo "snapshot " $pid
-  pmap -x $pid | tail -n1 >> $logfile
-  echo "$sleep"
-  sleep $sleep;
+  pmap -x $pid | awk "$summer" >> $logfile
+  sleep $sleep
 done
 
 echo "done tracking, visualizing"
