@@ -9,10 +9,19 @@
 #
 
 pid=$1
-sleep=$2;
+sleep=1;
 
-if [[ "$sleep" == "" ]]; then
-  sleep=1
+if [[ "$(ps -p $pid 2>/dev/null | grep $pid)" == "" ]]; then
+  # maybe a command was given
+  if [[ "$(which $1)" != "" ]]; then
+    echo "launching: $@"
+    $@ &
+    pid=$!
+  fi
+else
+  if [[ "$2" != "" ]]; then
+    sleep=$2
+  fi
 fi
 
 if [[ "$(ps -p $pid | grep $pid)" == "" ]]; then
@@ -54,3 +63,5 @@ done
 
 echo "done tracking, visualizing"
 $(dirname $0)/show_memory.sh "$logfile"
+
+# kate: replace-tabs on;
