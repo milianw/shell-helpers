@@ -1,0 +1,23 @@
+## syntax highlighting for git commit messages of KDE projects
+syntax "patch" ".git/COMMIT_EDITMSG$"
+
+# overlong lines
+color brightred "^.{70,}.+$"
+
+# KDE commit hook keywords, see: http://community.kde.org/Sysadmin/GitKdeOrgManual#Commit_hook_keywords
+color yellow "^(FEATURE|BUG|CCBUG|FIXED-IN|CCMAIL|REVIEW|GUI|DIGEST):.*$"
+color yellow "(SVN_SILENT|GIT_SILENT|SVN_MERGE)"
+
+# comment
+color blue "^#.*$"
+
+# special comment lines
+color green "^# Changes to be committed:"
+color red "^# Changes not staged for commit:"
+color brightblue "^# Untracked files:"
+color brightblue "^# On branch .+$"
+color brightblue "^# Your branch is ahead of .+$"
+
+# diff files
+# meh - cannot match against \t ... should be: ^#\t.*$
+color cyan "^#[^ a-zA-Z0-9][^ ].*$"
