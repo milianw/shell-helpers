@@ -29,6 +29,9 @@ if [ -d $HOME/projects/compiled/qt ]; then
   prepend LD_LIBRARY_PATH $QTDIR/lib
   prepend LD_LIBRARY_PATH $QTDIR/plugins/sqldrivers/
   prepend PKG_CONFIG_PATH $QTDIR/lib/pkgconfig
+  prepend CMAKE_PREFIX_PATH $QTDIR
+  prepend CMAKE_LIBRARY_PATH $QTDIR/lib
+  prepend CMAKE_INCLUDE_PATH $QTDIR/include
 fi
 
 # KDE
@@ -50,13 +53,10 @@ prepend LD_LIBRARY_PATH $KDEDIR/lib
 prepend PKG_CONFIG_PATH $KDEDIR/lib/pkgconfig
 prepend QT_PLUGIN_PATH $KDEDIR/lib/kde4/plugins
 
-prepend CMAKE_PREFIX_PATH $QTDIR
 prepend CMAKE_PREFIX_PATH $KDEDIR
 
 # CMake
 # Make sure CMake searches the right places.
-prepend CMAKE_LIBRARY_PATH $QTDIR/lib
-prepend CMAKE_INCLUDE_PATH $QTDIR/include
 prepend CMAKE_LIBRARY_PATH $KDEDIR/lib
 prepend CMAKE_INCLUDE_PATH $KDEDIR/include
 
