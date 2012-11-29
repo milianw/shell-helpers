@@ -99,16 +99,15 @@ export OBJ_REPLACEMENT="s#/home/$USER/projects/\([^\.]\)#/home/$USER/projects/.b
 
 export LIBRARY_PATH=$LD_LIBRARY_PATH
 
+# use icecream if possible
+if [[ -d /usr/lib/icecream/bin ]]; then
+  prepend PATH /usr/lib/icecream/bin
+  export MAKEFLAGS="-j40"
 # Use ccache if possible
-if [[ -d /usr/lib/ccache/bin ]]; then
+elif [[ -d /usr/lib/ccache/bin ]]; then
   prepend PATH /usr/lib/ccache/bin
 elif [[ -d /usr/lib/ccache ]]; then
   prepend PATH /usr/lib/ccache
-fi
-
-# use icecream if possible
-if [[ -d /usr/lib64/icecc ]]; then
-  prepend PATH /usr/lib64/icecc/bin
 fi
 
 # Insert Krazy into path if available
