@@ -102,7 +102,7 @@ function cmakekde {
           cs
         fi
 }
-
+export -f cmakekde
 # for the lazy ones, add/comment other directories
 function cmakekdeall {
     local directories
