@@ -56,8 +56,8 @@ END {
 AWK
 
 while [[ "$(ps -p $pid | grep $pid)" != "" ]]; do
-  echo "snapshot " $pid
-  pmap -x $pid | awk "$summer" >> $logfile
+  echo -n "snapshot $pid: "
+  pmap -x $pid | awk "$summer" | tee -a $logfile
   sleep $sleep
 done
 
