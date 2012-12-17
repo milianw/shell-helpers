@@ -268,11 +268,15 @@ function kdetest
     args=$@
 
     if [ ! -f "$test" ] || ! in_array "$test" $tests ; then
-      echo "could not find unittest '$test'. available are:"
-      echo $tests
-      echo
-      cd "$old_pwd"
-      return 1
+      if in_array "$test.shell" $tests; then
+        test="$test".shell
+      else
+        echo "could not find unittest '$test'. available are:"
+        echo $tests
+        echo
+        cd "$old_pwd"
+        return 1
+      fi
     fi
 
     if [[ "$debug" != "" ]]; then
