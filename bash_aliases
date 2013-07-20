@@ -38,6 +38,6 @@ alias free="free -m"
 alias netmplayer="mplayer -cache 8192"
 
 alias kde-update-pim="kde-update akonadi nepomuk-core nepomuk-widgets kdepimlibs kdepim-runtime kdepim"
-alias kde-update-kdev="kde-update kate kdevplatform kdevelop php php-docs qmake"
+alias kde-update-kdev="kde-update kate kdevplatform kdevelop kdev-php kdev-php-docs kdev-qmake"
 
 alias isomount="sudo mount -o loop -t iso9660"
