@@ -114,3 +114,9 @@ fi
 if [[ -d /usr/local/Krazy2 ]]; then
   prepend PATH /usr/local/Krazy2/bin
 fi
+
+# prefer clang if available
+if [[ "$(which clang)" != "" ]]; then
+  export CC="ccache $(which clang) -Qunused-arguments"
+  export CXX="ccache $(which clang++) -Qunused-arguments"
+fi
