@@ -53,6 +53,7 @@ if [[ "$pid" != "" && ! -d /proc/$pid/ ]]; then
     echo "launching: $@"
     $@ &
     pid=$!
+    trap "{ kill $pid; exit 255; }" SIGINT SIGTERM
   fi
 else
   if [[ "$2" != "" ]]; then
