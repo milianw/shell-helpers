@@ -69,7 +69,13 @@ if [[ "$pid" == "" || ! -d /proc/$pid/ ]]; then
   exit
 fi
 
+
+
 logfile=mem.log.$pid
+
+if [[ "${TRACK_MEMORY_OUTPUTDIR}" != "" ]]; then
+    logfile=${TRACK_MEMORY_OUTPUTDIR}/$logfile
+fi
 
 echo "# $(cat /proc/$pid/cmdline)" > $logfile
 echo "# $sleep" >> $logfile
