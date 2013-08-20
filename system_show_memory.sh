@@ -6,8 +6,15 @@
 # script
 #
 
-logfile=$1
+logfile=$(echo $1 | sed 's/\.$//')
 shift 1
+echo $logfile
+
+if [[ "$(ls $logfile.[0-9])" == "" ]]; then
+    echo "usage: $0 mem.log.system.PID [FILTER]"
+    echo "e.g.: $0 mem.log.system.15979 busybox"
+    exit 1
+fi
 
 read -r -d '' plot <<GNUPLOT
 set xlabel 'time in s';
