@@ -11,6 +11,8 @@
 
 xBaseline=$(date +'%s')
 
+filter=$@
+
 if [[ "$(pmap --version 2>&1 | grep BusyBox)" ]]; then
     summer=$(cat <<'AWK'
 {
@@ -52,6 +54,18 @@ AWK
 )
 fi
 
+isFiltered()
+{
+    local f
+    for f in $filter; do
+        echo $1 "VS" $f
+        if [[ "$1" == *"$f"* ]]; then
+            return 1
+        fi
+    done
+    return 0
+}
+
 logfile=mem.log.system.$$
 
 if [[ "${TRACK_MEMORY_OUTPUTDIR}" != "" ]]; then
@@ -76,11 +90,12 @@ while true; do
             if [[ "$exe" == "" ]]; then
                 continue;
             fi
+            isFiltered $exe && continue;
             echo "# $pid $(basename $exe)" >> $logfile.$pid
         fi
         pmap -x $pid | awk -v x0=$xBaseline "$summer" >> $logfile.$pid
     done
-    free -k | grep Mem: | awk -v x0=$xBaseline '{print (systime()-x0),$2,$3,$4;}' >> $logfile.total
+    sleep 1
 done
 
 visualizer=$(dirname $0)/system_show_memory.sh
