@@ -14,6 +14,7 @@ xBaseline=$(date +'%s')
 filter=$@
 
 if [[ "$(pmap --version 2>&1 | grep BusyBox)" ]]; then
+    rssCol=3
     summer=$(cat <<'AWK'
 {
     if ($1 == "total") {
@@ -33,6 +34,7 @@ END {
 AWK
 )
 else
+    rssCol=4
     summer=$(cat <<'AWK'
 {
     if ($1 == "total") {
@@ -58,7 +60,6 @@ isFiltered()
 {
     local f
     for f in $filter; do
-        echo $1 "VS" $f
         if [[ "$1" == *"$f"* ]]; then
             return 1
         fi
@@ -93,7 +94,9 @@ while true; do
             isFiltered $exe && continue;
             echo "# $pid $(basename $exe)" >> $logfile.$pid
         fi
-        pmap -x $pid | awk -v x0=$xBaseline "$summer" >> $logfile.$pid
+        # more complex: TODO, use a switch to enable this
+        # pmap -x $pid | awk -v x0=$xBaseline "$summer" >> $logfile.$pid
+        pmap -x $pid | tail -n1 | awk -v x0=$xBaseline -v col=$rssCol '{print (systime()-x0),$col}' >> $logfile.$pid
     done
     sleep 1
 done
