@@ -11,10 +11,10 @@
 # check for stdin
 if ! test -t 0; then
   # oh, nice - user input! we set that as current clipboard content
-  qdbus org.kde.klipper /klipper setClipboardContents "$(</dev/stdin)" > /dev/null
+  qdbus-qt4 org.kde.klipper /klipper setClipboardContents "$(</dev/stdin)" > /dev/null
   exit
 fi
 
 # if we reach this point no user input was given and we
 # print out the current contents of the clipboard
-qdbus org.kde.klipper /klipper getClipboardContents
+qdbus-qt4 org.kde.klipper /klipper getClipboardContents
