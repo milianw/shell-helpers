@@ -59,10 +59,11 @@ fi
 isFiltered()
 {
     local f
+    if [[ ! $filter ]]; then
+        return 1
+    fi
     for f in $filter; do
-        if [[ "$1" == *"$f"* ]]; then
-            return 1
-        fi
+        (echo $1 | grep -q $f) && return 1
     done
     return 0
 }
