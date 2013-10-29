@@ -41,7 +41,7 @@ fi
 
 cs releaseme
 
-for p in kdevplatform kdevelop php php-docs; do
+for p in kdevplatform kdevelop kdev-php kdev-php-docs; do
   pushd . &> /dev/null
   cs $p
   git fetch origin
@@ -59,5 +59,5 @@ for p in kdevplatform kdevelop php php-docs; do
   echo "creating release for $p version $v (branch is: $to / $i18nbranch)"
   gitchangelog $from $to > /tmp/CHANGELOG.$v
   popd &> /dev/null
-  ./$p.rb --src ~/projects/kde4/$p/ --git-branch $to -b $i18nbranch -m 75 -u mwolff -p ssh -v $v -c /tmp/CHANGELOG.$v
+  ./$p.rb --src ~/projects/kde4/$p/ --git-branch $to -b $i18nbranch -m 75 -p ssh -v $v -c /tmp/CHANGELOG.$v
 done
