@@ -41,7 +41,7 @@ fi
 
 cs releaseme
 
-for p in kdevplatform kdevelop kdev-php kdev-php-docs; do
+for p in kdevplatform kdevelop kdev-php kdev-php-docs kdev-python; do
   pushd . &> /dev/null
   cs $p
   git fetch origin

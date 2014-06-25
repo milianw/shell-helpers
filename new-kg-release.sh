@@ -2,4 +2,4 @@
 
 source $(dirname $0)/new-release.lib.sh
 
-new_release "massif-visualizer" $@
+new_release "kgraphviewer" $@
