@@ -8,9 +8,15 @@
 #
 
 # Perl-style regular expression which limits the files we interpret as source files.
-# This pattern here excludes CMakeLists.txt files and any .h/.cpp files.
-# Extend/adapt this to your needs.
-pattern="(?:(?:^|/)CMakeLists\.txt|\.h|\.cpp)$"
+# The default pattern here excludes CMakeLists.txt files and any .h/.cpp files.
+# Extend/adapt this to your needs. Alternatively, set the pattern in your repo via:
+#     git config hooks.prepush.sourcepattern "$your-pattern"
+pattern=$(git config --get hooks.prepush.sourcepattern)
+if [ -z "$pattern" ]; then
+  pattern="(?:(?:^|/)CMakeLists\.txt|\.h|\.cpp)$"
+fi
+
+echo $pattern
 
 files=$(git status -u --porcelain --no-column | sed "s/^?? //" | grep -P "$pattern")
 if [ -z "$files" ]; then
