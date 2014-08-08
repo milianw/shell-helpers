@@ -1,8 +1,18 @@
 #!/bin/sh
 
-# A hook script to verify that a push is not done with untracked source files
+#
+# A hook script to verify that a push is not done with untracked source file
+#
+# To use it, either symlink this script to $your-git-clone/.git/hooks/pre-push
+# or include it in your existing pre-push script.
+#
 
-files=$(git status -u --porcelain --no-column | sed "s/^?? //" | grep -P "(?:(?:^|/)CMakeLists\.txt|\.h|\.cpp)$")
+# Perl-style regular expression which limits the files we interpret as source files.
+# This pattern here excludes CMakeLists.txt files and any .h/.cpp files.
+# Extend/adapt this to your needs.
+pattern="(?:(?:^|/)CMakeLists\.txt|\.h|\.cpp)$"
+
+files=$(git status -u --porcelain --no-column | sed "s/^?? //" | grep -P "$pattern")
 if [ -z "$files" ]; then
   exit 0
 fi
