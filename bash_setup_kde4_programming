@@ -13,12 +13,16 @@
 # . ~/.bash_setup_kde4_programming
 ###############################################################
 
+prepend() { [ -d "$2" ] && eval $1=\"$2\$\{$1:+':'\$$1\}\" && export $1 ; }
+
 # you might have to change the actual filename in the path below
 # in my git repo the file is called kde4_setup_build_environment.sh
 # NOTE: it's important this lies in ~/.kde/env so it gets
 # called at KDE startup. This makes compiled applications
 # available via KRunner etc.
-. ~/.bin/kde4_setup_build_environment.sh
+if [[ "$KF5" == "" ]]; then
+  . ~/.bin/kde4_setup_build_environment.sh
+fi
 
 # Use makeobj instead of make, to automatically switch to the build dir.
 # If you don't have makeobj, install the package named kdesdk-scripts or

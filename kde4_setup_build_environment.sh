@@ -1,5 +1,17 @@
 #!/bin/bash
 
+BASE=$HOME/projects
+
+if [[ "$1" != "" && -d $1 ]]; then
+  BASE=$1
+  export KDEHOME=$BASE/.kde/
+  export LD_LIBRARY_PATH=
+  export PKG_CONFIG_PATH=
+  export CMAKE_PREFIX_PATH=
+  export CMAKE_INCLUDE_PATH=
+  export CMAKE_LIBRARY_PATH=
+fi
+
 ## A script to setup some needed variables and functions for KDE 4 development.
 ## This should normally go in the ~/.bashrc file of your kde-devel user, so
 ## that it is executed when a session for that user is started.
@@ -17,14 +29,18 @@ prepend() { [ -d "$2" ] && eval $1=\"$2\$\{$1:+':'\$$1\}\" && export $1 ; }
 # Make
 # set your common make flags here, so all scripts can benefit from them
 # general rule-of-thumb for -j: #cpucores + 1
-export MAKEFLAGS=" -j$(($(grep -c '^processor' /proc/cpuinfo)+1)) "
+if [[ "$HOSTNAME" == "minime" ]]; then
+  export MAKEFLAGS=" -j3"
+else
+  export MAKEFLAGS=" -j$(($(grep -c '^processor' /proc/cpuinfo)+1)) "
+fi
 
 # Qt
 # only set Qt related variables if you compiled Qt on your own
 # (which is discouraged). if you use the distro provided Qt, skip
 # this section. Comment it if necessary.
-if [ -d $HOME/projects/compiled/qt ]; then
-  export QTDIR=$HOME/projects/compiled/qt
+if [ -d $BASE/compiled/qt4 ]; then
+  export QTDIR=$BASE/compiled/qt4/
   prepend PATH $QTDIR/bin
   prepend LD_LIBRARY_PATH $QTDIR/lib
   prepend LD_LIBRARY_PATH $QTDIR/plugins/sqldrivers/
@@ -32,16 +48,17 @@ if [ -d $HOME/projects/compiled/qt ]; then
   prepend CMAKE_PREFIX_PATH $QTDIR
   prepend CMAKE_LIBRARY_PATH $QTDIR/lib
   prepend CMAKE_INCLUDE_PATH $QTDIR/include
+  prepend QT_PLUGIN_PATH /usr/lib/qt/plugins/
 fi
 
 # KDE
 
 # this is where the build files are written to
-export KDE_BUILD=$HOME/projects/.build/kde4/
+export KDE_BUILD=$BASE/.build/kde4/
 # this is where your source code lies
-export KDE_SRC=$HOME/projects/kde4/
+export KDE_SRC=$BASE/kde4/
 # this is where your compiled stuff will be installed to
-export KDEDIR=$HOME/projects/compiled/kde4
+export KDEDIR=$BASE/compiled/kde4
 
 export KDEHOME=$HOME/.kde
 export KDETMP=/tmp/kde-$USER
@@ -95,16 +112,16 @@ export QTEST_COLORED=1
 # default, works for most people, but only inside $KDE_SRC
 # export OBJ_REPLACEMENT="s#$KDE_SRC#$KDE_BUILD#"
 # adapted to my needs: works everywhere inside my ~/projects folder
-export OBJ_REPLACEMENT="s#/home/$USER/projects/\([^\.]\)#/home/$USER/projects/.build/\1#"
+export OBJ_REPLACEMENT="s#$BASE/\([^\.]\)#$BASE/.build/\1#"
 
 export LIBRARY_PATH=$LD_LIBRARY_PATH
 
 # use icecream if possible
-if [[ -d /usr/lib/icecream/bin ]]; then
-  prepend PATH /usr/lib/icecream/bin
-  export MAKEFLAGS="-j40"
+#if [[ -d /usr/lib/icecream/libexec/icecc/bin/ ]]; then
+#  prepend PATH /usr/lib/icecream/libexec/icecc/bin/
+#  export MAKEFLAGS="-j40"
 # Use ccache if possible
-elif [[ -d /usr/lib/ccache/bin ]]; then
+if [[ -d /usr/lib/ccache/bin ]]; then
   prepend PATH /usr/lib/ccache/bin
 elif [[ -d /usr/lib/ccache ]]; then
   prepend PATH /usr/lib/ccache
@@ -117,6 +134,12 @@ fi
 
 # prefer clang if available
 if [[ "$(which clang)" != "" ]]; then
+  export PATH=${PATH/:\/usr\/lib\/icecream\/libexec\/icecc\/bin\/:/:}
   export CC="ccache $(which clang) -Qunused-arguments"
   export CXX="ccache $(which clang++) -Qunused-arguments"
 fi
+
+#export PATH=${PATH/:\/usr\/lib\/ccache\/bin:/:}
+#export CC="$(which gcc)"
+#export CXX="$(which g++)"
+#export MAKEFLAGS="-j10"
