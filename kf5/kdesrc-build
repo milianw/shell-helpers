@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ -z "$KF5" ]; then
+  echo "KF5 env var not set"
+  exit 1;
+fi
+
+$KDE_SRC/extragear/utils/kdesrc-build/kdesrc-build --debug --stop-on-failure --ignore-modules cmake-git $@

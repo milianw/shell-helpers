@@ -41,3 +41,4 @@ alias kde-update-pim="kde-update akonadi nepomuk-core nepomuk-widgets kdepimlibs
 alias kde-update-kdev="kde-update kate kdevplatform kdevelop kdev-php kdev-php-docs kdev-qmake"
 
 alias isomount="sudo mount -o loop -t iso9660"
+alias kf5="bash --init-file ~/.bin/kf5_setup.sh"
