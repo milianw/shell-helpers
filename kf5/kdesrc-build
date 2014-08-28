@@ -5,4 +5,4 @@ if [ -z "$KF5" ]; then
   exit 1;
 fi
 
-$KDE_SRC/extragear/utils/kdesrc-build/kdesrc-build --debug --stop-on-failure --ignore-modules cmake-git $@
+$KDE_SRC/extragear/utils/kdesrc-build/kdesrc-build --debug --stop-on-failure --ignore-modules cmake-git --ignore-modules phonon-gstreamer $@
