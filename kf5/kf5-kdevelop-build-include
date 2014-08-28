@@ -1,0 +1,40 @@
+# minimal module definitions for building KDevelop for KDE Frameworks 5
+#
+# this tries to build only the bare minimum of KF5 required to get
+# kdevelop up and running
+#
+# NOTE: currently, this is probably still building a bit too much.
+#
+
+# Usage: Write your own kdesrc-buildrc with only a "global" section
+# then include this file
+
+module-set
+    repository kde-projects
+    use-modules kdesrc-build extra-cmake-modules
+    # Optionally: add polkit-qt-1
+    cmake-options -DCMAKE_BUILD_TYPE:STRING=debug
+end module-set
+
+module-set frameworks
+    repository kde-projects
+    use-modules frameworks
+    cmake-options -DBUILD_TESTING=TRUE -DCMAKE_BUILD_TYPE:STRING=debug
+end module
+
+module-set kf5-base-applications
+    repository kde-projects # Required by branch-group
+    use-modules konsole kate
+end module-set
+
+module-set libkomparediff2
+    repository kde-projects
+    use-modules libkomparediff2
+    branch frameworks
+end module
+
+module-set kdevelop-kf5
+    repository kde-projects
+    use-modules kdevplatform kdevelop/kdevelop
+    cmake-options -DBUILD_TESTING=TRUE -DCMAKE_BUILD_TYPE:STRING=debug
+end module-set

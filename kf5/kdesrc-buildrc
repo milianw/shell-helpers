@@ -1,0 +1,28 @@
+
+# Adjust all these settings at will
+
+global
+#  qtdir /d/qt/5/kde/qtbase
+  source-dir /home/milian/projects/kf5/src
+  build-dir /home/milian/projects/kf5/build
+  kdedir /home/milian/projects/compiled/kf5
+
+  branch-group kf5-qt5
+
+  git-repository-base kde-projects kde:
+
+  cxxflags -pipe -DQT_STRICT_ITERATORS -DQURL_NO_CAST_FROM_STRING -DQT_NO_HTTP -DQT_NO_FTP -Wformat -Werror=format-security -Werror=return-type -Wno-variadic-macros
+
+  #install-session-driver true
+
+end global
+
+module-set
+    repository kde-projects
+    branch qt5
+    use-modules polkit-qt-1
+    cmake-options -DCMAKE_BUILD_TYPE:STRING=debug
+end module-set
+
+include /home/milian/.bin/kf5/kf5-kdevelop-build-include
+
