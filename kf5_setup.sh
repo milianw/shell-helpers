@@ -4,14 +4,31 @@ export KF5=/home/milian/projects/compiled/kf5
 
 source ~/.bashrc
 
-PS1="KF5:$PS1"
-export PS1
+export PS1="KF5:$PS1"
 
 export CC="ccache /home/milian/.bin/clang -Qunused-arguments"
 export CXX="ccache /home/milian/.bin/clang++ -Qunused-arguments"
 
 export KDE_SRC=/home/milian/projects/kf5/src
 export KDE_BUILD=/home/milian/projects/kf5/build
+
+unset KDEDIR
+unset KDEDIRS
+
+function cleankde4 {
+    eval $1="\$(echo \"\$$1\" | sed -r 's#(^|:)[^:]+kde4[^:]*##g')"
+    export $1
+}
+cleankde4 PATH
+cleankde4 QT_PLUGIN_PATH
+cleankde4 LIBRARY_PATH
+cleankde4 LD_LIBRARY_PATH
+cleankde4 CMAKE_PREFIX_PATH
+cleankde4 CMAKE_INCLUDE_PATH
+cleankde4 CMAKE_LIBRARY_PATH
+cleankde4 PKG_CONFIG_PATH
+cleankde4 XDG_CONFIG_DIRS
+cleankde4 XDG_DATA_DIRS
 
 unset QTDIR
 # export QTDIR=<path to your qt5 sources>/qtbase

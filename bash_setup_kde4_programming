@@ -20,7 +20,7 @@ prepend() { [ -d "$2" ] && eval $1=\"$2\$\{$1:+':'\$$1\}\" && export $1 ; }
 # NOTE: it's important this lies in ~/.kde/env so it gets
 # called at KDE startup. This makes compiled applications
 # available via KRunner etc.
-if [[ "$KF5" == "" ]]; then
+if [ -z "$KF5" ]; then
   . ~/.bin/kde4_setup_build_environment.sh
 fi
 
