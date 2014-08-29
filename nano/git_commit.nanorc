@@ -1,5 +1,5 @@
 ## syntax highlighting for git commit messages of KDE projects
-syntax "patch" ".git/COMMIT_EDITMSG$"
+syntax "gitpatch" "\.git/COMMIT_EDITMSG$"
 
 # overlong lines
 color brightred "^.{70,}.+$"
