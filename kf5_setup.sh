@@ -6,14 +6,22 @@ source ~/.bashrc
 
 export PS1="KF5:$PS1"
 
-export CC="ccache /home/milian/.bin/clang -Qunused-arguments"
-export CXX="ccache /home/milian/.bin/clang++ -Qunused-arguments"
+if [[ "$HOSTNAME" == "minime" ]]; then
+    export CC="ccache /home/milian/.bin/clang -Qunused-arguments"
+    export CXX="ccache /home/milian/.bin/clang++ -Qunused-arguments"
+else
+    export CC=gcc
+    export CXX=g++
+fi
 
 export KDE_SRC=/home/milian/projects/kf5/src
 export KDE_BUILD=/home/milian/projects/kf5/build
 
+export OBJ_REPLACEMENT="s#$KDE_SRC#$KDE_BUILD#"
+
 unset KDEDIR
 unset KDEDIRS
+unset cmakekde
 
 function cleankde4 {
     eval $1="\$(echo \"\$$1\" | sed -r 's#(^|:)[^:]+kde4[^:]*##g')"
