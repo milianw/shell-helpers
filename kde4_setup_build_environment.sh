@@ -40,7 +40,7 @@ fi
 # (which is discouraged). if you use the distro provided Qt, skip
 # this section. Comment it if necessary.
 if [ -d $BASE/compiled/qt4 ]; then
-  export QTDIR=$BASE/compiled/qt4/
+  export QTDIR=$BASE/compiled/qt4
   prepend PATH $QTDIR/bin
   prepend LD_LIBRARY_PATH $QTDIR/lib
   prepend LD_LIBRARY_PATH $QTDIR/plugins/sqldrivers/
