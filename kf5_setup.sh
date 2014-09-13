@@ -62,6 +62,7 @@ export CMAKE_PREFIX_PATH=$KF5:$CMAKE_PREFIX_PATH
 prepend CMAKE_LIBRARY_PATH $KF5/lib
 prepend LD_LIBRARY_PATH $KF5/lib
 
+export OBJ_REPLACEMENT="s#$KDE_SRC#$KDE_BUILD#"
 
 # export QT_MESSAGE_PATTERN='%{appname}(%{pid})/%{category} %{function}: %{message}'
 c=`echo -e "\033"`

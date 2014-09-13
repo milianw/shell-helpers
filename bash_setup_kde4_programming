@@ -221,6 +221,8 @@ function _cs()
         local cur dirs
         _cs_scandir "$KDE_SRC"
         _cs_scandir "$KDE_SRC/KDE" "KDE/"
+        _cs_scandir "$KDE_SRC/frameworks" "frameworks/"
+        _cs_scandir "$KDE_SRC/extragear/kdevelop" "extragear/kdevelop/"
         COMPREPLY=()
         cur="${COMP_WORDS[COMP_CWORD]}"
         COMPREPLY=( $(compgen -W "${dirs}" -- ${cur}) )
@@ -228,169 +230,6 @@ function _cs()
 
 # Remove comment on next line to enable cs autocompletion
 complete -F _cs cs
-
-# run a given unit-test or all via ctest
-function kdetest
-{
-  local tests test args old_pwd tmpfile debug;
-
-  debug=
-
-  old_pwd=$(pwd)
-  cb
-
-  if [[ "$1" == "--debug" ]]; then
-    debug=$1
-    shift 1
-  fi
-
-  if [[ -d "$1" ]]; then
-    cd $1
-    shift 1
-  fi
-
-  tests=$(getTests $debug)
-
-  if [[ "$tests" == "" ]]; then
-    echo "this directory does not contain any unit tests!"
-    echo
-    cd "$old_pwd"
-    return 1
-  fi
-
-  tmpfile=/tmp/testoutput_$$
-
-  KDEHOME_backup=$KDEHOME
-  KDEHOME=~/.kde-unit-test
-
-  if [[ "$1" != "" ]]; then
-    test=$1
-    if [[ "$debug" == "--debug" ]]; then
-      test=${test/.shell/}
-    fi
-    shift 1
-    args=$@
-
-    if [ ! -f "$test" ] || ! in_array "$test" $tests ; then
-      if in_array "$test.shell" $tests; then
-        test="$test".shell
-      else
-        echo "could not find unittest '$test'. available are:"
-        echo $tests
-        echo
-        cd "$old_pwd"
-        return 1
-      fi
-    fi
-
-    if [[ "$debug" != "" ]]; then
-      gdb --eval-command="run" --args ./$test -maxwarnings 0 $args 2>&1 | tee -a "$tmpfile"
-    else
-      ./$test -maxwarnings 0 $args 2>&1 | tee -a "$tmpfile"
-    fi
-    echo
-  else
-    # run all tests
-    for test in $tests; do
-      if [[ "$debug" != "" ]]; then
-        gdb --eval-command="run" --args ./$test -maxwarnings 0 2>&1 | tee -a "$tmpfile"
-      else
-        ./$test -maxwarnings 0 2>&1 | tee -a "$tmpfile"
-      fi
-    done
-  fi
-
-  KDEHOME=$KDEHOME_backup
-
-  if [[ "$(grep -c "^RESULT " "$tmpfile")" != 0 ]]; then
-    echo
-    echo " --- BENCHMARKS --- "
-    grep --color=never -A 1 "^RESULT " "$tmpfile"
-    echo
-  fi
-
-  echo
-  echo " --- ALL PASSED TESTS --- "
-  grep --color=never "^PASS " "$tmpfile"
-  echo
-  echo $(grep -c "^PASS " "$tmpfile")" passed tests in total"
-
-  if [[ "$(grep -c "^XFAIL " "$tmpfile")" != 0 ]]; then
-    echo
-    echo " --- EXPECTED FAILURES --- "
-    perl -ne '(/^^XFAIL/../^   Loc:/) && print' "$tmpfile"
-    echo
-    echo $(grep -c "^XFAIL" "$tmpfile")" expected failed tests in total"
-    echo
-  fi
-
-  if [[ "$(grep -c "^XPASS " "$tmpfile")" != 0 ]]; then
-    echo
-    echo " --- UNEXPECTED PASSES --- "
-    perl -ne '(/^^XPASS/../^   Loc:/) && print' "$tmpfile"
-    echo
-    echo $(grep -c "^XPASS" "$tmpfile")" unexpected passed tests in total"
-    echo
-  fi
-
-  echo
-  echo " --- ALL FAILED TESTS --- "
-  perl -ne '(/^^FAIL!/../^   Loc:/) && print' "$tmpfile"
-  echo
-  echo $(grep -c "^FAIL!" "$tmpfile")" failed tests in total"
-  echo
-  grep --color=never "^QFATAL : " "$tmpfile"
-  grep --color=never -B 5 "^Segmentation fault" "$tmpfile"
-
-  rm "$tmpfile"
-
-  cd "$old_pwd"
-}
-
-# completion for kdetest
-function _kdetest
-{
-  local tests;
-
-  COMPREPLY=()
-  cur="${COMP_WORDS[COMP_CWORD]}"
-  prev="${COMP_WORDS[COMP_CWORD-1]}"
-
-  old_pwd=$(pwd)
-  cb
-
-  tests=$(getTests ${COMP_WORDS[1]})
-
-  if [[ "$prev" == "kdetest" || "$prev" == "--debug" ]]; then
-    # completion of tests
-    COMPREPLY=( $(compgen -W "${tests}" -- ${cur}) )
-  elif in_array "$prev" $tests; then
-    # completion of available functions
-    COMPREPLY=( $(compgen -W "$(./$prev -functions 2>/dev/null | cut -f 1 -d \( )" -- ${cur}) )
-  fi
-
-  cd "$old_pwd"
-}
-
-# removes .shell from the end of each test file
-function getTests {
-  local tests;
-  tests=""
-
-  tests=$(LANG=en_US.UTF-8 ctest -N -V | grep "Test command:" | egrep -o ' [^ ]+$' | cut -c $(echo " "$(pwd)"/" | wc -c)-)
-
-  if [[ "$1" == "--debug" ]]; then
-    # remove trailing .shell
-    for t in $tests; do
-      echo -n ${t/.shell/}" "
-    done
-    echo
-  else
-    echo $tests
-  fi
-}
-
-complete -F _kdetest kdetest
 
 # see http://ftp.hu.freebsd.org/pub/linux/distributions/frugalware/frugalware-testing/t/functions.sh
 function in_array
@@ -407,3 +246,51 @@ function in_array
   return 1
 }
 export -f in_array
+
+# completion for kdetest
+function _kdetest
+{
+  local tests;
+
+  COMPREPLY=()
+  cur="${COMP_WORDS[COMP_CWORD]}"
+  prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+  old_pwd=$(pwd)
+  cb
+
+  tests=$(listCTests ${COMP_WORDS[1]})
+
+  if [[ "$prev" == "kdetest" || "$prev" == "--debug" ]]; then
+    # completion of tests
+    COMPREPLY=( $(compgen -W "${tests}" -- ${cur}) )
+  elif in_array "$prev" $tests; then
+    # completion of available functions
+    COMPREPLY=( $(compgen -W "$(./$prev -functions 2>/dev/null | cut -f 1 -d \( )" -- ${cur}) )
+  fi
+
+  cd "$old_pwd"
+}
+
+# removes .shell from the end of each test file
+function listCTests {
+  local tests;
+  tests=""
+
+  tests=$(LANG=en_US.UTF-8 ctest -N -V | grep "Test command:" | egrep -o ' [^ ]+$' | cut -c $(echo " "$(pwd)"/" | wc -c)-)
+
+  if [[ "$1" == "--debug" ]]; then
+    # remove trailing .shell
+    for t in $tests; do
+      echo -n ${t/.shell/}" "
+    done
+    echo
+  else
+    echo $tests
+  fi
+}
+
+export -f listCTests
+
+alias kdetest="sh ~/.bin/kdetest.sh"
+complete -F _kdetest kdetest
