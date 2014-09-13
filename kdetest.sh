@@ -38,7 +38,6 @@ oldPS1="$PS1"
 PS1="TEST:$PS1"
 
 if [ ! -z "$KF5" ]; then
-    kbuildsycoca5
     msgPatternBackup="$QT_MESSAGE_PATTERN"
     QT_MESSAGE_PATTERN="%{category} %{function}: %{message}"
     dataHomeBackup="$XDG_DATA_HOME"
@@ -47,10 +46,11 @@ if [ ! -z "$KF5" ]; then
     XDG_CONFIG_HOME="$base/config5"
     dataCacheBackup="$XDG_CACHE_HOME"
     XDG_CACHE_HOME="$base/cache5"
+    kbuildsycoca5
 else
-    kbuildsycoca4
     KDEHOME_backup=$KDEHOME
     KDEHOME="$base/kde4"
+    kbuildsycoca4
 fi
 
 if [[ "$1" != "" ]]; then
