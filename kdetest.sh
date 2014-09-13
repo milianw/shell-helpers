@@ -22,13 +22,13 @@ tests=$(listCTests $debug)
 if [[ "$tests" == "" ]]; then
     echo "this directory does not contain any unit tests!"
     echo
-cd "$old_pwd"
-    return 1
+    cd "$old_pwd"
+    exit 1
 fi
 
 base="$HOME/.unit-test"
 if [ ! -d "$base" ]; then
-    mkdir -p $base || return 1
+    mkdir -p $base || exit 1
 fi
 
 tmpfile=/tmp/testoutput_$$
@@ -69,7 +69,7 @@ if [ ! -f "$test" ] || ! in_array "$test" $tests ; then
         echo $tests
         echo
         cd "$old_pwd"
-        return 1
+        exit 1
     fi
 fi
 
