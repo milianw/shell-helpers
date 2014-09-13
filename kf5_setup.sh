@@ -21,7 +21,6 @@ export OBJ_REPLACEMENT="s#$KDE_SRC#$KDE_BUILD#"
 
 unset KDEDIR
 unset KDEDIRS
-unset cmakekde
 
 function cleankde4 {
     eval $1="\$(echo \"\$$1\" | sed -r 's#(^|:)[^:]+kde4[^:]*##g')"

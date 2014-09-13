@@ -83,12 +83,16 @@ function cmakekde {
                 switched=1
         fi
         fail=0
-        # to enable tests, add -DKDE4_BUILD_TESTS=ON to the next line.
-        # you can also change "debugfull" to "debug" to save disk space.
-        cmake "$srcFolder" -DCMAKE_INSTALL_PREFIX=$KDEDIR \
-                -DCMAKE_BUILD_TYPE=debugfull \
-                -DKDE4_AUTH_POLICY_FILES_INSTALL_DIR=$KDEDIR/share/polkit-1/actions \
-                -DKDE4_BUILD_TESTS=ON || fail=1
+
+        if [ -z "$KF5" ]; then
+            cmake "$srcFolder" -DCMAKE_INSTALL_PREFIX=$KDEDIR \
+                    -DCMAKE_BUILD_TYPE=debugfull \
+                    -DKDE4_AUTH_POLICY_FILES_INSTALL_DIR=$KDEDIR/share/polkit-1/actions \
+                    -DKDE4_BUILD_TESTS=ON || fail=1
+        else
+            cmake "$srcFolder" -DCMAKE_INSTALL_PREFIX=$KF5 \
+                    -DCMAKE_BUILD_TYPE=debug|| fail=1
+        fi
 
         # uncomment the following two lines to make builds wait after
         # configuration step, so that the user can check configure output
@@ -101,7 +105,13 @@ function cmakekde {
 
         nice make && \
         make install
-        kbuildsycoca4
+
+        if [ -z "$KF5" ]; then
+            kbuildsycoca4
+        else
+            kbuildsycoca5
+        fi
+
         if test $switched -eq 1; then
           cs
         fi
