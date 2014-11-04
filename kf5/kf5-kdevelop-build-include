@@ -22,15 +22,22 @@ module-set frameworks
     cmake-options -DBUILD_TESTING=TRUE -DCMAKE_BUILD_TYPE:STRING=debug
 end module
 
+module grantlee
+    repository git://gitorious.org/grantlee/grantlee.git
+    branch master
+end module
+
 module-set kf5-base-applications
     repository kde-projects # Required by branch-group
     use-modules konsole kate
+    cmake-options -DCMAKE_BUILD_TYPE:STRING=debug
 end module-set
 
 module-set libkomparediff2
     repository kde-projects
     use-modules libkomparediff2
     branch frameworks
+    cmake-options -DCMAKE_BUILD_TYPE:STRING=debug
 end module
 
 module-set kdevelop-kf5
