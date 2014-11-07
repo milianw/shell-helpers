@@ -42,6 +42,6 @@ end module
 
 module-set kdevelop-kf5
     repository kde-projects
-    use-modules kdevplatform kdevelop/kdevelop
+    use-modules kdevplatform kdevelop/kdevelop kdevelop-pg-qt kdev-php kdev-php-docs
     cmake-options -DBUILD_TESTING=TRUE -DCMAKE_BUILD_TYPE:STRING=debug
 end module-set
