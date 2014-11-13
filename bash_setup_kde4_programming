@@ -233,6 +233,7 @@ function _cs()
         _cs_scandir "$KDE_SRC/KDE" "KDE/"
         _cs_scandir "$KDE_SRC/frameworks" "frameworks/"
         _cs_scandir "$KDE_SRC/extragear/kdevelop" "extragear/kdevelop/"
+        _cs_scandir "$KDE_SRC/playground/devtools/plugins" "playground/devtools/plugins/"
         COMPREPLY=()
         cur="${COMP_WORDS[COMP_CWORD]}"
         COMPREPLY=( $(compgen -W "${dirs}" -- ${cur}) )

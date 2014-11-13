@@ -70,3 +70,5 @@ unset c
 
 eval `dbus-launch`
 #kdeinit5
+
+export CDPATH=.:$KDE_SRC/frameworks:$KDE_SRC/extragear/kdevelop:$KDE_SRC/playground/devtools/plugins
