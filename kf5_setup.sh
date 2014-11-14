@@ -68,7 +68,7 @@ c=`echo -e "\033"`
 export QT_MESSAGE_PATTERN="%{appname}(%{pid})/(%{category}) $c[31m%{if-debug}$c[34m%{endif}%{function}$c[0m: %{message}"
 unset c
 
-eval `dbus-launch`
+#eval `dbus-launch`
 #kdeinit5
 
 export CDPATH=.:$KDE_SRC/frameworks:$KDE_SRC/extragear/kdevelop:$KDE_SRC/playground/devtools/plugins
