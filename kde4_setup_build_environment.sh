@@ -143,3 +143,5 @@ fi
 #export CC="$(which gcc)"
 #export CXX="$(which g++)"
 #export MAKEFLAGS="-j10"
+
+prepend XDG_DATA_DIRS /home/milian/.bin/kf5/dbus-share

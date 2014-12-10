@@ -26,7 +26,7 @@ if [[ "$tests" == "" ]]; then
     exit 1
 fi
 
-base="$HOME/.unit-test"
+base="$HOME/.kde-unit-test"
 if [ ! -d "$base" ]; then
     mkdir -p $base || exit 1
 fi
@@ -38,13 +38,13 @@ oldPS1="$PS1"
 PS1="TEST:$PS1"
 
 if [ ! -z "$KF5" ]; then
-    QT_MESSAGE_PATTERN="%{category} %{function}: %{message}"
-    XDG_DATA_HOME="$base/local5"
-    XDG_CONFIG_HOME="$base/config5"
-    XDG_CACHE_HOME="$base/cache5"
+    export QT_MESSAGE_PATTERN="%{category} %{function}: %{message}"
+    export XDG_DATA_HOME="$base/local5"
+    export XDG_CONFIG_HOME="$base/config5"
+    export XDG_CACHE_HOME="$base/cache5"
     kbuildsycoca5
 else
-    KDEHOME="$base/kde4"
+    export KDEHOME="$base/kde4"
     kbuildsycoca4
 fi
 
