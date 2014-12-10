@@ -30,7 +30,7 @@ end module-set
 
 module-set kf5-base-workspace
     repository kde-projects # Required by branch-group
-    use-modules khelpcenter kio-extras breeze
+    use-modules khelpcenter kio-extras kdecoration breeze
 end module-set
 
 module-set libkomparediff2
@@ -48,6 +48,6 @@ end module
 
 module-set kdevelop-kf5
     repository kde-projects
-    use-modules kdevplatform kdevelop/kdevelop kdevelop-pg-qt kdev-php kdev-php-docs kdev-qmljs kdev-clang kdev-css
+    use-modules kdevplatform kdevelop/kdevelop kdevelop-pg-qt kdev-php kdev-php-docs kdev-qmljs kdev-clang kdev-qmake kdev-css
     cmake-options -DBUILD_TESTING=TRUE -DCMAKE_BUILD_TYPE:STRING=debug
 end module-set
