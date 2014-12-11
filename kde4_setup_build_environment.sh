@@ -123,8 +123,10 @@ export LIBRARY_PATH=$LD_LIBRARY_PATH
 # Use ccache if possible
 if [[ -d /usr/lib/ccache/bin ]]; then
   prepend PATH /usr/lib/ccache/bin
+  export CCACHE_CPP2=yes
 elif [[ -d /usr/lib/ccache ]]; then
   prepend PATH /usr/lib/ccache
+  export CCACHE_CPP2=yes
 fi
 
 # Insert Krazy into path if available

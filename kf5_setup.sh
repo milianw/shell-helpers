@@ -9,6 +9,7 @@ export PS1="KF5:$PS1"
 if [[ "$HOSTNAME" == "minime" ]]; then
     export CC="ccache /home/milian/.bin/clang -Qunused-arguments"
     export CXX="ccache /home/milian/.bin/clang++ -Qunused-arguments"
+    export CCACHE_CPP2=yes
 else
     export CC=gcc
     export CXX=g++
