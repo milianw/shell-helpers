@@ -71,9 +71,13 @@ unset c
 
 #eval `dbus-launch`
 #kdeinit5
-if not pidof kded5 > /dev/null; then
+if not pidof kdeinit5 > /dev/null; then
   echo launching kdeinit5
-  kdeinit5
+  kdeinit5 > /dev/null &
+fi
+if not pidof kded5 > /dev/null; then
+  echo launching kded5
+  kded5 > /dev/null &
 fi
 
 export CDPATH=.:$KDE_SRC/frameworks:$KDE_SRC/extragear/kdevelop:$KDE_SRC/playground/devtools/plugins
