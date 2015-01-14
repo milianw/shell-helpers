@@ -8,8 +8,8 @@
 #    will put "foobar" into your clipboard/klipper
 
 if [ ! -z "$(which xclip)" ]; then
-  readCmd="xclip -o"
-  writeCmd="xclip -i"
+  readCmd="xclip -o -selection clipboard"
+  writeCmd="xclip -i -selection clipboard"
 else
   readCmd="qdbus-qt4 org.kde.klipper /klipper getClipboardContents"
   writeCmd="qdbus-qt4 org.kde.klipper /klipper setClipboardContents"
