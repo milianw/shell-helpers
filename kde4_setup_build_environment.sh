@@ -70,6 +70,8 @@ prepend LD_LIBRARY_PATH $KDEDIR/lib
 prepend PKG_CONFIG_PATH $KDEDIR/lib/pkgconfig
 prepend QT_PLUGIN_PATH $KDEDIR/lib/kde4/plugins
 
+prepend PATH ~/.bin/kde4
+
 prepend CMAKE_PREFIX_PATH $KDEDIR
 
 # CMake
@@ -95,6 +97,7 @@ if [[ "$XDG_DATA_DIRS" == "" ]]; then
   XDG_DATA_DIRS=/usr/share
 fi
 prepend XDG_DATA_DIRS $KDEDIR/share
+prepend XDG_DATA_DIRS ~/.bin/kf5/dbus-share
 export XDG_DATA_DIRS
 if [[ "$XDG_CONFIG_DIRS" == "" ]]; then
   XDG_CONFIG_DIRS=/usr/share/kde4/config
