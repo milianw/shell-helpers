@@ -97,7 +97,6 @@ if [[ "$XDG_DATA_DIRS" == "" ]]; then
   XDG_DATA_DIRS=/usr/share
 fi
 prepend XDG_DATA_DIRS $KDEDIR/share
-prepend XDG_DATA_DIRS ~/.bin/kf5/dbus-share
 export XDG_DATA_DIRS
 if [[ "$XDG_CONFIG_DIRS" == "" ]]; then
   XDG_CONFIG_DIRS=/usr/share/kde4/config
@@ -149,4 +148,4 @@ fi
 #export CXX="$(which g++)"
 #export MAKEFLAGS="-j10"
 
-prepend XDG_DATA_DIRS /home/milian/.bin/kf5/dbus-share
+export XDG_DATA_DIRS=/home/milian/.bin/kf5/dbus-share:$XDG_DATA_DIRS
