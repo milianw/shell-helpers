@@ -80,4 +80,4 @@ if not pidof kded5 > /dev/null; then
   kded5 > /dev/null &
 fi
 
-export CDPATH=.:$KDE_SRC/frameworks:$KDE_SRC/extragear/kdevelop:$KDE_SRC/playground/devtools/plugins
+export CDPATH=.:$KDE_SRC/frameworks:$KDE_SRC/extragear/kdevelop:$KDE_SRC/playground/devtools/plugins:$KDE_SRC/extragear/kdevelop/plugins

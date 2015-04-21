@@ -36,12 +36,11 @@ end module-set
 module-set libkomparediff2
     repository kde-projects
     use-modules libkomparediff2
-    branch frameworks
     cmake-options -DCMAKE_BUILD_TYPE:STRING=debug
 end module
 
 module grantlee
-    repository git://gitorious.org/grantlee/grantlee.git
+    repository https://github.com/steveire/grantlee.git
     branch master
     cmake-options -DBUILD_TESTING=TRUE -DCMAKE_BUILD_TYPE:STRING=debug
 end module
