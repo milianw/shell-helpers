@@ -148,4 +148,4 @@ fi
 #export CXX="$(which g++)"
 #export MAKEFLAGS="-j10"
 
-export XDG_DATA_DIRS=/home/milian/.bin/kf5/dbus-share:$XDG_DATA_DIRS
+#export XDG_DATA_DIRS=/home/milian/.bin/kf5/dbus-share:$XDG_DATA_DIRS

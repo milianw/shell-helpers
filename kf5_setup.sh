@@ -54,9 +54,9 @@ export QML_IMPORT_PATH=$QML2_IMPORT_PATH
 export KDE_SESSION_VERSION=5
 export KDE_FULL_SESSION=true
 
-export XDG_DATA_HOME=$HOME/.local5
-export XDG_CONFIG_HOME=$HOME/.config5
-export XDG_CACHE_HOME=$HOME/.cache5
+export XDG_DATA_HOME=$HOME/.local
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_CACHE_HOME=$HOME/.cache
 
 export CMAKE_PREFIX_PATH=$KF5:$CMAKE_PREFIX_PATH
 prepend CMAKE_LIBRARY_PATH $KF5/lib
@@ -69,11 +69,9 @@ c=`echo -e "\033"`
 export QT_MESSAGE_PATTERN="%{appname}(%{pid})/(%{category}) $c[31m%{if-debug}$c[34m%{endif}%{function}$c[0m: %{message}"
 unset c
 
-#eval `dbus-launch`
-#kdeinit5
 if not pidof kdeinit5 > /dev/null; then
   echo launching kdeinit5
-  kdeinit5 > /dev/null &
+  #kdeinit5 > /dev/null &
 fi
 if not pidof kded5 > /dev/null; then
   echo launching kded5
