@@ -78,4 +78,26 @@ if not pidof kded5 > /dev/null; then
   kded5 > /dev/null &
 fi
 
-export CDPATH=.:$KDE_SRC/frameworks:$KDE_SRC/extragear/kdevelop:$KDE_SRC/playground/devtools/plugins:$KDE_SRC/extragear/kdevelop/plugins
+export CS_PATHS=(
+    $KDE_SRC/extragear/base
+    $KDE_SRC/extragear/graphics
+    $KDE_SRC/extragear/kdevelop
+    $KDE_SRC/extragear/kdevelop/plugins
+    $KDE_SRC/extragear/kdevelop/utilities
+    $KDE_SRC/extragear/libs
+    $KDE_SRC/extragear/network/telepathy
+    $KDE_SRC/extragear/sdk
+    $KDE_SRC/extragear/utils
+    $KDE_SRC/frameworks
+    $KDE_SRC/kde/applications
+    $KDE_SRC/kde/kdegraphics/libs
+    $KDE_SRC/kde/kdelibs
+    $KDE_SRC/kde/kdesdk
+    $KDE_SRC/kde/kdeutils
+    $KDE_SRC/kde/workspace
+    $KDE_SRC/kdesupport/phonon
+    $KDE_SRC/kdesupport/strigi
+    $KDE_SRC/kde-workspace
+    $KDE_SRC/playground/devtools/plugins
+    $KDE_SRC/playground/libs
+)

@@ -192,9 +192,6 @@ export -f cb
 function cs {
         local dest current
 
-        # Make sure source directory exists.
-        mkdir -p "$KDE_SRC"
-
         # command line argument
         if test -n "$1"; then
                 cd "$KDE_SRC/$1"
@@ -228,14 +225,11 @@ function _cs_scandir
 
 function _cs()
 {
-        local cur dirs
-        _cs_scandir "$KDE_SRC"
-        _cs_scandir "$KDE_SRC/KDE" "KDE/"
-        _cs_scandir "$KDE_SRC/frameworks" "frameworks/"
-        _cs_scandir "$KDE_SRC/extragear/kdevelop" "extragear/kdevelop/"
-        _cs_scandir "$KDE_SRC/extragear/kdevelop/plugins" "extragear/kdevelop/plugins/"
-        _cs_scandir "$KDE_SRC/kde/applications" "kde/applications/"
-        _cs_scandir "$KDE_SRC/playground/devtools/plugins" "playground/devtools/plugins/"
+        local cur dirs dir
+        for dir in ${CS_PATHS[@]}; do
+            _cs_scandir "$dir" "${dir/$KDE_SRC\//}/"
+        done
+
         COMPREPLY=()
         cur="${COMP_WORDS[COMP_CWORD]}"
         COMPREPLY=( $(compgen -W "${dirs}" -- ${cur}) )
@@ -259,6 +253,15 @@ function in_array
   return 1
 }
 export -f in_array
+
+# see http://stackoverflow.com/questions/1527049/bash-join-elements-of-an-array
+function join_array
+{
+    local IFS="$1";
+    shift;
+    echo "$*";
+}
+export -f join_array
 
 # completion for kdetest
 function _kdetest
