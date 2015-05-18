@@ -4,6 +4,8 @@ export KF5=/home/milian/projects/compiled/kf5
 
 source ~/.bashrc
 
+export KF5=/home/milian/projects/compiled/kf5
+
 export PS1="KF5:$PS1"
 
 if [[ "$HOSTNAME" == "minime" ]]; then

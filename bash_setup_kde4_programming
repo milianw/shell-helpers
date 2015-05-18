@@ -1,4 +1,5 @@
 #!/bin/bash
+
 ###############################################################
 # KDE 4 DEVELOPMENT
 #
@@ -15,6 +16,15 @@
 
 prepend() { eval $1=\"$2\$\{$1:+':'\$$1\}\" && export $1 ; }
 
+# Make
+# set your common make flags here, so all scripts can benefit from them
+# general rule-of-thumb for -j: #cpucores + 1
+if [[ "$HOSTNAME" == "minime" ]]; then
+  export MAKEFLAGS=" -j3"
+else
+  export MAKEFLAGS=" -j$(($(grep -c '^processor' /proc/cpuinfo)+1)) "
+fi
+
 # you might have to change the actual filename in the path below
 # in my git repo the file is called kde4_setup_build_environment.sh
 # NOTE: it's important this lies in ~/.kde/env so it gets
@@ -29,36 +39,6 @@ fi
 # kdesdk, or check out kdesdk/scripts from svn.
 # use -rR for speed
 alias make='makeobj -rR'
-
-# Uncomment the following lines if DBus does not work. DBus is not
-# working if, when you run `dbus-uuidgen --ensure && qdbus`, you get an error.
-#
-# alias dbusstart="eval `PATH=$DBUSDIR/bin \
-#  $DBUSDIR/bin/dbus-launch --auto-syntax`"
-
-# A function to easily build the project in the current directory
-#
-# builds in the dir depending on what you set OBJ_REPLACEMENT to
-# installs to "install" folder in the project folder
-#
-# cd ~/projects/...
-# cmakeproject
-function cmakeproject {
-  local srcdir builddir installdir
-  srcdir=$(pwd)
-  installdir="$srcdir/install"
-  builddir=$(echo $srcdir | sed -e "$OBJ_REPLACEMENT")
-
-  mkdir -p "$builddir"
-  cd "$builddir"
-
-  cmake "$srcdir" -DCMAKE_INSTALL_PREFIX="$installdir" \
-    -DCMAKE_BUILD_TYPE=debugfull \
-    -DKDE4_BUILD_TESTS=ON
-
-  nice make install
-  cd "$srcdir"
-}
 
 # A function to easily build the current directory of KDE.
 #
@@ -117,36 +97,6 @@ function cmakekde {
         fi
 }
 export -f cmakekde
-# for the lazy ones, add/comment other directories
-function cmakekdeall {
-    local directories
-    directories=(
-      kate
-      kdevplatform
-      kdevelop
-      php
-    )
-    for i in `seq 1 ${#directories[@]}`; do
-        echo "############## ${directories[$i-1]} ##############";
-        if [[ "$1" == "" ]]; then
-            cs ${directories[$i-1]} && update_cs && cb && make install;
-        else
-            cs ${directories[$i-1]} && update_cs && cmakekde;
-        fi
-    done
-}
-
-# update the source code which is either in git or in svn
-# TODO: return not-0 when nothing got updated, i.e parse output
-function update_cs {
-    local output
-    if [[ -d ".git" || -d "../.git" ]]; then
-        output=$(git svn rebase)
-    elif [[ -d ".svn" || -d "../.svn" ]]; then
-        output=$(svn up)
-    fi
-    return 0
-}
 
 # A function to easily change to the build directory.
 # Usage: cb KDE/kdebase
@@ -178,6 +128,7 @@ function cb {
         cd "$dest"
 }
 export -f cb
+
 # Change to the source directory.  Same as cb, except this
 # switches to $KDE_SRC instead of $KDE_BUILD.
 # Usage: cs KDE/kdebase
