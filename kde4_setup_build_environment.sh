@@ -19,8 +19,6 @@ fi
 ## If you don't use a separate user, the first section with the
 ## environment variables should go into a separate script.
 
-prepend() { [ -d "$2" ] && eval $1=\"$2\$\{$1:+':'\$$1\}\" && export $1 ; }
-
 # Other
 # you might want to set a full value for PATH rather than prepend'ing, to make
 # sure the your kde3 path isn't in here.
@@ -99,14 +97,6 @@ export XDG_CONFIG_DIRS
 export KDE_COLOR_DEBUG=1
 export QTEST_COLORED=1
 
-# Make
-# Tell many scripts how to switch from source dir to build dir:
-# requires makeobj from kdesdk
-# default, works for most people, but only inside $KDE_SRC
-# export OBJ_REPLACEMENT="s#$KDE_SRC#$KDE_BUILD#"
-# adapted to my needs: works everywhere inside my ~/projects folder
-export OBJ_REPLACEMENT="s#$BASE/\([^\.]\)#$BASE/.build/\1#"
-
 export LIBRARY_PATH=$LD_LIBRARY_PATH
 
 # use icecream if possible
@@ -144,3 +134,5 @@ fi
 export CS_PATHS=(
     $KDE_SRC/
 )
+
+export CMAKE_INSTALL_PREFIX=$KDEDIR

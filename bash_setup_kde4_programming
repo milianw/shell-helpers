@@ -14,7 +14,18 @@
 # . ~/.bash_setup_kde4_programming
 ###############################################################
 
-prepend() { eval $1=\"$2\$\{$1:+':'\$$1\}\" && export $1 ; }
+function prepend {
+    eval $1=\"$2\$\{$1:+':'\$$1\}\" && export $1
+}
+export -f prepend
+
+export SRC_ROOT=$HOME/projects
+
+export CS_PATHS=(
+    ${CS_PATH[@]}
+    $SRC_ROOT/src
+    $SRC_ROOT/qt5
+)
 
 # Make
 # set your common make flags here, so all scripts can benefit from them
@@ -25,6 +36,19 @@ else
   export MAKEFLAGS=" -j$(($(grep -c '^processor' /proc/cpuinfo)+1)) "
 fi
 
+# Use makeobj instead of make, to automatically switch to the build dir.
+# If you don't have makeobj, install the package named kdesdk-scripts or
+# kdesdk, or check out kdesdk/scripts from svn.
+# use -rR for speed
+alias make='makeobj -rR'
+
+# Make
+# Tell many scripts how to switch from source dir to build dir:
+# requires makeobj from kdesdk and replaces src with build
+export SRC_TO_BUILD="s,/src/,/build/,"
+export BUILD_TO_SRC="s,/build/,/src/,"
+export OBJ_REPLACEMENT="$SRC_TO_BUILD"
+
 # you might have to change the actual filename in the path below
 # in my git repo the file is called kde4_setup_build_environment.sh
 # NOTE: it's important this lies in ~/.kde/env so it gets
@@ -32,32 +56,23 @@ fi
 # available via KRunner etc.
 if [ -z "$KF5" ]; then
   . ~/.bin/kde4_setup_build_environment.sh
+else
+  . ~/.bin/kf5_setup.sh
 fi
-
-# Use makeobj instead of make, to automatically switch to the build dir.
-# If you don't have makeobj, install the package named kdesdk-scripts or
-# kdesdk, or check out kdesdk/scripts from svn.
-# use -rR for speed
-alias make='makeobj -rR'
 
 # A function to easily build the current directory of KDE.
 #
-# This builds only the sources in the current ~/{src,build}/KDE subdirectory.
-# Usage: cs KDE/kdebase && cmakekde
-#   will build/rebuild the sources in ~/src/KDE/kdebase
+# This builds only the sources in the current ~/{src,build}/ subdirectory.
+# Usage: cs somewhere && cmakekde
+# will build/rebuild the sources in ~/src/somewhere
 function cmakekde {
         local srcFolder current switched fail
         switched=0
-        if test -n "$1"; then
-                # srcFolder is defined via command line argument
-                srcFolder="$1"
-        else
-                # get srcFolder for current dir
-                srcFolder=`pwd | sed -e s,$KDE_BUILD,$KDE_SRC,`
-        fi
+        # get srcFolder for current dir
+        srcFolder=$(pwd | sed -e "$BUILD_TO_SRC")
         # we are in the src folder, change to build directory
         # Alternatively, we could just use makeobj in the commands below...
-        current=`pwd`
+        current=$(pwd)
         if [ "$srcFolder" = "$current" ]; then
                 cb
                 switched=1
@@ -65,26 +80,20 @@ function cmakekde {
         fail=0
 
         if [ -z "$KF5" ]; then
-            cmake "$srcFolder" -DCMAKE_INSTALL_PREFIX=$KDEDIR \
+            cmake "$srcFolder" -DCMAKE_INSTALL_PREFIX=$CMAKE_INSTALL_PREFIX \
                     -DCMAKE_BUILD_TYPE=debugfull \
                     -DKDE4_AUTH_POLICY_FILES_INSTALL_DIR=$KDEDIR/share/polkit-1/actions \
                     -DKDE4_BUILD_TESTS=ON || fail=1
         else
-            cmake "$srcFolder" -DCMAKE_INSTALL_PREFIX=$KF5 \
+            cmake "$srcFolder" -DCMAKE_INSTALL_PREFIX=$CMAKE_INSTALL_PREFIX \
                     -DCMAKE_BUILD_TYPE=debug|| fail=1
         fi
-
-        # uncomment the following two lines to make builds wait after
-        # configuration step, so that the user can check configure output
-        echo "Press <ENTER> to continue..."
-        read userinput
 
         if [[ $fail == 1 ]]; then
           return 1
         fi
 
-        nice make && \
-        make install
+        nice make install
 
         if [ -z "$KF5" ]; then
             kbuildsycoca4
@@ -99,8 +108,6 @@ function cmakekde {
 export -f cmakekde
 
 # A function to easily change to the build directory.
-# Usage: cb KDE/kdebase
-#   will change to $KDE_BUILD/KDE/kdebase
 # Usage: cb
 #   will simply go to the build folder if you are currently in a src folder
 #   Example:
@@ -111,16 +118,13 @@ export -f cmakekde
 function cb {
         local dest
 
-        # Make sure build directory exists.
-        mkdir -p "$KDE_BUILD"
-
-        # command line argument
-        if test -n "$1"; then
-                cd "$KDE_BUILD/$1"
-                return
-        fi
         # substitute src dir with build dir
-        dest=`pwd | sed -e $OBJ_REPLACEMENT`
+        dest=$(pwd | sed -e "$SRC_TO_BUILD")
+        current=$(pwd)
+        if [ "$dest" = "$current" ]; then
+            echo "no build dir found for path $current."
+            return 1
+        fi
         if test ! -d "$dest"; then
                 # build directory does not exist, create
                 mkdir -p "$dest"
@@ -130,9 +134,7 @@ function cb {
 export -f cb
 
 # Change to the source directory.  Same as cb, except this
-# switches to $KDE_SRC instead of $KDE_BUILD.
-# Usage: cs KDE/kdebase
-#   will change to $KDE_SRC/KDE/kdebase
+# switches to the source folder instead of the build folder.
 # Usage: cs
 #   will simply go to the source folder if you are currently in a build folder
 #   Example:
@@ -145,13 +147,13 @@ function cs {
 
         # command line argument
         if test -n "$1"; then
-                cd "$KDE_SRC/$1"
+                cd "$SRC_ROOT/$1"
         else
                 # substitute build dir with src dir
-                dest=`pwd | sed -e s,$KDE_BUILD,$KDE_SRC,`
-                current=`pwd`
+                dest=$(pwd | sed -e "$BUILD_TO_SRC")
+                current=$(pwd)
                 if [ "$dest" = "$current" ]; then
-                        cd "$KDE_SRC"
+                        cd "$SRC_ROOT"
                 else
                         cd "$dest"
                 fi
@@ -178,7 +180,7 @@ function _cs()
 {
         local cur dirs dir
         for dir in ${CS_PATHS[@]}; do
-            _cs_scandir "$dir" "${dir/$KDE_SRC\//}/"
+            _cs_scandir "$dir" "${dir/$SRC_ROOT\//}/"
         done
 
         COMPREPLY=()
