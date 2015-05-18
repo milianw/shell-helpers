@@ -46,3 +46,5 @@ alias enable_icc="source ~/.bin/enable_icc.sh"
 alias webkit-debug="export QTWEBKIT_INSPECTOR_SERVER=9999"
 
 alias kf5="bash --init-file ~/.bin/kf5_setup.sh"
+
+alias kdab-berlin-vpn="sudo openvpn /etc/openvpn/office-berlin.ovpn"
