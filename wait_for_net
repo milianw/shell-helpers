@@ -1,0 +1,1 @@
+while true; do ping -c 1 google.de && break || sleep 1; done
