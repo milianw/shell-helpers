@@ -1,5 +1,0 @@
-# start typing the first letters of a command and use PgUp/PgDown
-# to browse in the history of all commands with the same initial letters
-"\e[5~":        history-search-backward
-"\e[6~":        history-search-forward
-
