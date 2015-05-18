@@ -1,0 +1,45 @@
+#!/bin/bash
+
+cd ~/.cache/kdevduchain
+
+echo "Available duchain repositories: "
+ls
+
+echo
+
+echo " USAGE "
+
+for i in $(ls); do
+  locked=0
+  if [ -f $i/lock ]; then
+    pid=$(head -n 1 $i/lock)
+    app=""
+    if [[ "$pid" != "" ]]; then
+      app=$(ps --no-headers -p $pid -o comm=)
+    fi
+    if [[ "$app" == "" ]]; then
+      echo "repo $i has stale lockfile"
+    else
+      cwd=$(readlink /proc/$pid/cwd)
+      echo "repo $i is in use by $app (pid:$pid, cwd:$cwd)"
+    fi
+  else
+    echo "repo $i is not used"
+    if [ ! -d ~/.kde/share/apps/kdevelop/sessions/$i ]; then
+      echo "removing stale duchain cache"
+      rm -Rf $i
+    fi
+  fi
+done
+
+echo
+echo " SIZE "
+
+for i in $(ls); do
+  echo -n "size of repo $i: "
+  du -hs $i | awk '{print $1}'
+done
+
+echo "---------------------"
+echo -n "total size: "
+du -hs . | awk '{print $1}'
