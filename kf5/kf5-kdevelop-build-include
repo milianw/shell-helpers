@@ -24,7 +24,7 @@ end module
 
 module-set kf5-base-applications
     repository kde-projects # Required by branch-group
-    use-modules konsole kate
+    use-modules konsole kate kdiagram
     cmake-options -DCMAKE_BUILD_TYPE:STRING=debug
 end module-set
 
@@ -50,7 +50,6 @@ module-set kdevelop-kf5
     use-modules kdevplatform kdevelop/kdevelop kdevelop-pg-qt kdev-php kdev-php-docs kdev-qmljs kdev-clang kdev-qmake kdev-css
     cmake-options -DBUILD_TESTING=TRUE -DCMAKE_BUILD_TYPE:STRING=debug
 end module-set
-
 
 module-set massif-visualizer
     repository kde-projects
