@@ -51,6 +51,11 @@ module-set kdevelop-kf5
     cmake-options -DBUILD_TESTING=TRUE -DCMAKE_BUILD_TYPE:STRING=debug
 end module-set
 
+options bluez-qt
+    # Default udev rules dir /lib/udev/rules.d is not writable by regular user
+    cmake-options -DINSTALL_UDEV_RULE:BOOL=OFF
+end options
+
 module-set massif-visualizer
     repository kde-projects
     branch frameworks
