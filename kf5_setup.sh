@@ -48,6 +48,8 @@ export QML_IMPORT_PATH=$QML2_IMPORT_PATH
 export CMAKE_PREFIX_PATH=$KF5:$CMAKE_PREFIX_PATH
 prepend CMAKE_LIBRARY_PATH $KF5/lib
 prepend LD_LIBRARY_PATH $KF5/lib
+prepend LIBEXEC_PATH /usr/lib
+prepend LIBEXEC_PATH $KF5/lib
 
 prepend CMAKE_PREFIX_PATH $HOME/projects/compiled/other
 prepend CMAKE_LIBRARY_PATH $HOME/projects/compiled/other/lib
