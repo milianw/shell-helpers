@@ -3,7 +3,10 @@
 export KF5=/home/milian/projects/compiled/kf5
 export KDE_SRC=/home/milian/projects/kf5/src
 
-if [[ "$HOSTNAME" == "minime" || "$HOSTNAME" == "agathebauer" ]]; then
+if [[ "$HOSTNAME" == "agathebauer" ]]; then
+    export CC=clang
+    export CXX=clang++
+elif [[ "$HOSTNAME" == "minime" ]]; then
     export CC="ccache /home/milian/.bin/clang -Qunused-arguments"
     export CXX="ccache /home/milian/.bin/clang++ -Qunused-arguments"
     export CCACHE_CPP2=yes
