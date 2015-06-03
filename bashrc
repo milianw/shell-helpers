@@ -59,7 +59,9 @@ fi
 #xhost +local:
 
 . ~/.bin/keychain.sh
-if [[ "$HOSTNAME" == "agathebauer" || "$HOSTNAME" == "minime" ]]; then
+if [[ "$HOSTNAME" == *"kdab"* ]]; then
+  alias kf5="bash --init-file ~/.bin/kf5_setup.sh"
+else
   export KF5=1
 fi
 . ~/.bin/bash_setup_kde4_programming
