@@ -1,19 +1,17 @@
 #!/bin/bash
 
-export KF5=/home/milian/projects/compiled/kf5
+
+suffix=""
+qtsuffix="-dbg"
+if [[ "$KF5_OPT" == "1" ]]; then
+  suffix="-opt"
+  qtsuffix="-opt"
+fi
+
+export KF5="/home/milian/projects/compiled/kf5$suffix"
 export KDE_SRC=/home/milian/projects/kf5/src
 
-if [[ "$HOSTNAME" == "agathebauer" ]]; then
-    export CC=clang
-    export CXX=clang++
-elif [[ "$HOSTNAME" == "minime" ]]; then
-    export CC="ccache /home/milian/.bin/clang -Qunused-arguments"
-    export CXX="ccache /home/milian/.bin/clang++ -Qunused-arguments"
-    export CCACHE_CPP2=yes
-else
-    export CC=gcc
-    export CXX=g++
-fi
+export PS1="KF5$suffix:$PS1"
 
 # cleanup KDE4 stuff
 unset KDEDIR
@@ -35,10 +33,13 @@ cleankde4 XDG_CONFIG_DIRS
 cleankde4 XDG_DATA_DIRS
 
 unset QTDIR
-# export QTDIR=<path to your qt5 sources>/qtbase
-# prepend PATH $QTDIR/bin
-# prepend QT_PLUGIN_PATH $QTDIR/plugins
-# prepend QML2_IMPORT_PATH $QTDIR/qml
+QTDIR=/home/milian/projects/compiled/qt5-x86-dev-$qtsuffix
+if [ -d "$QTDIR" ]; then
+    export QTDIR
+    prepend PATH $QTDIR/bin
+    prepend QT_PLUGIN_PATH $QTDIR/plugins
+    prepend QML2_IMPORT_PATH $QTDIR/qml
+fi
 
 prepend XDG_DATA_DIRS $KF5/share
 prepend XDG_CONFIG_DIRS $KF5/etc/xdg

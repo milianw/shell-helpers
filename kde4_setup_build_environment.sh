@@ -99,37 +99,10 @@ export QTEST_COLORED=1
 
 export LIBRARY_PATH=$LD_LIBRARY_PATH
 
-# use icecream if possible
-#if [[ -d /usr/lib/icecream/libexec/icecc/bin/ ]]; then
-#  prepend PATH /usr/lib/icecream/libexec/icecc/bin/
-#  export MAKEFLAGS="-j40"
-# Use ccache if possible
-if [[ -d /usr/lib/ccache/bin ]]; then
-  prepend PATH /usr/lib/ccache/bin
-  export CCACHE_CPP2=yes
-elif [[ -d /usr/lib/ccache ]]; then
-  prepend PATH /usr/lib/ccache
-  export CCACHE_CPP2=yes
-fi
-
 # Insert Krazy into path if available
 if [[ -d /usr/local/Krazy2 ]]; then
   prepend PATH /usr/local/Krazy2/bin
 fi
-
-# prefer clang if available
-if [[ "$(which clang)" != "" ]]; then
-  export PATH=${PATH/:\/usr\/lib\/icecream\/libexec\/icecc\/bin\/:/:}
-  export CC="ccache $(which clang) -Qunused-arguments"
-  export CXX="ccache $(which clang++) -Qunused-arguments"
-fi
-
-#export PATH=${PATH/:\/usr\/lib\/ccache\/bin:/:}
-#export CC="$(which gcc)"
-#export CXX="$(which g++)"
-#export MAKEFLAGS="-j10"
-
-#export XDG_DATA_DIRS=/home/milian/.bin/kf5/dbus-share:$XDG_DATA_DIRS
 
 export CS_PATHS=(
     $KDE_SRC/

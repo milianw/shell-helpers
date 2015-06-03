@@ -59,7 +59,9 @@ fi
 #xhost +local:
 
 . ~/.bin/keychain.sh
-export KF5=1
+if [[ "$HOSTNAME" == "agathebauer" || "$HOSTNAME" == "minime" ]]; then
+  export KF5=1
+fi
 . ~/.bin/bash_setup_kde4_programming
 
 export EDITOR=nano
@@ -70,3 +72,19 @@ set +o histexpand
 export INTEL_LICENSE_FILE=28518@192.168.160.9
 
 export LANGUAGE=en_US
+
+if [[ "$HOSTNAME" == "agathebauer" ]]; then
+    export CC=clang
+    export CXX=clang++
+elif [[ "$HOSTNAME" == "minime" ]]; then
+    export CC="ccache /home/milian/.bin/clang -Qunused-arguments"
+    export CXX="ccache /home/milian/.bin/clang++ -Qunused-arguments"
+    export CCACHE_CPP2=yes
+else
+    export CC=gcc
+    export CXX=g++
+    prepend PATH /usr/lib/icecream/libexec/icecc/bin
+    export MAKEFLAGS="-j40"
+fi
+
+export XAUTHORITY=~/.Xauthority
