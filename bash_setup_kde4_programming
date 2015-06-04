@@ -261,5 +261,24 @@ function listCTests {
 
 export -f listCTests
 
+
 alias kdetest="sh ~/.bin/kdetest.sh"
 complete -F _kdetest kdetest
+
+function add_env {
+  local d="$(readlink -f $1)"
+
+  if [[ ! -z "$d" && -d "$d" ]]; then
+    prepend PATH $d/bin
+    prepend LD_LIBRARY_PATH $d/lib
+    if [ -d "$d/plugins/sqldrivers" ]; then
+      prepend LD_LIBRARY_PATH "$d/plugins/sqldrivers/"
+    fi
+    prepend PKG_CONFIG_PATH "$d/lib/pkgconfig"
+    prepend CMAKE_PREFIX_PATH "$d"
+    prepend CMAKE_LIBRARY_PATH "$d/lib"
+    prepend CMAKE_INCLUDE_PATH "$d/include"
+  fi
+}
+
+export -f add_env

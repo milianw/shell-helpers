@@ -19,27 +19,6 @@ fi
 ## If you don't use a separate user, the first section with the
 ## environment variables should go into a separate script.
 
-# Other
-# you might want to set a full value for PATH rather than prepend'ing, to make
-# sure the your kde3 path isn't in here.
-#prepend PATH /usr/local/bin
-
-# Qt
-# only set Qt related variables if you compiled Qt on your own
-# (which is discouraged). if you use the distro provided Qt, skip
-# this section. Comment it if necessary.
-if [ -d $BASE/compiled/qt4 ]; then
-  export QTDIR=$BASE/compiled/qt4
-  prepend PATH $QTDIR/bin
-  prepend LD_LIBRARY_PATH $QTDIR/lib
-  prepend LD_LIBRARY_PATH $QTDIR/plugins/sqldrivers/
-  prepend PKG_CONFIG_PATH $QTDIR/lib/pkgconfig
-  prepend CMAKE_PREFIX_PATH $QTDIR
-  prepend CMAKE_LIBRARY_PATH $QTDIR/lib
-  prepend CMAKE_INCLUDE_PATH $QTDIR/include
-  prepend QT_PLUGIN_PATH /usr/lib/qt/plugins/
-fi
-
 # KDE
 
 # this is where the build files are written to
