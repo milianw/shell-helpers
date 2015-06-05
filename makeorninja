@@ -11,8 +11,10 @@ function trycompile()
 
   if [ -f Makefile ]; then
     /usr/bin/make $@
+    return 0
   elif [ -f build.ninja ]; then
     /usr/bin/ninja $@
+    return 0
   else
     return 1
   fi
