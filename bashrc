@@ -90,3 +90,5 @@ else
 fi
 
 export XAUTHORITY=~/.Xauthority
+
+add_env "$HOME/projects/compiled/other"

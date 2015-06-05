@@ -59,13 +59,6 @@ prepend LD_LIBRARY_PATH $KF5/lib
 prepend LIBEXEC_PATH /usr/lib
 prepend LIBEXEC_PATH $KF5/lib
 
-prepend CMAKE_PREFIX_PATH $HOME/projects/compiled/other
-prepend CMAKE_LIBRARY_PATH $HOME/projects/compiled/other/lib
-prepend CMAKE_INCLUDE_PATH $HOME/projects/compiled/other/include
-prepend LD_LIBRARY_PATH $HOME/projects/compiled/other/lib
-prepend PKG_CONFIG_PATH $HOME/projects/compiled/other/lib/pkgconfig
-prepend PATH $HOME/projects/compiled/other/bin
-
 # export QT_MESSAGE_PATTERN='%{appname}(%{pid})/%{category} %{function}: %{message}'
 c=`echo -e "\033"`
 export QT_MESSAGE_PATTERN="%{appname}(%{pid})/(%{category}) $c[31m%{if-debug}$c[34m%{endif}%{function}$c[0m: %{message}"
