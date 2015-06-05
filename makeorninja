@@ -1,0 +1,8 @@
+#!/bin/bash
+
+cb
+if [ -f Makefile ]; then
+  /usr/bin/make $@
+else
+  /usr/bin/ninja $@
+fi

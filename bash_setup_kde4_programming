@@ -39,8 +39,7 @@ fi
 # Use makeobj instead of make, to automatically switch to the build dir.
 # If you don't have makeobj, install the package named kdesdk-scripts or
 # kdesdk, or check out kdesdk/scripts from svn.
-# use -rR for speed
-alias make='makeobj -rR'
+alias make='makeorninja'
 
 # Make
 # Tell many scripts how to switch from source dir to build dir:
@@ -85,16 +84,16 @@ function cmakekde {
                     -DKDE4_AUTH_POLICY_FILES_INSTALL_DIR=$KDEDIR/share/polkit-1/actions \
                     -DKDE4_BUILD_TESTS=ON || fail=1
         else
-            cmake "$srcFolder" -DCMAKE_INSTALL_PREFIX=$CMAKE_INSTALL_PREFIX \
+            cmake -GNinja "$srcFolder" -DCMAKE_INSTALL_PREFIX=$CMAKE_INSTALL_PREFIX \
                 '-DCMAKE_CXX_FLAGS:STRING=-pipe -DQT_STRICT_ITERATORS -DQURL_NO_CAST_FROM_STRING -DQT_NO_HTTP -DQT_NO_FTP -Wformat -Werror=format-security -Werror=return-type -Wno-variadic-macros ' \
-                -DBUILD_TESTING=TRUE -DCMAKE_BUILD_TYPE:STRING=debug || fail=1
+                -DBUILD_TESTING=TRUE -DCMAKE_BUILD_TYPE:STRING=debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON || fail=1
         fi
 
         if [[ $fail == 1 ]]; then
           return 1
         fi
 
-        nice make install
+        make install
 
         if [ -z "$KF5" ]; then
             kbuildsycoca4
