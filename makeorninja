@@ -20,11 +20,11 @@ function trycompile()
   fi
 }
 
-trycompile && exit 0
+trycompile $@ && exit 0
 cb > /dev/null
 
 while true; do
-  trycompile && exit 0
+  trycompile $@ && exit 0
   if [[ "$(pwd)" == "$HOME/projects/"* ]]; then
     cd ..
   else
