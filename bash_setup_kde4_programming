@@ -86,7 +86,8 @@ function cmakekde {
                     -DKDE4_BUILD_TESTS=ON || fail=1
         else
             cmake "$srcFolder" -DCMAKE_INSTALL_PREFIX=$CMAKE_INSTALL_PREFIX \
-                    -DCMAKE_BUILD_TYPE=debug|| fail=1
+                '-DCMAKE_CXX_FLAGS:STRING=-pipe -DQT_STRICT_ITERATORS -DQURL_NO_CAST_FROM_STRING -DQT_NO_HTTP -DQT_NO_FTP -Wformat -Werror=format-security -Werror=return-type -Wno-variadic-macros ' \
+                -DBUILD_TESTING=TRUE -DCMAKE_BUILD_TYPE:STRING=debug || fail=1
         fi
 
         if [[ $fail == 1 ]]; then
