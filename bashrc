@@ -65,6 +65,7 @@ else
   export KF5=1
 fi
 . ~/.bin/bash_setup_kde4_programming
+add_env "$HOME/projects/compiled/other"
 
 export EDITOR=nano
 export GNUTERM=qt
@@ -90,5 +91,3 @@ else
 fi
 
 export XAUTHORITY=~/.Xauthority
-
-add_env "$HOME/projects/compiled/other"
