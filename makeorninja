@@ -10,10 +10,10 @@ function trycompile()
 {
 
   if [ -f Makefile ]; then
-    /usr/bin/make $@
+    /usr/bin/make $@ || exit 1
     return 0
   elif [ -f build.ninja ]; then
-    /usr/bin/ninja $@
+    /usr/bin/ninja $@ || exit 1
     return 0
   else
     return 1
