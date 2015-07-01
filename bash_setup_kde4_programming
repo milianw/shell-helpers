@@ -117,7 +117,9 @@ export -f cmakekde
 #     /home/user/build/KDE/kdebase
 function cb {
         local dest
-
+        if [[ "$(pwd)" == *"/build"* ]]; then
+            return 0
+        fi
         # substitute src dir with build dir
         dest=$(pwd | sed -e "$SRC_TO_BUILD")
         current=$(pwd)
