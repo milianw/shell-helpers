@@ -15,6 +15,9 @@ fi
 if [[ -d "$1" ]]; then
     cd $1
     shift 1
+elif [[ ! -f "$1" && -d "$(dirname $1)" ]]; then
+    cd $(dirname $1)
+    shift 1
 fi
 
 tests=$(listCTests $debug)
