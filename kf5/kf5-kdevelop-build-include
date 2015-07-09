@@ -10,16 +10,15 @@
 # then include this file
 
 module-set
-    ignore-modules cmake-git
     repository kde-projects
-    branch qt5
-    use-modules polkit-qt-1
+    use-modules kdesrc-build extra-cmake-modules polkit-qt-1
+    # Optionally: add polkit-qt-1
 end module-set
 
-module-set
+module-set akonadi
     repository kde-projects
-    use-modules kdesrc-build extra-cmake-modules
-    # Optionally: add polkit-qt-1
+    cmake-options -DQT5_BUILD=TRUE
+    use-modules akonadi
 end module-set
 
 module-set frameworks
@@ -37,16 +36,6 @@ module-set kf5-base-workspace
     use-modules khelpcenter kio-extras kdecoration breeze
 end module-set
 
-module-set libkomparediff2
-    repository kde-projects
-    use-modules libkomparediff2
-end module
-
-module grantlee
-    repository https://github.com/steveire/grantlee.git
-    branch master
-end module
-
 module-set kdevelop-kf5
     repository kde-projects
     use-modules kdevplatform kdevelop/kdevelop kdevelop-pg-qt kdev-php kdev-php-docs kdev-qmljs kdev-clang kdev-qmake kdev-css
@@ -62,3 +51,36 @@ module-set massif-visualizer
     branch frameworks
     use-modules massif-visualizer
 end module
+
+########## kdepim stuff
+
+module-set kf5-prison
+    repository kde-projects
+    use-modules prison
+end module-set
+
+module-set kdepimlibs
+    repository kde-projects
+    use-modules kdepimlibs
+end module-set
+
+# The PIM Baloo code is now in akonadi-search
+module-set akonadi-search
+    repository kde-projects
+    use-modules akonadi-search
+end module-set
+
+module-set libkgapi
+    repository kde-projects
+    use-modules libkgapi
+end module
+
+module-set kdepim
+    repository kde-projects
+    use-modules kde/pim kde/kdepim
+end module-set
+
+module-set kdepim-runtime
+    repository kde-projects
+    use-modules kdepim-runtime
+end module-set

@@ -17,11 +17,4 @@ global
   custom-build-command ninja
 end global
 
-module-set
-    repository kde-projects
-    branch qt5
-    use-modules polkit-qt-1
-end module-set
-
 include /home/milian/.bin/kf5/kf5-kdevelop-build-include
-
