@@ -28,7 +28,7 @@ end module
 
 module-set kf5-base-applications
     repository kde-projects # Required by branch-group
-    use-modules konsole kate kdiagram
+    use-modules konsole kate kdiagram dolphin
 end module-set
 
 module-set kf5-base-workspace
