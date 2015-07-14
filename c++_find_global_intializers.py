@@ -40,7 +40,7 @@ def find_associated_constructor(disassembly, symbol):
     if loc < 0:
         return False
     symbol = disassembly[loc+2:disassembly.find("\n", loc)][:-1]
-    if symbol[:23] != "__static_initialization":
+    if not symbol.startswith("__static_initialization") and not symbol.startswith("__cxx_global_var_init"):
         return False
     address = disassembly[disassembly.rfind(" ", 0, loc)+1:loc]
     loc = disassembly.find("%s <%s>" % (address, symbol))
