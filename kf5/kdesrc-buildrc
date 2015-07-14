@@ -13,8 +13,7 @@ global
 
   cxxflags -pipe -DQT_STRICT_ITERATORS -DQURL_NO_CAST_FROM_STRING -DQT_NO_HTTP -DQT_NO_FTP -Wformat -Werror=format-security -Werror=return-type -Wno-variadic-macros
 
-  cmake-options -GNinja -DCMAKE_BUILD_TYPE:STRING=debug -DBUILD_TESTING=TRUE -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
-  custom-build-command ninja
+  cmake-options -DCMAKE_BUILD_TYPE:STRING=debug -DBUILD_TESTING=TRUE -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 end global
 
 include /home/milian/.bin/kf5/kf5-kdevelop-build-include
