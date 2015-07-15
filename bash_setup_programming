@@ -30,11 +30,7 @@ export CS_PATHS=(
 # Make
 # set your common make flags here, so all scripts can benefit from them
 # general rule-of-thumb for -j: #cpucores + 1
-if [[ "$HOSTNAME" == "minime" ]]; then
-  export MAKEFLAGS=" -j3"
-else
-  export MAKEFLAGS=" -j$(($(grep -c '^processor' /proc/cpuinfo)+1)) "
-fi
+export MAKEFLAGS=" -j$(($(nproc)+1)) "
 
 # Use makeobj instead of make, to automatically switch to the build dir.
 # If you don't have makeobj, install the package named kdesdk-scripts or
