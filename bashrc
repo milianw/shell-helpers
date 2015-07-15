@@ -59,12 +59,7 @@ fi
 #xhost +local:
 
 . ~/.bin/keychain.sh
-if [[ "$HOSTNAME" == *"kdab"* ]]; then
-  alias kf5="bash --init-file ~/.bin/kf5_setup.sh"
-else
-  export KF5=1
-fi
-. ~/.bin/bash_setup_kde4_programming
+. ~/.bin/bash_setup_programming
 add_env "$HOME/projects/compiled/other"
 
 export EDITOR=nano
@@ -91,3 +86,4 @@ else
 fi
 
 export XAUTHORITY=~/.Xauthority
+prepend PATH $HOME/.bin

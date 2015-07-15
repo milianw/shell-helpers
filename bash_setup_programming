@@ -45,15 +45,11 @@ export BUILD_TO_SRC="s,/build/,/src/,"
 export OBJ_REPLACEMENT="$SRC_TO_BUILD"
 
 # you might have to change the actual filename in the path below
-# in my git repo the file is called kde4_setup_build_environment.sh
+# in my git repo the file is called kf5_setup.sh
 # NOTE: it's important this lies in ~/.kde/env so it gets
 # called at KDE startup. This makes compiled applications
 # available via KRunner etc.
-if [ -z "$KF5" ]; then
-  . ~/.bin/kde4_setup_build_environment.sh
-else
-  . ~/.bin/kf5_setup.sh
-fi
+. ~/.bin/kf5_setup.sh
 
 # A function to easily build the current directory of KDE.
 #

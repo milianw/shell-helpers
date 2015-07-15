@@ -8,11 +8,6 @@ if [[ "$KF5_OPT" == "1" ]]; then
   qtsuffix="-opt"
 fi
 
-if [[ "$HOSTNAME" == *"kdab"* ]]; then
-  . ~/.bin/bashrc
-  export PS1="KF5$suffix:$PS1"
-fi
-
 export KF5="/home/milian/projects/compiled/kf5$suffix"
 export KDE_SRC=/home/milian/projects/kf5/src
 
