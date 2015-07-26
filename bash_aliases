@@ -43,3 +43,5 @@ alias enable_icc="source ~/.bin/enable_icc.sh"
 alias webkit-debug="export QTWEBKIT_INSPECTOR_SERVER=9999"
 
 alias kdab-berlin-vpn="sudo openvpn /etc/openvpn/office-berlin.ovpn"
+
+alias nvidia-run="vblank_mode=0 primusrun"
