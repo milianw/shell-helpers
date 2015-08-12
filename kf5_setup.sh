@@ -2,10 +2,8 @@
 
 
 suffix=""
-qtsuffix="-dbg"
 if [[ "$KF5_OPT" == "1" ]]; then
   suffix="-opt"
-  qtsuffix="-opt"
 fi
 
 export KF5="/home/milian/projects/compiled/kf5$suffix"
@@ -30,15 +28,6 @@ cleankde4 CMAKE_LIBRARY_PATH
 cleankde4 PKG_CONFIG_PATH
 cleankde4 XDG_CONFIG_DIRS
 cleankde4 XDG_DATA_DIRS
-
-unset QTDIR
-QTDIR=/home/milian/projects/compiled/qt5-x86-dev-$qtsuffix
-if [ -d "$QTDIR" ]; then
-    export QTDIR
-    prepend PATH $QTDIR/bin
-    prepend QT_PLUGIN_PATH $QTDIR/plugins
-    prepend QML2_IMPORT_PATH $QTDIR/qml
-fi
 
 prepend XDG_DATA_DIRS /usr/share
 prepend XDG_DATA_DIRS $KF5/share
