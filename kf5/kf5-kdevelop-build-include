@@ -38,7 +38,7 @@ end module-set
 
 module-set kdevelop-kf5
     repository kde-projects
-    use-modules kdevelop-pg-qt kdevplatform kdevelop/kdevelop kdev-php kdev-php-docs kdev-clang kdev-css
+    use-modules kdevelop-pg-qt kdevplatform kdevelop/kdevelop kdev-php kdev-css
 end module-set
 
 options bluez-qt
