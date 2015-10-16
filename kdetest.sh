@@ -41,7 +41,7 @@ oldPS1="$PS1"
 PS1="TEST:$PS1"
 
 if [ ! -z "$KF5" ]; then
-    export QT_MESSAGE_PATTERN="%{category} %{function}: %{message}"
+    export QT_MESSAGE_PATTERN="%{category} %{function}: %{message} [%{file}:%{line}]"
     export XDG_DATA_HOME="$base/local5"
     export XDG_CONFIG_HOME="$base/config5"
     export XDG_CACHE_HOME="$base/cache5"
