@@ -28,8 +28,7 @@ if [ -f /etc/arch-release ]; then
   alias ack-grep='ack'
 fi
 
-# damn you free, why have thy no -h...
-alias free="free -m"
+alias free="free -h"
 
 # mplayer with cache, e.g. for sshfs mounted shares and the like
 alias netmplayer="mplayer -cache 8192"
