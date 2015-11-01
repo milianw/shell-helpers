@@ -28,7 +28,7 @@ end module
 
 module-set kf5-base-applications
     repository kde-projects # Required by branch-group
-    use-modules konsole kate kdiagram dolphin
+    use-modules kate kdiagram
 end module-set
 
 module-set kf5-base-workspace
@@ -38,7 +38,8 @@ end module-set
 
 module-set kdevelop-kf5
     repository kde-projects
-    use-modules kdevelop-pg-qt kdevplatform kdevelop/kdevelop kdev-php kdev-css
+    use-modules kdevelop-pg-qt kdevplatform kdevelop/kdevelop kdev-php
+    branch 5.0
 end module-set
 
 options bluez-qt
@@ -48,7 +49,7 @@ end options
 
 module-set massif-visualizer
     repository kde-projects
-    branch frameworks
+    branch master
     use-modules massif-visualizer
 end module
 
