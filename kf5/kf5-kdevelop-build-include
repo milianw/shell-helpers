@@ -31,11 +31,6 @@ module-set kf5-base-applications
     use-modules kate kdiagram
 end module-set
 
-module-set kf5-base-workspace
-    repository kde-projects # Required by branch-group
-    use-modules khelpcenter kio-extras kdecoration breeze
-end module-set
-
 module-set kdevelop-kf5
     repository kde-projects
     use-modules kdevelop-pg-qt kdevplatform kdevelop/kdevelop kdev-php
