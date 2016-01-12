@@ -50,33 +50,4 @@ end module
 
 ########## kdepim stuff
 
-module-set kf5-prison
-    repository kde-projects
-    use-modules prison
-end module-set
-
-module-set kdepimlibs
-    repository kde-projects
-    use-modules kdepimlibs
-end module-set
-
-# The PIM Baloo code is now in akonadi-search
-module-set akonadi-search
-    repository kde-projects
-    use-modules akonadi-search
-end module-set
-
-module-set libkgapi
-    repository kde-projects
-    use-modules libkgapi
-end module
-
-module-set kdepim
-    repository kde-projects
-    use-modules kde/pim kde/kdepim
-end module-set
-
-module-set kdepim-runtime
-    repository kde-projects
-    use-modules kdepim-runtime
-end module-set
+include /home/milian/projects/kf5/src/extragear/utils/kdesrc-build/kf5-kdepim-build-include
