@@ -272,6 +272,8 @@ function add_env {
     prepend CMAKE_PREFIX_PATH "$d"
     prepend CMAKE_LIBRARY_PATH "$d/lib"
     prepend CMAKE_INCLUDE_PATH "$d/include"
+    prepend QT_PLUGIN_PATH "$d/plugins"
+    prepend QML2_IMPORT_PATH "$d/qml"
   fi
 }
 
