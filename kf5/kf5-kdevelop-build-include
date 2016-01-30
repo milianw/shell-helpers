@@ -26,6 +26,11 @@ module-set frameworks
     use-modules frameworks
 end module
 
+module-set kdeutils
+    repository kde-projects
+    use-modules kdebugsettings
+end module-set
+
 module-set kf5-base-applications
     repository kde-projects # Required by branch-group
     use-modules kate kdiagram
