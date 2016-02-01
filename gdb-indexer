@@ -1,0 +1,37 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+	echo "Usage: $0 <index|unindex> <ELF files>"
+	exit 1;
+fi
+
+action=$1
+shift
+
+case $action in
+	index)
+		for lib in $@; do
+			f=`readlink -f "${lib}"`
+			if ! [ -z "`readelf --sections ${f} | grep gdb_index`" ]; then
+				echo "Skipping $f, already indexed."
+				continue
+			fi
+
+			echo "Indexing $f..."
+			dir=`dirname $f`
+			gdb --nx --batch --quiet -ex 'set confirm off' -ex "save gdb-index ${dir}" -ex quit "${f}"
+			if ! [ -f ${f}.gdb-index ]; then
+				echo "Indexing $f failed."
+				continue
+			fi
+			objcopy --add-section ".gdb_index=${f}.gdb-index" --set-section-flags '.gdb_index=readonly' "${f}" "${f}"
+			rm -f ${f}.gdb-index
+		done
+	;;
+	unindex)
+		for f in $@; do
+			echo "Removing index from $f..."
+			objcopy --remove-section ".gdb_index" "${f}" "${f}"
+		done
+	;;
+esac
