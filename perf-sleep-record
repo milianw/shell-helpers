@@ -1,0 +1,6 @@
+#!/bin/bash
+perf record --event sched:sched_stat_sleep/call-graph=fp/ \
+            --event sched:sched_switch/call-graph=dwarf/ \
+            --event sched:sched_process_exit/call-graph=fp/ \
+            --output perf.data.raw $@ && \
+perf inject --sched-stat --input perf.data.raw --output perf.data
