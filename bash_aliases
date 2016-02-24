@@ -44,3 +44,5 @@ alias webkit-debug="export QTWEBKIT_INSPECTOR_SERVER=9999"
 alias kdab-berlin-vpn="sudo openvpn /etc/openvpn/office-berlin.ovpn"
 
 alias nvidia-run="vblank_mode=0 primusrun"
+
+alias screen-omap5432="screen /dev/ttyUSB0 115200 8N1"
