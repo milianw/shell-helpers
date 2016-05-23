@@ -1,0 +1,4 @@
+#!/bin/sh
+for n in $@; do
+  echo $((0x$n))
+done

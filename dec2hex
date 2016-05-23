@@ -1,0 +1,2 @@
+#!/bin/sh
+echo $@ | xargs printf "%X\n"
