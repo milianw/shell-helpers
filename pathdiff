@@ -1,0 +1,14 @@
+#!/bin/bash
+
+from=$1
+to=$2
+
+diff -r "$from" "$to" | grep "Only in" | while IFS='' read -r line || [[ -n "$line" ]]; do
+    path=$(echo "$line" | sed 's/^Only in \(.*\): .*$/\1/')
+    file=$(echo "$line" | sed 's/^Only in .*: \(.*\)$/\1/')
+    if [[ $path == "$from"* ]]; then
+        echo "- $path/$file"
+    else
+        echo "+ $path/$file"
+    fi
+done
