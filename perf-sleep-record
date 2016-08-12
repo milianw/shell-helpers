@@ -1,6 +1,15 @@
 #!/bin/bash
+
+if [ -f /proc/sys/kernel/sched_schedstats ]; then
+    echo 1 | sudo tee /proc/sys/kernel/sched_schedstats
+fi
+
 perf record --event sched:sched_stat_sleep/call-graph=fp/ \
             --event sched:sched_switch/call-graph=dwarf/ \
             --event sched:sched_process_exit/call-graph=fp/ \
             --output perf.data.raw $@ && \
 perf inject --sched-stat --input perf.data.raw --output perf.data
+
+if [ -f /proc/sys/kernel/sched_schedstats ]; then
+    echo 0 | sudo tee /proc/sys/kernel/sched_schedstats
+fi
