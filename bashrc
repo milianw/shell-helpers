@@ -89,3 +89,5 @@ export XAUTHORITY=~/.Xauthority
 prepend PATH $HOME/.bin
 
 export JAVA_HOME=/usr/lib/jvm/java-7-openjdk
+
+export PYTHONPATH=/home/milian/projects/compiled/other/lib/python3.5/site-packages
