@@ -39,11 +39,19 @@ if [[ "$response" != "Y" && "$response" != "" ]]; then
   exit 2
 fi
 
-cs releaseme
+SRC=~/projects/kde4
+cd $SRC/releaseme
 
-for p in kdevplatform kdevelop kdev-php kdev-php-docs kdev-python; do
+for p in kdevplatform kdevelop kdev-php kdev-php-docs kdev-python kdev-python-py3; do
+for p in kdev-python; do
+  suffix=
+  if [[ "$p" == "kdev-python-py3" ]]; then
+    suffix="-py3"
+    p="kdev-python"
+  fi
+
   pushd . &> /dev/null
-  cs $p
+  cd $SRC/$p
   git fetch origin
 
   if [[ "$p" == "kdevelop" ]]; then
@@ -51,9 +59,9 @@ for p in kdevplatform kdevelop kdev-php kdev-php-docs kdev-python; do
     from=$kdevelop_lastreleasetag
     to=$kdevelop_releasetag
   else
-    v=$version
-    from=$lastreleasetag
-    to=$releasetag
+    v=$version$suffix
+    from=$lastreleasetag$suffix
+    to=$releasetag$suffix
   fi
 
   echo "creating release for $p version $v (branch is: $to / $i18nbranch)"
