@@ -266,6 +266,7 @@ function add_env {
   if [[ ! -z "$d" && -d "$d" ]]; then
     prepend PATH $d/bin
     prepend LD_LIBRARY_PATH $d/lib
+    prepend LD_LIBRARY_PATH $d/lib64
     if [ -d "$d/plugins/sqldrivers" ]; then
       prepend LD_LIBRARY_PATH "$d/plugins/sqldrivers/"
     fi
