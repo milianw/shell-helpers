@@ -38,8 +38,8 @@ end module-set
 
 module-set kdevelop-kf5
     repository kde-projects
-    use-modules kdevelop-pg-qt kdevplatform kdevelop/kdevelop kdev-php
-    branch 5.0
+    use-modules kdevplatform kdevelop/kdevelop kdev-php kdevelop-pg-qt
+    branch master
 end module-set
 
 options bluez-qt
