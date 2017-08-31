@@ -46,7 +46,8 @@ prepend LIBEXEC_PATH $KF5/lib
 
 # export QT_MESSAGE_PATTERN='%{appname}(%{pid})/%{category} %{function}: %{message}'
 c=`echo -e "\033"`
-export QT_MESSAGE_PATTERN="$c[31m%{if-debug}$c[34m%{endif}%{type}: %{appname}%{if-category}/%{category}%{endif}/%{function}$c[0m: %{message} [%{file}:%{line}/pid=%{pid}]"
+#export QT_MESSAGE_PATTERN="$c[31m%{if-debug}$c[34m%{endif}%{type}: %{appname}%{if-category}/%{category}%{endif}/%{function}$c[0m: %{message} [%{file}:%{line}/pid=%{pid}]"
+export QT_MESSAGE_PATTERN="%{time process} $c[31m%{if-debug}$c[34m%{endif}%{type}: %{if-category}%{category}/%{endif}%{function}[%{file}:%{line}]$c[0m: %{message}"
 unset c
 
 export CS_PATHS=(
