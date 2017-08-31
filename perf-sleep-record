@@ -3,9 +3,9 @@
 echo 1 | sudo tee /proc/sys/kernel/sched_schedstats
 
 perf record \
-    --event sched:sched_stat_sleep/call-graph=fp/ \
-    --event sched:sched_process_exit/call-graph=fp/ \
-    --event sched:sched_switch/call-graph=dwarf/ \
+    --event sched:sched_stat_sleep \
+    --event sched:sched_process_exit \
+    --event sched:sched_switch --call-graph=dwarf \
     --output perf.data.raw $@
 
 echo 0 | sudo tee /proc/sys/kernel/sched_schedstats
