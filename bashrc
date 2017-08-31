@@ -85,6 +85,7 @@ else
     export CXX=g++
     prepend PATH /usr/lib/icecream/libexec/icecc/bin
     export MAKEFLAGS="-j40"
+    export NINJAFLAGS="-j40"
 fi
 
 export XAUTHORITY=~/.Xauthority
