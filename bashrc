@@ -107,3 +107,8 @@ man() {
         LESS_TERMCAP_us=$'\e[1;32m' \
             man "$@"
 }
+
+export GOPATH=$HOME/projects/go
+export UBSAN_OPTIONS=print_stacktrace=1
+
+export LD_LIBRARY_PATH=$(echo $LD_LIBRARY_PATH | sed -E 's/:$//')
