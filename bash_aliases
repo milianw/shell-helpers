@@ -41,10 +41,16 @@ alias enable_icc="source ~/.bin/enable_icc.sh"
 
 alias webkit-debug="export QTWEBKIT_INSPECTOR_SERVER=9999"
 
-alias kdab-berlin-vpn="sudo openvpn /etc/openvpn/office-berlin.ovpn"
+alias kdab-berlin-vpn="sudo openvpn /etc/openvpn/client/office-berlin.ovpn"
 
 alias nvidia-run="vblank_mode=0 primusrun"
 
 alias screen-omap5432="screen /dev/ttyUSB0 115200 8N1"
 
 alias dropcaches="echo 3 | sudo tee /proc/sys/vm/drop_caches"
+
+alias clazy-demo="CLAZY_CHECKS='level0,level1,level2,level3' clazy -I/usr/include/qt -I/usr/include/qt/QtCore -c -o /dev/null -std=c++11 -fPIC"
+alias clazy-demo-gcc="g++ -Wall -Wpedantic -I/usr/include/qt -I/usr/include/qt/QtCore -c -o /dev/null -std=c++11 -fPIC"
+
+alias aslr-disable="echo 0 | sudo tee /proc/sys/kernel/randomize_va_space"
+alias aslr-enable="echo 2 | sudo tee /proc/sys/kernel/randomize_va_space"
