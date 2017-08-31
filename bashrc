@@ -72,8 +72,10 @@ export INTEL_LICENSE_FILE=28518@192.168.160.9
 export LANGUAGE=en_US
 
 if [[ "$HOSTNAME" == "agathebauer" ]]; then
-    export CC=/usr/bin/clang
-    export CXX=/usr/bin/clang++
+#    export CC=/usr/bin/clang
+#    export CXX=/usr/bin/clang++
+    export CC=/usr/bin/gcc
+    export CXX=/usr/bin/g++
 elif [[ "$HOSTNAME" == "minime" ]]; then
     export CC="ccache /home/milian/.bin/clang -Qunused-arguments"
     export CXX="ccache /home/milian/.bin/clang++ -Qunused-arguments"
