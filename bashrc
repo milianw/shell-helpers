@@ -91,9 +91,9 @@ fi
 export XAUTHORITY=~/.Xauthority
 prepend PATH $HOME/.bin
 
-export JAVA_HOME=/usr/lib/jvm/java-7-openjdk
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
 
-export PYTHONPATH=/home/milian/projects/compiled/other/lib/python3.5/site-packages
+export PYTHONPATH=/home/milian/projects/compiled/other/lib/python3.6/site-packages
 
 # colorize man output, see:
 # http://boredzo.org/blog/archives/2016-08-15/colorized-man-pages-understood-and-customized
