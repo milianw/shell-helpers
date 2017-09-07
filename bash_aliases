@@ -54,3 +54,5 @@ alias clazy-demo-gcc="g++ -Wall -Wpedantic -I/usr/include/qt -I/usr/include/qt/Q
 
 alias aslr-disable="echo 0 | sudo tee /proc/sys/kernel/randomize_va_space"
 alias aslr-enable="echo 2 | sudo tee /proc/sys/kernel/randomize_va_space"
+
+alias toplev="python2 $HOME/projects/src/pmu-tools/toplev.py"
