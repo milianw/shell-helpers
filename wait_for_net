@@ -1,1 +1,1 @@
-while true; do ping -c 1 google.de && break || sleep 1; done
+watch -g -n 1 ping -c 1 google.de
