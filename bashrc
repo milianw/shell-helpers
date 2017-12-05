@@ -74,8 +74,9 @@ export LANGUAGE=en_US
 if [[ "$HOSTNAME" == "agathebauer" ]]; then
 #    export CC=/usr/bin/clang
 #    export CXX=/usr/bin/clang++
-    export CC=/usr/bin/gcc
-    export CXX=/usr/bin/g++
+    prepend PATH /usr/lib/ccache/bin
+    export CC=gcc
+    export CXX=g++
 elif [[ "$HOSTNAME" == "minime" ]]; then
     export CC="ccache /home/milian/.bin/clang -Qunused-arguments"
     export CXX="ccache /home/milian/.bin/clang++ -Qunused-arguments"
