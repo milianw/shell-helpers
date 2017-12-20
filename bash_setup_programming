@@ -20,6 +20,35 @@ function prepend {
 }
 export -f prepend
 
+function add_env {
+  local d="$(readlink -f $1)"
+
+  if [[ ! -z "$d" && -d "$d" ]]; then
+    prepend PATH $d/bin
+    prepend LD_LIBRARY_PATH $d/lib
+    prepend LD_LIBRARY_PATH $d/lib64
+    if [ -d "$d/plugins/sqldrivers" ]; then
+      prepend LD_LIBRARY_PATH "$d/plugins/sqldrivers/"
+    fi
+    prepend PKG_CONFIG_PATH "$d/lib/pkgconfig"
+    prepend CMAKE_PREFIX_PATH "$d"
+    prepend CMAKE_LIBRARY_PATH "$d/lib"
+    prepend CMAKE_INCLUDE_PATH "$d/include"
+    prepend QT_PLUGIN_PATH "$d/plugins"
+    prepend QT_PLUGIN_PATH "$d/lib/plugins"
+    prepend QT_PLUGIN_PATH "$d/lib64/plugins"
+    prepend QT_PLUGIN_PATH "$d/lib/x86_64-linux-gnu/plugins"
+    prepend QML2_IMPORT_PATH "$d/qml"
+    prepend QML2_IMPORT_PATH "$d/lib/qml"
+    prepend QML2_IMPORT_PATH "$d/lib64/qml"
+    prepend QML2_IMPORT_PATH "$d/lib/x86_64-linux-gnu/qml"
+    prepend XDG_DATA_DIRS "$d/share"
+    prepend XDG_CONFIG_DIRS "$d/etc/xdg"
+  fi
+}
+
+export -f add_env
+
 export SRC_ROOT=$HOME/projects
 
 export CS_PATHS=(
@@ -259,25 +288,3 @@ export -f listCTests
 
 alias kdetest="sh ~/.bin/kdetest.sh"
 complete -F _kdetest kdetest
-
-function add_env {
-  local d="$(readlink -f $1)"
-
-  if [[ ! -z "$d" && -d "$d" ]]; then
-    prepend PATH $d/bin
-    prepend LD_LIBRARY_PATH $d/lib
-    prepend LD_LIBRARY_PATH $d/lib64
-    if [ -d "$d/plugins/sqldrivers" ]; then
-      prepend LD_LIBRARY_PATH "$d/plugins/sqldrivers/"
-    fi
-    prepend PKG_CONFIG_PATH "$d/lib/pkgconfig"
-    prepend CMAKE_PREFIX_PATH "$d"
-    prepend CMAKE_LIBRARY_PATH "$d/lib"
-    prepend CMAKE_INCLUDE_PATH "$d/include"
-    prepend QT_PLUGIN_PATH "$d/plugins"
-    prepend QML2_IMPORT_PATH "$d/qml"
-    prepend XDG_DATA_DIRS "$d/share"
-  fi
-}
-
-export -f add_env

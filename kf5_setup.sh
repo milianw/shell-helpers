@@ -30,17 +30,11 @@ cleankde4 XDG_CONFIG_DIRS
 cleankde4 XDG_DATA_DIRS
 
 prepend XDG_DATA_DIRS /usr/share
-prepend XDG_DATA_DIRS $KF5/share
 prepend XDG_CONFIG_DIRS /etc/xdg
-prepend XDG_CONFIG_DIRS $KF5/etc/xdg
-prepend PATH $KF5/bin
+add_env $KF5
 prepend PATH ~/.bin/kf5
-prepend QT_PLUGIN_PATH $KF5/lib/plugins:$KF5/lib64/plugins:$KF5/lib/x86_64-linux-gnu/plugins
-prepend QML2_IMPORT_PATH $KF5/lib/qml:$KF5/lib64/qml:$KF5/lib/x86_64-linux-gnu/qml
 export QML_IMPORT_PATH=$QML2_IMPORT_PATH
 
-prepend CMAKE_PREFIX_PATH $KF5
-prepend CMAKE_LIBRARY_PATH $KF5/lib
 prepend LIBEXEC_PATH /usr/lib
 prepend LIBEXEC_PATH $KF5/lib
 
