@@ -56,3 +56,5 @@ alias aslr-disable="echo 0 | sudo tee /proc/sys/kernel/randomize_va_space"
 alias aslr-enable="echo 2 | sudo tee /proc/sys/kernel/randomize_va_space"
 
 alias toplev="python2 $HOME/projects/src/pmu-tools/toplev.py"
+
+alias memcheck="valgrind --smc-check=all-non-file --track-origins=yes"
