@@ -1,0 +1,13 @@
+#!/bin/bash
+#
+# find files called e.g. libFoo.so.1.2.3
+# that have newer replacements. The newer files
+# are checked by looking at where libFoo.so links
+#
+
+find "$1/" -type f -name "*.so.*" | while read f; do
+    base=$(echo $f | sed 's/.so.*$/.so/');
+    if [[ -f "$base" && "$(readlink -f $base)" != "$(readlink -f $f)" ]]; then
+        echo $f;
+    fi
+done
