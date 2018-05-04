@@ -106,7 +106,7 @@ man() {
         LESS_TERMCAP_se=$'\e[0m' \
         LESS_TERMCAP_so=$'\e[1;40;92m' \
         LESS_TERMCAP_ue=$'\e[0m' \
-        LESS_TERMCAP_us=$'\e[1;32m' \
+        LESS_TERMCAP_us=$'\e[1;33m' \
             man "$@"
 }
 
