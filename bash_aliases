@@ -14,6 +14,7 @@ alias compile++='g++ -Wall -pedantic -ansi'
 # run program in gdb
 # usage: debug APP APP_ARGS
 alias debug='QT_XCB_NO_GRAB_SERVER=1 gdb --eval-command="run" --args'
+alias debug_main='QT_XCB_NO_GRAB_SERVER=1 gdb --eval-command="break main" --eval-command="run" --args'
 
 # I always want to install all updates
 alias apupgrade="sudo aptitude update; sudo aptitude -y dist-upgrade"
