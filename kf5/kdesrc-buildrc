@@ -11,7 +11,7 @@ global
 
   git-repository-base kde-projects kde:
 
-  cxxflags -pipe -DQT_STRICT_ITERATORS -DQURL_NO_CAST_FROM_STRING -DQT_NO_HTTP -DQT_NO_FTP -Wformat -Werror=format-security -Werror=return-type -Wno-variadic-macros
+  cxxflags -pipe -DQT_STRICT_ITERATORS -DQURL_NO_CAST_FROM_STRING -Wformat -Werror=format-security -Werror=return-type -Wno-variadic-macros
 
   cmake-options -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo -DBUILD_TESTING=TRUE -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_CXX_FLAGS_RELWITHDEBINFO="-g -O2 -UQT_NO_DEBUG" -DOPENSSL_ROOT_DIR=/usr/include/openssl-1.0
 end global
