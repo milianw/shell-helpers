@@ -1,0 +1,4 @@
+#!/bin/bash
+
+#$KF5/extragear/utils/kdesrc-build/kdesrc-build --debug --stop-on-failure --ignore-modules=cmake-git $@
+$KF5/extragear/utils/kdesrc-build/kdesrc-build --stop-on-failure --ignore-modules=plymouth-kcm $@
