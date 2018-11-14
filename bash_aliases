@@ -59,3 +59,8 @@ alias aslr-enable="echo 2 | sudo tee /proc/sys/kernel/randomize_va_space"
 alias toplev="python2 $HOME/projects/src/pmu-tools/toplev.py"
 
 alias memcheck="valgrind --smc-check=all-non-file --track-origins=yes"
+
+alias kde_reboot="qdbus org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.logout 0 1 0"
+alias kde_shutdown="qdbus org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.logout 0 2 0"
+
+alias minmaxavgstats="datamash -W min 1 max 1 mean 1 median 1 q1 1 q3 1 sstdev 1"
