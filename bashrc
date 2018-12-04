@@ -67,8 +67,6 @@ export GNUTERM=qt
 
 set +o histexpand
 
-export INTEL_LICENSE_FILE=28518@192.168.160.9
-
 export LANGUAGE=en_US
 
 if [[ "$HOSTNAME" == "agathebauer" ]]; then
