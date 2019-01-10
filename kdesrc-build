@@ -1,4 +1,4 @@
 #!/bin/bash
 
 #$KDE_SRC/extragear/utils/kdesrc-build/kdesrc-build --debug --stop-on-failure --ignore-modules=cmake-git $@
-$KDE_SRC/extragear/utils/kdesrc-build/kdesrc-build --stop-on-failure --ignore-modules=plymouth-kcm $@
+$KDE_SRC/extragear/utils/kdesrc-build/kdesrc-build --stop-on-failure --ignore-modules=plymouth-kcm --ignore-modules=kjs --ignore-modules=khtml --ignore-modules=kjsembed $@
