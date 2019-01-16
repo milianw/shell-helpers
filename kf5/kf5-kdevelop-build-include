@@ -56,4 +56,4 @@ end module
 ########## kdepim stuff
 
 include /home/milian/projects/kf5/src/extragear/utils/kdesrc-build/kf5-kdepim-build-include
-include /home/milian/projects/kf5/src/extragear/utils/kdesrc-build/kf5-workspace-build-include
+#include /home/milian/projects/kf5/src/extragear/utils/kdesrc-build/kf5-workspace-build-include
