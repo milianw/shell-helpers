@@ -5,7 +5,7 @@ if [[ "$(which ksshaskpass)" != "" ]]; then
 fi
 
 if [[ "$USER" != "root" ]]; then
-  keychain --agents ssh ~/.ssh/kde_id_dsa ~/.ssh/milian
+  keychain --agents ssh ~/.ssh/kde_id_dsa ~/.ssh/milian ~/.ssh/kde_id_v2
 fi
 
 if [[ -f $HOME/.keychain/$HOSTNAME-sh ]]; then
