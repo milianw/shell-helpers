@@ -11,6 +11,6 @@ fi
 if [ "$1" = "-f" ] && [ "$2" = "-" ]; then
     /usr/bin/make "$@"
 else
-    GMAKE=/usr/bin/make makeobj "$@"
+    makeobj "$@"
 fi
 
