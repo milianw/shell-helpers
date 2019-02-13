@@ -64,11 +64,6 @@ export CS_PATHS=(
 # general rule-of-thumb for -j: #cpucores + 1
 export MAKEFLAGS=" -j$(($(nproc)+1)) "
 
-# Use makeobj instead of make, to automatically switch to the build dir.
-# If you don't have makeobj, install the package named kdesdk-scripts or
-# kdesdk, or check out kdesdk/scripts from svn.
-alias make='makeobj'
-
 # Make
 # Tell many scripts how to switch from source dir to build dir:
 # requires makeobj from kdesdk and replaces src with build
