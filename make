@@ -3,6 +3,7 @@
 if icecream_is_available.sh; then
     export USE_ICECREAM=1
     export MAKEFLAGS="-j40"
+    export NINJAFLAGS="-j40"
 fi
 
 # specially handle make -f - ..., makeobj cannot handle this otherwise
@@ -10,6 +11,6 @@ fi
 if [ "$1" = "-f" ] && [ "$2" = "-" ]; then
     /usr/bin/make "$@"
 else
-    MAKE=/usr/bin/make makeobj "$@"
+    GMAKE=/usr/bin/make makeobj "$@"
 fi
 
