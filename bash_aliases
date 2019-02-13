@@ -64,3 +64,5 @@ alias kde_reboot="qdbus org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.
 alias kde_shutdown="qdbus org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.logout 0 2 0"
 
 alias minmaxavgstats="datamash -W min 1 max 1 mean 1 median 1 q1 1 q3 1 sstdev 1"
+
+alias icemon="icemon -s 192.168.150.185"
