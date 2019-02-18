@@ -2,4 +2,4 @@
 
 . /etc/icecream.conf
 
-ping -i 0.5 -c 1 $ICECREAM_SCHEDULER_HOST 2>&1 > /dev/null
+(echo "listcs"; sleep .1; echo "quit") | telnet $ICECREAM_SCHEDULER_HOST 8766 2> /dev/null | grep -Po "jobs=\d+/\d+" | sed -r 's#jobs=[0-9]+/##' | paste -sd+ | bc

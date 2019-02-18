@@ -1,9 +1,10 @@
 #!/bin/sh
 
-if icecream_is_available.sh; then
+ICECREAM_JOBS=$(icecream_is_available.sh)
+if [ ! -z "$ICECREAM_JOBS" ]; then
     export USE_ICECREAM=1
-    export MAKEFLAGS="-j40"
-    export NINJAFLAGS="-j40"
+    export MAKEFLAGS="-j$ICECREAM_JOBS"
+    export NINJAFLAGS="-j$ICECREAM_JOBS"
 fi
 
 # specially handle make -f - ..., makeobj cannot handle this otherwise
