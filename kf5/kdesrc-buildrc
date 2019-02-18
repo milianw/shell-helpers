@@ -1,19 +1,19 @@
-
 # Adjust all these settings at will
 
 global
-#  qtdir /d/qt/5/kde/qtbase
   source-dir /home/milian/projects/kf5/src
-  build-dir /home/milian/projects/kf5/build
-  kdedir /home/milian/projects/compiled/kf5
+
+  #qtdir /home/milian/projects/compiled/qt5-x86-dev-dbg
+  build-dir /home/milian/projects/kf5/build-dbg
+  kdedir /home/milian/projects/compiled/kf5-dbg
 
   branch-group kf5-qt5
 
   git-repository-base kde-projects kde:
 
-  cxxflags -pipe -DQT_STRICT_ITERATORS -DQURL_NO_CAST_FROM_STRING -Wformat -Werror=format-security -Werror=return-type -Wno-variadic-macros
-
-  cmake-options -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo -DBUILD_TESTING=TRUE -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_CXX_FLAGS_RELWITHDEBINFO="-g -O2 -UQT_NO_DEBUG" -DOPENSSL_ROOT_DIR=/usr/include/openssl-1.0
+  custom-build-command ninja
+  cxxflags -pipe -DQT_STRICT_ITERATORS -DQURL_NO_CAST_FROM_STRING -Wformat -Werror=format-security -Werror=return-type -Wno-variadic-macros -gsplit-dwarf
+  cmake-options -DBUILD_TESTING=TRUE -DCMAKE_BUILD_TYPE:STRING=debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DOPENSSL_ROOT_DIR=/usr/include/openssl-1.0 -G Ninja
 end global
 
 include /home/milian/.bin/kf5/kf5-kdevelop-build-include
