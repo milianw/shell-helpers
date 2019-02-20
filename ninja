@@ -1,2 +1,5 @@
 #!/bin/sh
+if [ "$VERBOSE" = "1" ]; then
+    NINJAFLAGS="$NINJAFLAGS -v"
+fi
 /usr/bin/ninja $NINJAFLAGS "$@"
