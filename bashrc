@@ -69,20 +69,8 @@ set +o histexpand
 
 export LANGUAGE=en_US
 
-if [[ "$HOSTNAME" == "agathebauer" ]]; then
-#    export CC=/usr/bin/clang
-#    export CXX=/usr/bin/clang++
-    export CC=gcc
-    export CXX=g++
-elif [[ "$HOSTNAME" == "minime" ]]; then
-    export CC="ccache /home/milian/.bin/clang -Qunused-arguments"
-    export CXX="ccache /home/milian/.bin/clang++ -Qunused-arguments"
-    export CCACHE_CPP2=yes
-else
-    export CC=gcc
-    export CXX=g++
-    prepend PATH /usr/lib/icecream/libexec/icecc/bin
-fi
+export CC=$HOME/.bin/gcc
+export CXX=$HOME/.bin/g++
 
 export XAUTHORITY=~/.Xauthority
 prepend PATH $HOME/.bin
