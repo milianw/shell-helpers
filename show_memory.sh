@@ -30,7 +30,7 @@ else
 fi
 
 read -r -d '' plot <<GNUPLOT
-set title '$title';
+set title '$title' noenhanced;
 set xlabel 'time in s';
 set ylabel 'memory consumption in MB';
 set key bottom right;
