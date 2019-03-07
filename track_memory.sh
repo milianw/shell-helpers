@@ -77,7 +77,7 @@ if [[ "${TRACK_MEMORY_OUTPUTDIR}" != "" ]]; then
     logfile=${TRACK_MEMORY_OUTPUTDIR}/$logfile
 fi
 
-echo "# $(cat /proc/$pid/cmdline)" > $logfile
+echo "# $(cat /proc/$pid/cmdline | sed 's/\x0/ /g')" > $logfile
 echo "# $sleep" >> $logfile
 
 cat $logfile
