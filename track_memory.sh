@@ -9,7 +9,7 @@
 #
 
 pid=$1
-sleep=1;
+sleep=0.1;
 
 if [[ "$(pmap --version 2>&1 | grep BusyBox)" ]]; then
     summer=$(cat <<'AWK'
