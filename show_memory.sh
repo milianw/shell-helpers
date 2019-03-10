@@ -19,6 +19,7 @@ fi
 
 title=$(head -n1 "$logfile")
 timeout=$(head -n2 "$logfile" | tail -n1)
+basetime=$(head -n3 "$logfile" | tail -n1 | awk '{print $1}')
 
 title=${title/\# /}
 timeout=${timeout/\# /}
@@ -36,10 +37,10 @@ set ylabel 'memory consumption in MB';
 set key bottom right;
 set grid;
 plot \
-  '$logfile' using (\$0 * $timeout):(\$1/1024) $lineType title 'RSS', \
-  '$logfile' using (\$0 * $timeout):(\$2/1024) $lineType title 'Dirty', \
-  '$logfile' using (\$0 * $timeout):(\$3/1024) $lineType title 'Heap', \
-  '$logfile' using (\$0 * $timeout):(\$4/1024) $lineType title 'Stack' ;
+  '$logfile' using (\$1 - $basetime):(\$2/1024) $lineType title 'RSS', \
+  '$logfile' using (\$1 - $basetime):(\$3/1024) $lineType title 'Dirty', \
+  '$logfile' using (\$1 - $basetime):(\$4/1024) $lineType title 'Heap', \
+  '$logfile' using (\$1 - $basetime):(\$5/1024) $lineType title 'Stack' ;
   ;
 GNUPLOT
 

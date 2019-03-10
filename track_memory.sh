@@ -84,7 +84,7 @@ cat $logfile
 
 while [ -d /proc/$pid/ ]; do
   echo -n "snapshot $pid: "
-  pmap -x $pid | awk "$summer" | tee -a $logfile
+  echo $(date '+%s.%N') $(pmap -x $pid | awk "$summer") | tee -a $logfile
   sleep $sleep
 done
 
