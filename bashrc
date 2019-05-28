@@ -68,6 +68,7 @@ export CC=$HOME/.bin/gcc
 export CXX=$HOME/.bin/g++
 
 export XAUTHORITY=~/.Xauthority
+prepend PATH $HOME/.local/bin
 prepend PATH $HOME/.bin
 
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
