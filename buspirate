@@ -1,0 +1,2 @@
+#!/bin/bash
+screen /dev/buspirate 115200 8N1
