@@ -3,7 +3,8 @@
                 "left": [
                         {
                                 "function": "powerline.segments.common.vcs.branch",
-                                "priority": 40
+                                "priority": 40,
+                                "args": { "status_colors": true, "ignore_statuses": ["U"] }
                         },
                         {
                                 "function": "powerline.segments.shell.cwd",
