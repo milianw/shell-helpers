@@ -2,9 +2,8 @@
         "segments": {
                 "left": [
                         {
-                                "function": "powerline.segments.common.vcs.branch",
-                                "priority": 40,
-                                "args": { "status_colors": true, "ignore_statuses": ["U"] }
+                                "function": "powerline_gitstatus.gitstatus",
+                                "priority": 40
                         },
                         {
                                 "function": "powerline.segments.shell.cwd",
