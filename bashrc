@@ -101,3 +101,6 @@ if [ -f `which powerline-daemon` ]; then
   POWERLINE_BASH_SELECT=1
   . /usr/lib/python3.7/site-packages/powerline/bindings/bash/powerline.sh
 fi
+
+# I still want to load my qtlogging.ini even when setFilterRules was used...
+export QT_LOGGING_CONF=$HOME/.config/QtProject/qtlogging.ini
