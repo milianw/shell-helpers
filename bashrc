@@ -106,3 +106,5 @@ fi
 export QT_LOGGING_CONF=$HOME/.config/QtProject/qtlogging.ini
 export CMAKE_GENERATOR=Ninja
 
+. /etc/profile.d/autojump.bash
+
