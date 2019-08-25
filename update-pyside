@@ -1,2 +1,2 @@
 #!/bin/sh
-pip3 install --user --upgrade --index-url=http://download.qt.io/snapshots/ci/pyside/5.12/latest/ --trusted-host download.qt.io pyside2 shiboken2 shiboken2-generator
+pip3 install --user --upgrade --index-url=http://download.qt.io/snapshots/ci/pyside/5.13/latest/ --trusted-host download.qt.io pyside2 shiboken2 shiboken2-generator
