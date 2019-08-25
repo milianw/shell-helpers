@@ -71,3 +71,5 @@ alias icemon="icemon -s 192.168.150.185"
 alias restart_icecream="sudo systemctl restart icecream"
 
 alias ls="lsd --group-dirs=first --icon=never"
+
+alias diff="colordiff -u"
