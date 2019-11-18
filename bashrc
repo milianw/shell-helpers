@@ -74,8 +74,7 @@ prepend PATH $HOME/.bin
 
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
 
-export PYTHONPATH=/home/milian/projects/compiled/other/lib/python3.6/site-packages
-prepend PYTHONPATH /home/milian/.local/lib/python3.7/site-packages
+prepend PYTHONPATH /home/milian/.local/lib/python3.8/site-packages
 
 # colorize man output, see:
 # http://boredzo.org/blog/archives/2016-08-15/colorized-man-pages-understood-and-customized
@@ -100,7 +99,7 @@ if [ -f `which powerline-daemon` ]; then
   powerline-daemon -q
   POWERLINE_BASH_CONTINUATION=1
   POWERLINE_BASH_SELECT=1
-  . /usr/lib/python3.7/site-packages/powerline/bindings/bash/powerline.sh
+  . /usr/lib/python3.8/site-packages/powerline/bindings/bash/powerline.sh
 fi
 
 # I still want to load my qtlogging.ini even when setFilterRules was used...
