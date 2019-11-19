@@ -25,6 +25,7 @@ export GIT_PS1_SHOWDIRTYSTATE=yes
 export GIT_PS1_SHOWUPSTREAM="auto"
 #export GIT_PS1_SHOWUNTRACKEDFILES=yes
 #export GIT_PS1_SHOWSTASHSTATE=yes
+export PROMPT_DIRTRIM=1
 PS1='┌${debian_chroot:+($debian_chroot)}\[\033[00;35m\]\u\[\033[00m\]:\[\033[00;33m\]\w\[\033[32m\]$(__git_ps1 \|%s)\[\033[00m\]\n└\$ '
 
 # If this is an xterm set the title to user@host:dir
