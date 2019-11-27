@@ -7,13 +7,28 @@ global
   build-dir /home/milian/projects/kf5/build-dbg
   kdedir /home/milian/projects/compiled/kf5-dbg
 
-  branch-group kf5-qt5
-
   git-repository-base kde-projects kde:
 
   custom-build-command make
   cxxflags -pipe -DQT_STRICT_ITERATORS -DQURL_NO_CAST_FROM_STRING -Wformat -Werror=format-security -Werror=return-type -Wno-variadic-macros
   cmake-options -DBUILD_TESTING=TRUE -DCMAKE_BUILD_TYPE:STRING=debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DOPENSSL_ROOT_DIR=/usr/include/openssl-1.0 -G Ninja
+
+  include-dependencies true
 end global
 
-include /home/milian/.bin/kf5/kf5-kdevelop-build-include
+module-set kf5-base-applications
+    repository kde-projects
+    use-modules kate
+end module-set
+
+module-set kdevelop-kf5
+    repository kde-projects
+    use-modules kdevelop/kdevelop
+    # kdev-php kdevelop-pg-qt
+    branch master
+end module-set
+
+options bluez-qt
+    # Default udev rules dir /lib/udev/rules.d is not writable by regular user
+    cmake-options -DINSTALL_UDEV_RULE:BOOL=OFF
+end options
