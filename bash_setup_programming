@@ -15,8 +15,8 @@
 ###############################################################
 
 function prepend {
-    p=$(readlink -f $2)
-    if [ -d "$p" ]; then
+    if [ -d "$2" ]; then
+        p=$(readlink -f $2)
         eval $1=\"$p\$\{$1:+':'\$$1\}\" && export $1
     fi
 }
