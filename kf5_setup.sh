@@ -9,26 +9,6 @@ fi
 export KF5="/home/milian/projects/compiled/kf5$suffix"
 export KDE_SRC=/home/milian/projects/kf5/src
 
-
-# cleanup KDE4 stuff
-unset KDEDIR
-unset KDEDIRS
-
-function cleankde4 {
-    eval $1="\$(echo \"\$$1\" | sed -r 's#(^|:)[^:]+kde4[^:]*##g')"
-    export $1
-}
-cleankde4 PATH
-cleankde4 QT_PLUGIN_PATH
-cleankde4 LIBRARY_PATH
-cleankde4 LD_LIBRARY_PATH
-cleankde4 CMAKE_PREFIX_PATH
-cleankde4 CMAKE_INCLUDE_PATH
-cleankde4 CMAKE_LIBRARY_PATH
-cleankde4 PKG_CONFIG_PATH
-cleankde4 XDG_CONFIG_DIRS
-cleankde4 XDG_DATA_DIRS
-
 prepend XDG_DATA_DIRS /usr/share
 prepend XDG_CONFIG_DIRS /etc/xdg
 add_env $KF5

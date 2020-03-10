@@ -1,9 +1,9 @@
 #!/bin/bash
 
 ###############################################################
-# KDE 4 DEVELOPMENT
+# KDE DEVELOPMENT
 #
-# If you just want to setup your environment for kde4
+# If you just want to setup your environment for kde
 # development, download this file and save it somewhere
 # now put the following line (with the path pointing to
 # your just downloaded file) into your ~/.bashrc:
@@ -11,7 +11,7 @@
 # . ~/path/to/this/file
 #
 # Example (the leading # has to be ommitted of course!)
-# . ~/.bash_setup_kde4_programming
+# . ~/.bash_setup_programming
 ###############################################################
 
 function prepend {
@@ -97,28 +97,15 @@ function cmakekde {
         fi
         fail=0
 
-        if [ -z "$KF5" ]; then
-            cmake "$srcFolder" -DCMAKE_INSTALL_PREFIX=$CMAKE_INSTALL_PREFIX \
-                    -DCMAKE_BUILD_TYPE=debugfull \
-                    -DKDE4_AUTH_POLICY_FILES_INSTALL_DIR=$KDEDIR/share/polkit-1/actions \
-                    -DKDE4_BUILD_TESTS=ON || fail=1
-        else
-            cmake "$srcFolder" -DCMAKE_INSTALL_PREFIX=$CMAKE_INSTALL_PREFIX \
-                '-DCMAKE_CXX_FLAGS:STRING=-pipe -DQT_STRICT_ITERATORS -DQURL_NO_CAST_FROM_STRING -Wformat -Werror=format-security -Werror=return-type -Wno-variadic-macros' \
-                -DBUILD_TESTING=TRUE -DCMAKE_BUILD_TYPE:STRING=debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja || fail=1
-        fi
+        cmake "$srcFolder" -DCMAKE_INSTALL_PREFIX=$CMAKE_INSTALL_PREFIX \
+            '-DCMAKE_CXX_FLAGS:STRING=-pipe -DQT_STRICT_ITERATORS -DQURL_NO_CAST_FROM_STRING -Wformat -Werror=format-security -Werror=return-type -Wno-variadic-macros' \
+            -DBUILD_TESTING=TRUE -DCMAKE_BUILD_TYPE:STRING=debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja || fail=1
 
         if [[ $fail == 1 ]]; then
           return 1
         fi
 
         make install
-
-        if [ -z "$KF5" ]; then
-            kbuildsycoca4
-        else
-            kbuildsycoca5
-        fi
 
         if test $switched -eq 1; then
           cs
