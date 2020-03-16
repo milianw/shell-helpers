@@ -71,3 +71,5 @@ alias restart_icecream="sudo systemctl restart icecream"
 alias ls="lsd --group-dirs=first --icon=never"
 
 alias diff="colordiff -u"
+
+alias clang-ast-dump="clang -cc1 -ast-dump"
