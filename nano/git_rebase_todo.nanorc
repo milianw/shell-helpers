@@ -1,0 +1,10 @@
+## syntax highlighting for git commit messages of KDE projects
+syntax "gitrebasetodo" "/git-rebase-todo$"
+
+color green "^(p|pick) .*$"
+color blue "^(s|squash) .*$"
+color brightyellow "^(f|fixup) .*$"
+color yellow "^(e|r|edit|reword) .*$"
+color red "^(d|drop) .*$"
+color brightgreen "^(x|exec|b|break|l|label|t|reset|m|merge) .*$"
+color brightblack "^(;|#).*$"

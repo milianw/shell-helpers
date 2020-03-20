@@ -28,3 +28,4 @@ include "/usr/share/nano/makefile.nanorc"
 # /usr/share/nano/java.nanorc
 
 include "/home/milian/.bin/nano/git_commit.nanorc"
+include "/home/milian/.bin/nano/git_rebase_todo.nanorc"
