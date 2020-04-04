@@ -1,1 +1,2 @@
-/usr/bin/ld.gold
+#!/bin/sh
+nice /usr/bin/ld.gold "$@"
