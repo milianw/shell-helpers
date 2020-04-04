@@ -106,7 +106,7 @@ fi
 export QT_LOGGING_CONF=$HOME/.config/QtProject/qtlogging.ini
 export CMAKE_GENERATOR=Ninja
 
-. /etc/profile.d/autojump.bash
+[[ -s /etc/profile.d/autojump.sh ]] && source /etc/profile.d/autojump.sh
 
 FZF_CTRL_T_COMMAND="fd"
 FZF_ALT_C_COMMAND="fd -t d"
