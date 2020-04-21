@@ -1,0 +1,26 @@
+#!/bin/bash
+
+input="$1"
+output="$2"
+
+if [[ ! -f "$input" ]]; then
+    echo "error: input file \"$input\" does not exist"
+    exit 1
+fi
+
+if [[ ! -e "$output" ]]; then
+    echo "error: output device \"$output\" does not exist"
+    exit 1
+fi
+
+echo "will run:"
+echo
+echo "    dd if="$1" of="$2" status=progress conv=sync bs=4M"
+echo
+echo "continue? [y/N]"
+
+read a
+
+if [[ "$a" == "y" ]]; then
+    sudo dd if="$1" of="$2" status=progress conv=sync bs=4M
+fi
