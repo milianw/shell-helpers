@@ -5,13 +5,17 @@ output="$2"
 
 if [[ ! -f "$input" ]]; then
     echo "error: input file \"$input\" does not exist"
+    echo "$0 <input image> <output device>"
     exit 1
 fi
 
 if [[ ! -e "$output" ]]; then
     echo "error: output device \"$output\" does not exist"
+    echo "$0 <input image> <output device>"
     exit 1
 fi
+
+lsblk "$output" || exit 1
 
 echo "will run:"
 echo
