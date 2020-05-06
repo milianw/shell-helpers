@@ -112,3 +112,7 @@ FZF_CTRL_T_COMMAND="fd"
 FZF_ALT_C_COMMAND="fd -t d"
 . /usr/share/fzf/completion.bash
 . /usr/share/fzf/key-bindings.bash
+
+if [[ "$(hostname)" == "milian-workstation" ]]; then
+    export USE_ICECREAM=0
+fi
