@@ -16,6 +16,11 @@ global
   include-dependencies true
 end global
 
+module-set kf5-build-support
+    repository kde-projects
+    use-modules kdesrc-build kde-dev-scripts extra-cmake-modules
+end module-set
+
 module-set kf5-base-applications
     repository kde-projects
     use-modules kate
