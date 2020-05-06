@@ -1,4 +1,5 @@
 #!/bin/bash
+sudo sysctl -w kernel.yama.ptrace_scope=0
 sudo mount -o remount,mode=755 /sys/kernel/debug
 sudo mount -o remount,mode=755 /sys/kernel/debug/tracing
 echo "0" | sudo tee /proc/sys/kernel/kptr_restrict
