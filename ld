@@ -1,2 +1,1 @@
-#!/bin/sh
-nice /usr/bin/ld.gold "$@"
+ld.lld-wrapper

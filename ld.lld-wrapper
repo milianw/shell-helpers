@@ -1,0 +1,3 @@
+#!/bin/sh
+
+nice /usr/bin/ld.lld --allow-shlib-undefined "$@"
