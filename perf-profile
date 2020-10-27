@@ -1,3 +1,3 @@
 #!/bin/sh
 
-perf record -m 16M --aio --switch-events --sample-cpu --call-graph dwarf,8192 -e cycles -e sched:sched_switch $@
+perf record -m 16M --aio -z --switch-events --sample-cpu --call-graph dwarf,8192 -e cycles -e sched:sched_switch $@
