@@ -23,7 +23,12 @@ end module-set
 
 module-set kf5-base-applications
     repository kde-projects
-    use-modules kate ruqola
+    use-modules kate
+end module-set
+
+module-set extragear-network
+    repository kde-projects
+    use-modules ruqola
 end module-set
 
 module-set kdevelop-kf5
