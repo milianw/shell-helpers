@@ -2,6 +2,11 @@
 
 . /etc/icecream.conf
 
+if [ -z "$ICECREAM_SCHEDULER_HOST" ]; then
+    >&2 echo "ICECREAM_SCHEDULER_HOST is not set in icecream.conf"
+    exit 1
+fi
+
 timeout_1=1
 timeout_2=2
 if [[ "$(hostname)" == "milian-kdab2" ]]; then
