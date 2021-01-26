@@ -33,8 +33,7 @@ end module-set
 
 module-set kdevelop-kf5
     repository kde-projects
-    use-modules kdevelop/kdevelop
-    # kdev-php kdevelop-pg-qt
+    use-modules kdevelop/kdevelop kdev-php kdevelop-pg-qt kdev-python
     branch master
 end module-set
 
