@@ -29,6 +29,8 @@ function add_env {
     prepend PATH $d/bin
     prepend LD_LIBRARY_PATH $d/lib
     prepend LD_LIBRARY_PATH $d/lib64
+    prepend LIBEXEC_PATH $d/lib/libexec
+    prepend LIBEXEC_PATH $d/lib64/libexec
     if [ -d "$d/plugins/sqldrivers" ]; then
       prepend LD_LIBRARY_PATH "$d/plugins/sqldrivers/"
     fi
