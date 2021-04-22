@@ -116,3 +116,7 @@ FZF_ALT_C_COMMAND="fd -t d"
 if [[ "$(hostname)" == "milian-workstation" ]]; then
     export USE_ICECREAM=0
 fi
+
+if [[ ! -z "$SSH_CONNECTION" ]]; then
+    export QT_QPA_PLATFORMTHEME=kde
+fi
