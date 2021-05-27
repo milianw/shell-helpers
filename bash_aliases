@@ -13,9 +13,9 @@ alias compile++='g++ -Wall -pedantic -ansi'
 
 # run program in gdb
 # usage: debug APP APP_ARGS
-alias debug='QT_XCB_NO_GRAB_SERVER=1 gdb --eval-command="run" --args'
-alias debug_main='QT_XCB_NO_GRAB_SERVER=1 gdb --eval-command="break main" --eval-command="run" --args'
-alias debug_catch='QT_XCB_NO_GRAB_SERVER=1 gdb --eval-command="catch throw" --eval-command="run" --args'
+alias debug='QT_XCB_NO_GRAB_SERVER=1 gdb -q --eval-command="run" --args'
+alias debug_main='QT_XCB_NO_GRAB_SERVER=1 gdb -q --eval-command="break main" --eval-command="run" --args'
+alias debug_catch='QT_XCB_NO_GRAB_SERVER=1 gdb -q --eval-command="catch throw" --eval-command="run" --args'
 
 # sometimes I want to clean all files which are not tracked by svn
 alias svnclean="svn status | grep "^?" | cut -c 3- | xargs rm -Rf"
