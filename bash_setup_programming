@@ -101,7 +101,7 @@ function cmakekde {
 
         cmake "$srcFolder" -DCMAKE_INSTALL_PREFIX=$CMAKE_INSTALL_PREFIX \
             '-DCMAKE_CXX_FLAGS:STRING=-pipe -DQT_STRICT_ITERATORS -DQURL_NO_CAST_FROM_STRING -Wformat -Werror=format-security -Werror=return-type -Wno-variadic-macros' \
-            -DBUILD_TESTING=TRUE -DCMAKE_BUILD_TYPE:STRING=debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja || fail=1
+            -DBUILD_TESTING=TRUE -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja || fail=1
 
         if [[ $fail == 1 ]]; then
           return 1
