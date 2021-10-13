@@ -1,6 +1,3 @@
-#!/bin/python3
-import pkg_resources
-from subprocess import call
+#!/bin/sh
 
-packages = [dist.project_name for dist in pkg_resources.working_set]
-call("pip install --user --upgrade " + ' '.join(packages), shell=True)
+pip-review --local --interactive
