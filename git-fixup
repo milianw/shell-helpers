@@ -1,0 +1,58 @@
+#!/bin/sh
+#
+# script to simplify jumping back during interactive rebase (or to start an interactive rebase)
+#
+# see also:
+# https://stackoverflow.com/questions/69673695/git-jump-back-again-during-interactive-rebase
+#
+
+set -e
+
+if [ "$GIT_SEQUENCE_EDITOR" == "$(readlink -f $0)" ]; then
+    # mark the first rev as a patch to edit (the one that's passed to the fixup script)
+    # see also below
+    sed -i -e '1 s#^p #e #' "$1"
+    sed -i -e '1 s#^pick #edit #' "$1"
+    exit
+fi
+
+fixup_rev="$1"
+shift 1
+
+fixup_rev_pretty=$(git rev-parse "$fixup_rev")
+
+rebase_merge_path="$(git rev-parse --show-toplevel)/.git/rebase-merge"
+rebase_todo="$rebase_merge_path/git-rebase-todo"
+rebase_done="$rebase_merge_path/done"
+
+if [ ! -f "$rebase_todo" ]; then
+    # set us ourselves as sequence editor to mark the passed patch for edito automatically
+    # see also above
+    GIT_SEQUENCE_EDITOR="$(readlink -f $0)" git rebase --interactive "$fixup_rev"
+    exit
+fi
+
+if ! grep -q "$fixup_rev_pretty" "$rebase_done"; then
+    echo "rev $fixup_rev aka $fixup_rev_pretty not listed in $rebase_done"
+    echo "Cannot fixup outside of current interactive rebase range."
+    echo "You'll have to finish the ongoing rebase first and restart with a range that includes $rev afterwards"
+    exit
+fi
+
+scratch="$rebase_todo.tmp"
+git log --format=format:"%H %s" "$fixup_rev"..HEAD | awk '{print "pick " $0}' > "$scratch"
+echo "break" >> "$scratch"
+cat "$rebase_todo" >> "$scratch"
+
+cp "$rebase_todo" "$rebase_todo.backup"
+mv "$scratch" "$rebase_todo"
+
+git checkout "$fixup_rev"
+
+echo "You can amend the commit now, with"
+echo
+echo "  git commit --amend"
+echo
+echo "Once you are satisfied with your changes, run"
+echo
+echo "  git rebase --continue"
