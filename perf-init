@@ -2,7 +2,9 @@
 sudo sysctl -w kernel.yama.ptrace_scope=0
 sudo mount -o remount,mode=755 /sys/kernel/debug
 sudo mount -o remount,mode=755 /sys/kernel/debug/tracing
+sudo mount -o remount,mode=755 /sys/kernel/tracing
+sudo chown -R root:tracing /sys/kernel/debug/tracing/
+sudo chown -R root:tracing /sys/kernel/tracing/
 echo "0" | sudo tee /proc/sys/kernel/kptr_restrict
 echo "-1" | sudo tee /proc/sys/kernel/perf_event_paranoid
-sudo chown root:tracing /sys/kernel/debug/tracing/uprobe_events
 sudo chmod g+rw /sys/kernel/debug/tracing/uprobe_events
