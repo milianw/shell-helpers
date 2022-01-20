@@ -1,0 +1,58 @@
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+[user]
+        name = Milian Wolff
+        email = mail@milianw.de
+[url "gitolite@git.kdab.com:"]
+    insteadOf = kdab:
+[url "ssh://milian@codereview.kdab.com:29418/"]
+    insteadOf = kdab-gerrit:
+[alias]
+    qpush-dev = push gerrit HEAD:refs/for/dev
+    qpush-stable = push gerrit HEAD:refs/for/stable
+    qpush-54 = push gerrit HEAD:refs/for/5.4
+    qpush-55 = push gerrit HEAD:refs/for/5.5
+    qpush-56 = push gerrit HEAD:refs/for/5.6
+    qpush-57 = push gerrit HEAD:refs/for/5.7
+    qpush-58 = push gerrit HEAD:refs/for/5.8
+    qpush-59 = push gerrit HEAD:refs/for/5.9
+    qpush-513 = push gerrit HEAD:refs/for/5.13
+    qpush-514 = push gerrit HEAD:refs/for/5.14
+    qpush-5140 = push gerrit HEAD:refs/for/5.14.0
+    qpush-515 = push gerrit HEAD:refs/for/5.15
+    qpush-master = push gerrit HEAD:refs/for/master
+    qpush-kdab = push gerrit HEAD:refs/for/kdab
+[push]
+	default = simple
+[core]
+	excludesfile = /home/milian/.gitignore
+        commentChar = ";"
+	pager = diff-so-fancy | less --tabs=4 -RFX
+[alias]
+        xclean = clean -xfd -e \"*.kdev4\"
+
+[rerere]
+        enabled = true
+        autoupdate = true
+[sendemail]
+	smtpEncryption = tls
+	smtpServer = mail.kdab.com
+	smtpUser = milian.wolff@kdab.com
+	smtpServerPort = 587
+[merge]
+	tool = kdiff3
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[includeIf "gitdir:~/projects/kdab/"]
+    path = ~/projects/kdab/gitconfig
+[rebase]
+	abbreviateCommands = true
+[url "ssh://git@invent.kde.org/"]
+	pushInsteadOf = kde:
+	insteadOf = kde:
