@@ -113,7 +113,7 @@ FZF_ALT_C_COMMAND="fd -t d"
 . /usr/share/fzf/completion.bash
 . /usr/share/fzf/key-bindings.bash
 
-if [[ "$(hostname)" == "milian-workstation" ]]; then
+if [[ "$(hostname)" == "milian-workstation" || "$(hostname)" == "agathemoarbauer" ]]; then
     export USE_ICECREAM=0
 fi
 
