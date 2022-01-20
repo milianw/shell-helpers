@@ -6,9 +6,9 @@ fi
 
 if [[ "$USER" != "root" ]]; then
   if [[ "$(hostname)" == "agathemoarbauer" ]]; then
-    keychain --agents ssh ~/.ssh/id_ed25519
+    keychain -q -Q --agents ssh ~/.ssh/id_ed25519
   else
-    keychain --agents ssh ~/.ssh/kde_id_dsa ~/.ssh/kdab ~/.ssh/kde_id_v2
+    keychain -q -Q --agents ssh ~/.ssh/kde_id_dsa ~/.ssh/kdab ~/.ssh/kde_id_v2
   fi
 fi
 
