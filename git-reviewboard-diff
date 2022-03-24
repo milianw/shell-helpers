@@ -1,5 +1,0 @@
-#!/bin/bash
-
-REV=$(git svn find-rev $(git rev-list --date-order --max-count=1 git-svn $@))
-git diff --no-prefix HEAD -- $@ | sed -e 's/^+++ .*/&  (working copy)/' -e "s/^--- .*/&  (revision $REV)/"
-
