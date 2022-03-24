@@ -1,1 +1,1 @@
-ld.lld-wrapper
+ld.mold
