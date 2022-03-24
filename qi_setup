@@ -1,0 +1,4 @@
+unset LD_LIBRARY_PATH
+prepend PATH ~/Qt5.15.5/5.15.5/gcc_64/bin/
+. ~/projects/kdab/qitissue/devel-tools/sanitizers.opt
+export PYTHONPATH=/home/milian/.local/lib/python3.9/site-packages
