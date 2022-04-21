@@ -120,3 +120,6 @@ fi
 if [[ ! -z "$SSH_CONNECTION" ]]; then
     export QT_QPA_PLATFORMTHEME=kde
 fi
+
+export LESS=-mR
+export ACK_PAGER=less
