@@ -1,0 +1,13 @@
+@charset "utf-8";
+
+@-moz-document url(chrome://browser/content/browser.xhtml) {
+    #main-window,
+    browser[type="content-primary"],
+    browser[type="content"],
+    tabbrowser#content,
+    #content,
+    browser[type="content"] > html
+    {
+        background: #2a2e32 !important;
+    }
+}

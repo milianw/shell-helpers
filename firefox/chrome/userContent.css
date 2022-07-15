@@ -1,0 +1,13 @@
+@charset "utf-8";
+
+@-moz-document url("about:newtab") {
+    body {
+        background-color: #1b1e20 !important;
+    }
+}
+
+@-moz-document url(chrome://browser/content/browser.xhtml) {
+    browser[type="content-primary"] {
+        background: #1b1e20 !important;
+    }
+}
