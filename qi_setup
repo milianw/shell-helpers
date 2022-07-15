@@ -1,4 +1,4 @@
 unset LD_LIBRARY_PATH
-prepend PATH ~/Qt5.15.5/5.15.5/gcc_64/bin/
+prepend PATH ~/Qt5.15.9/gcc_64/bin/
 . ~/projects/kdab/qitissue/devel-tools/sanitizers.opt
 export OMP_WAIT_POLICY=PASSIVE
