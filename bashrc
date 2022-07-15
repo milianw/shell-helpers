@@ -74,8 +74,6 @@ prepend PATH $HOME/.bin
 
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
 
-prepend PYTHONPATH /home/milian/.local/lib/python3.10/site-packages
-
 # colorize man output, see:
 # http://boredzo.org/blog/archives/2016-08-15/colorized-man-pages-understood-and-customized
 man() {
