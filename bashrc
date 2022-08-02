@@ -121,3 +121,5 @@ fi
 
 export LESS=-mRFS
 export ACK_PAGER=less
+
+eval "$(direnv hook bash)"
