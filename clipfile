@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# Add files to your clipboard
+# usage:
+#  ./clipfile foo*
+#  ls foo* | ./clipfile
+#    will put all files matching foo into the clipboard
+
+base=$(dirname $0)
+
+if ! test -t 0; then
+    # read from stdin
+    xargs -d '\n' readlink -f < /dev/stdin | $base/clipboard uri
+else
+    # read from args
+    files=
+    for f in "$@"; do
+        if [ ! -z "$files" ]; then
+            files="$files\n"
+        fi
+        files="$files$(readlink -f "$f")"
+    done
+    echo -e $files | $base/clipboard uri
+fi
