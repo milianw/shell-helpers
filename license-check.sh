@@ -20,7 +20,7 @@ popd > /dev/null
 cd $1
 tmp=/tmp/license-check-$$
 find -name "*.cpp" -o -name "*.h" | while read f; do
-  ask=$($checker $f | egrep "^\- \+eV:")
+  ask=$($checker $f | grep -E "^\- \+eV:")
   echo $ask | sed 's/- +eV: //' | tr ' ' '\n' >> $tmp
   if [[ "$ask" != "" ]]; then
     echo $f $ask

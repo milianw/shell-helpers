@@ -16,8 +16,8 @@ echo $headline
 echo $headline | sed 's/./=/g'
 echo
 
-for rev in $(git log --no-merges --pretty=oneline $revFrom..$revTo | egrep -v "(SVN_SILENT|^[mM]erge)" | awk '{print $1}');
-#for rev in $(git log --pretty=oneline $revFrom..$revTo | egrep -v "(SVN_SILENT)" | awk '{print $1}');
+for rev in $(git log --no-merges --pretty=oneline $revFrom..$revTo | grep -E -v "(SVN_SILENT|^[mM]erge)" | awk '{print $1}');
+#for rev in $(git log --pretty=oneline $revFrom..$revTo | grep -E -v "(SVN_SILENT)" | awk '{print $1}');
 do
   git --no-pager log -1 --pretty=format:"* %an: %s%n" $rev
 done

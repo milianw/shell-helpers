@@ -39,7 +39,7 @@ HAS_ERROR="NO"
 BAD_FILES=
 
 for file in $(git diff --cached --name-only --diff-filter=ACM); do
-  if [[ "$(echo "$file" | egrep '^.*\.(h|cpp|hpp|c)$')" == "" ]]; then
+  if [[ "$(echo "$file" | grep -E '^.*\.(h|cpp|hpp|c)$')" == "" ]]; then
     # not a C/C++ file, skip it
     continue
   fi

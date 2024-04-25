@@ -256,7 +256,7 @@ function listCTests {
   local tests;
   tests=""
 
-  tests=$(LANG=en_US.UTF-8 ctest -N -V | grep "Test command:" | egrep -o ' [^ ]+$' | xargs readlink -f | cut -c $(echo $(readlink -f $(pwd))"/" | wc -c)-)
+  tests=$(LANG=en_US.UTF-8 ctest -N -V | grep "Test command:" | grep -E -o ' [^ ]+$' | xargs readlink -f | cut -c $(echo $(readlink -f $(pwd))"/" | wc -c)-)
 
   if [[ "$1" == "--debug" ]]; then
     # remove trailing .shell

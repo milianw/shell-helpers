@@ -15,7 +15,7 @@ pushd $(pwd) &>/dev/null
 cs $p || exit
 
 i=0
-egrep "^commit " $s | cut -s -d " " -f 2 | tac | while read c; do
+grep -E "^commit " $s | cut -s -d " " -f 2 | tac | while read c; do
   f=$(git log --oneline $c^..$c --)
   f=$(echo $(printf "%03d" $i)-$f.patch | tr " " "_" | sed "s#/##g")
   git show $c > "$t/$f"
