@@ -65,6 +65,9 @@ set +o histexpand
 
 export LANGUAGE=en_US
 
+export CC=$HOME/.bin/gcc
+export CXX=$HOME/.bin/g++
+
 prepend PATH $HOME/.local/bin
 prepend PATH $HOME/.bin
 
