@@ -7,7 +7,7 @@
 #
 python
 import sys
-sys.path.insert(0, '/home/milian/projects/compiled/kf5-dbg/share/kdevgdb/printers')
+sys.path.insert(0, '/home/milian/projects/kde/src/kdevelop/plugins/gdb/printers')
 sys.path.insert(0, '/home/milian/.bin/gdb-printers')
 end
 #
