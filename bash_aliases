@@ -22,7 +22,7 @@ alias svnclean="svn status | grep "^?" | cut -c 3- | xargs rm -Rf"
 
 if [ -f /etc/arch-release ]; then
   # arch linux specific aliases
-  alias upgradesystem='CMAKE_GENERATOR="Unix Makefiles" pikaur -Syu'
+  alias upgradesystem='CMAKE_GENERATOR="Unix Makefiles" paru -Syu'
   # ack is called ack-grep under debian, and I got used to that name...
   alias ack-grep='ack'
 fi
