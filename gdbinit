@@ -32,3 +32,5 @@ source ~/.bin/signals.gdb
 
 set index-cache enabled on
 maint set worker-threads 8
+
+set debuginfod enabled on
