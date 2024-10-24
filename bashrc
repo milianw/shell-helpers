@@ -2,8 +2,12 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-. /usr/share/git/completion/git-completion.bash
-. /usr/share/git/git-prompt.sh
+if [ -f /usr/share/git/completion/git-completion.bash ]; then
+    . /usr/share/git/completion/git-completion.bash
+    . /usr/share/git/git-prompt.sh
+else
+    . /usr/share/bash-completion/bash_completion
+fi
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
@@ -54,7 +58,10 @@ fi
 
 #xhost +local:
 
-. ~/.bin/keychain.sh
+if [ ! -z "$(command -v keychain 2> /dev/null)" ]; then
+    . ~/.bin/keychain.sh
+fi
+
 . ~/.bin/bash_setup_programming
 add_env "$HOME/projects/compiled/other"
 
@@ -92,7 +99,7 @@ export UBSAN_OPTIONS=print_stacktrace=1
 
 export LD_LIBRARY_PATH=$(echo $LD_LIBRARY_PATH | sed -E 's/:$//')
 
-if [ -f `which powerline-daemon` ]; then
+if [ ! -z "$(command -v powerline-daemon 2> /dev/null)" ]; then
   powerline-daemon -q
   POWERLINE_BASH_CONTINUATION=1
   POWERLINE_BASH_SELECT=1
@@ -107,8 +114,13 @@ export CMAKE_GENERATOR=Ninja
 
 FZF_CTRL_T_COMMAND="fd"
 FZF_ALT_C_COMMAND="fd -t d"
-. /usr/share/fzf/completion.bash
-. /usr/share/fzf/key-bindings.bash
+
+if [ -f /usr/share/fzf/completion.bash ]; then
+    . /usr/share/fzf/completion.bash
+    . /usr/share/fzf/key-bindings.bash
+else
+    . /usr/share/doc/fzf/examples/key-bindings.bash
+fi
 
 if [[ "$(hostname)" == "milian-workstation" || "$(hostname)" == "agathemoarbauer" ]]; then
     export USE_ICECREAM=0

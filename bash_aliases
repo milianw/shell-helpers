@@ -66,7 +66,9 @@ alias minmaxavgstats="datamash -W min 1 max 1 mean 1 median 1 q1 1 q3 1 sstdev 1
 
 alias icemon="icemon -s 192.168.150.185"
 
-alias ls="lsd --group-dirs=first --icon=never"
+if [ ! -z "$(command -v lsd 2> /dev/null)" ]; then
+  alias ls="lsd --group-dirs=first --icon=never"
+fi
 
 alias diff="colordiff -u"
 
