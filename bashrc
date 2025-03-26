@@ -109,6 +109,7 @@ fi
 # I still want to load my qtlogging.ini even when setFilterRules was used...
 export QT_LOGGING_CONF=$HOME/.config/QtProject/qtlogging.ini
 export CMAKE_GENERATOR=Ninja
+export CMAKE_EXPORT_COMPILE_COMMANDS=ON
 
 [[ -s /etc/profile.d/autojump.sh ]] && source /etc/profile.d/autojump.sh
 
