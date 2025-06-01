@@ -31,13 +31,13 @@ AWK
 else
     summer=$(cat <<'AWK'
 {
-    if ($1 == "total") {
-        rss = $4
+    if ($1 == "Total:") {
+        rss = $3
         dirty = $5
-    } else if ($7 == "anon") {
-        heap += $3
-    } else if ($7 == "stack") {
-        stack += $3
+    } else if ($8 == "[anon]") {
+        heap += $2
+    } else if ($8 == "[stack]") {
+        stack += $2
     }
 }
 END {
