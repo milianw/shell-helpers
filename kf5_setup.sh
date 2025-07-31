@@ -8,7 +8,7 @@ fi
 
 export KF5="/home/milian/projects/compiled/kf5$suffix"
 export KDE_SRC=/home/milian/projects/kde/src
-export QML2_IMPORT_PATH=/usr/lib/qt/qml
+export QML2_IMPORT_PATH=/usr/lib/qt6/qml
 
 prepend XDG_DATA_DIRS /usr/share
 prepend XDG_CONFIG_DIRS /etc/xdg
