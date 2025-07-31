@@ -6,9 +6,9 @@ fi
 
 if [[ "$USER" != "root" ]]; then
   if [[ "$(hostname)" == "agathemoarbauer" ]]; then
-    keychain -q -Q ~/.ssh/id_ed25519
+    eval $(keychain --eval -q -Q ~/.ssh/id_ed25519)
   else
-    keychain -q -Q ~/.ssh/kdab ~/.ssh/kde_id_v2
+    eval $(keychain --eval -q -Q ~/.ssh/kdab ~/.ssh/kde_id_v2)
   fi
 fi
 
