@@ -7,7 +7,7 @@ if [[ "$KF5_OPT" == "1" ]]; then
 fi
 
 export KF5="/home/milian/projects/compiled/kf5$suffix"
-export KDE_SRC=/home/milian/projects/kf5/src
+export KDE_SRC=/home/milian/projects/kde/src
 export QML2_IMPORT_PATH=/usr/lib/qt/qml
 
 prepend XDG_DATA_DIRS /usr/share
