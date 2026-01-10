@@ -103,7 +103,7 @@ if [ ! -z "$(command -v powerline-daemon 2> /dev/null)" ]; then
   powerline-daemon -q
   POWERLINE_BASH_CONTINUATION=1
   POWERLINE_BASH_SELECT=1
-  . /usr/lib/python3.13/site-packages/powerline/bindings/bash/powerline.sh
+  . /usr/lib/python3.14/site-packages/powerline/bindings/bash/powerline.sh
 fi
 
 # I still want to load my qtlogging.ini even when setFilterRules was used...
