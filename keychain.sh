@@ -8,7 +8,7 @@ if [[ "$USER" != "root" ]]; then
   if [[ "$(hostname)" == "agathemoarbauer" ]]; then
     eval $(keychain --eval --immediate -q -Q ~/.ssh/id_ed25519)
   else
-    eval $(keychain --eval --immediate -q -Q ~/.ssh/kdab ~/.ssh/kde_id_v2)
+    eval $(keychain --eval --immediate -q -Q ~/.ssh/kde_id_v2)
   fi
 fi
 
