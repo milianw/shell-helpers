@@ -5,6 +5,8 @@ if [ "$1" = "-f" ] && [ "$2" = "-" ]; then
     /usr/bin/make "$@"
 elif [ "$NO_MAKEOBJ" == "1" ]; then
     /usr/bin/make "$@"
+elif [ -z "$(command -v makeobj 2> /dev/null)" ]; then
+    /usr/bin/make "$@"
 else
     export PATH=$(dirname $0):$PATH
     makeobj "$@"

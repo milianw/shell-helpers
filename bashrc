@@ -30,6 +30,10 @@ export GIT_PS1_SHOWUPSTREAM="auto"
 #export GIT_PS1_SHOWUNTRACKEDFILES=yes
 #export GIT_PS1_SHOWSTASHSTATE=yes
 export PROMPT_DIRTRIM=1
+
+if [ -f "/run/host/usr/share/git/git-prompt.sh" ]; then
+    source /run/host/usr/share/git/git-prompt.sh
+fi
 PS1='┌${debian_chroot:+($debian_chroot)}\[\033[00;35m\]\u\[\033[00m\]:\[\033[00;33m\]\w\[\033[32m\]$(__git_ps1 \|%s)\[\033[00m\]\n└\$ '
 
 # If this is an xterm set the title to user@host:dir
@@ -135,3 +139,25 @@ export LESS=-mRFS
 export ACK_PAGER=less
 
 eval "$(direnv hook bash)"
+
+# monorepo_sdk start
+if grep Ubuntu /etc/lsb-release > /dev/null; then
+    export CMAKE_TOOLCHAIN_FILE="/opt/monorepo-sdk-qt6/monorepo-sdk-toolchain.cmake"
+    alias fd=fdfind
+    export CMAKE_PREFIX_PATH=/opt/monorepo-sdk-qt6/qt/
+    export PATH=/opt/monorepo-sdk-qt6/qt/bin:$PATH:/usr/lib/rust-1.89/bin
+    export QTFRAMEWORK_BYPASS_LICENSE_CHECK=1
+    export NO_MAKEOBJ=1
+    export http_proxy=http://127.0.0.1:8888/
+    export https_proxy=http://127.0.0.1:8888/
+    export QI_SYSTEM_CACHE_OVERRIDE=/mnt/data1/milian/qi/cache
+    export CERT_DIR=$HOME/.local/share/zscaler
+    export CERT_PATH=$CERT_DIR/ca-bundle.pem
+    export SSL_CERT_DIR=$CERT_DIR
+    export SSL_CERT_FILE=$CERT_PATH
+    export REQUESTS_CA_BUNDLE=$CERT_PATH
+    export NODE_EXTRA_CA_CERTS=$CERT_PATH
+    #export DBUS_SYSTEM_BUS_ADDRESS="unix:path=/run/host/var/run/dbus/system_bus_socket"
+    export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/host/run/user/1000/bus"
+fi
+# monorepo_sdk stop
