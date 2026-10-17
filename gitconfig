@@ -5,10 +5,6 @@
 [user]
         name = Milian Wolff
         email = mail@milianw.de
-[url "gitolite@git.kdab.com:"]
-    insteadOf = kdab:
-[url "ssh://milian@codereview.kdab.com:29418/"]
-    insteadOf = kdab-gerrit:
 [alias]
     qpush-dev = push gerrit HEAD:refs/for/dev
     qpush-stable = push gerrit HEAD:refs/for/stable
@@ -23,7 +19,6 @@
     qpush-5140 = push gerrit HEAD:refs/for/5.14.0
     qpush-515 = push gerrit HEAD:refs/for/5.15
     qpush-master = push gerrit HEAD:refs/for/master
-    qpush-kdab = push gerrit HEAD:refs/for/kdab
 [push]
 	default = simple
 [core]
@@ -36,11 +31,6 @@
 [rerere]
         enabled = true
         autoupdate = true
-[sendemail]
-	smtpEncryption = tls
-	smtpServer = mail.kdab.com
-	smtpUser = milian.wolff@kdab.com
-	smtpServerPort = 587
 [merge]
 	tool = kdiff3
 [filter "lfs"]
@@ -49,8 +39,6 @@
 	process = git-lfs filter-process
 	required = true
 
-[includeIf "gitdir:~/projects/kdab/"]
-    path = ~/projects/kdab/gitconfig
 [rebase]
 	abbreviateCommands = true
 [url "ssh://git@invent.kde.org/"]
